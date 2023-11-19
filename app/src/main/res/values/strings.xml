@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">roknEltayb</string>
+    <string name="welcome_to">Welcome to Rokn El-Tayb retailing and delivering household and business disposables. We're excited to see you again!</string>
+    <string name="phone_number">Phone number</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="log_in">Log in</string>
+    <string name="continue_as_guest">Continue as Guest</string>
+    <string name="sign_up">Sign up</string>
+    <string name="don_t_have_an_account">Don`t have an account?</string>
+    <string name="email_address">Email Address</string>
+    <string name="username">Username</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="choose">Choose\n</string>
+    <string name="block">Block</string>
+    <string name="street">Street</string>
+    <string name="avenue">Avenue</string>
+    <string name="building_number">Building Number</string>
+    <string name="floor">Floor</string>
+    <string name="apartment">Apartment</string>
+    <string name="delivery_instruction">Delivery Instruction</string>
+</resources>

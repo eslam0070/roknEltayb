@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">roknEltayb</string>
+    <string name="welcome_to">مرحبًا بكم في ركن الطيب لتجارة التجزئة وتوصيل المستهلكات المنزلية والتجارية. نحن متحمسون لرؤيتك مرة أخرى!</string>
+    <string name="phone_number">رقم التليفون</string>
+    <string name="password">كلمة المرور</string>
+    <string name="remember_me">تذكرنى</string>
+    <string name="forgot_password">هل نسيت كلمة السر؟</string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="continue_as_guest">الاستمرار كضيف</string>
+    <string name="sign_up">اشتراك</string>
+    <string name="don_t_have_an_account">ليس لديك حساب؟</string>
+    <string name="email_address">عنوان البريد الإلكتروني</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="choose">اختر\n</string>
+    <string name="block">حاجز</string>
+    <string name="street">شارع</string>
+    <string name="avenue">شارع</string>
+    <string name="building_number">رقم المبنى</string>
+    <string name="floor">أرضية</string>
+    <string name="apartment">شقة</string>
+    <string name="delivery_instruction">تعليمات التسليم</string>
+</resources>
