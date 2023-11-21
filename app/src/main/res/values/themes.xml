@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.RoknEltayb" parent="Base.Theme.RoknEltayb" />
+
+    //verify_code_pin_view
+
+    <style name="PinViewTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="pinViewStyle">@style/PinWidget.PinView</item>
+    </style>
 </resources>

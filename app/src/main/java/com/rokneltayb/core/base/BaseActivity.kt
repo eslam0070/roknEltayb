@@ -6,12 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import com.exas.qpmoemp.core.appUtils.localization.LocalizationUtils
+import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import com.rokneltayb.R
 import com.rokneltayb.core.appUtils.Constants
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
@@ -26,7 +25,7 @@ class BaseActivity : AppCompatActivity() {
 
     private var progressDialog: Dialog? = null
     var dialogDismissThread: Job? = null
-    var databinding: ActivityBaseBinding? = null
+    var binding: ActivityBaseBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +40,19 @@ class BaseActivity : AppCompatActivity() {
         if (!Constants.densities.contains(metrics.density))
             configuration.densityDpi = (LocalizationUtils.getDensity(this) * 170f).toInt()
         resources.updateConfiguration(configuration, metrics)
-        databinding = DataBindingUtil.setContentView(this@BaseActivity, R.layout.activity_base)
+        binding = DataBindingUtil.setContentView(this@BaseActivity, R.layout.activity_base)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(1, getString(R.string.home),R.drawable.ic_home))
+        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(2, getString(R.string.categories),R.drawable.ic_home))
+        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(3, getString(R.string.cart),R.drawable.ic_home))
+        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(4, getString(R.string.more),R.drawable.ic_home))
+
+        binding!!.bottomNavigation.setOnClickMenuListener {
+            when(it.id){
+
+            }
+        }
     }
 
    /* override fun onBackPressed() {
@@ -114,129 +124,13 @@ class BaseActivity : AppCompatActivity() {
         }
     }
 
-  /*  private val listener =
+    private val listener =
         NavController.OnDestinationChangedListener { _, destination, _ ->
-
             when (destination.label.toString()) {
 
-                "SplashFragment", "LoginFragment", "ConfirmLoginFragment",
-                "ForgetPasswordFragment", "ConfirmForgetPasswordFragment",
-                "changePasswordAfterLogin", "ChangePassword" -> {
-                    databinding!!.ivBack.visibility = View.GONE
-                    databinding!!.ivUser.visibility = View.GONE
-                    databinding!!.sideMenu.visibility = View.GONE
-                    databinding!!.clMainToolbarContainer.visibility = View.GONE
-                }
-
-                "fragment_home", "MapsFragment", "HomeNewFragment" -> {
-                    databinding!!.drawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                    databinding!!.ivBack.visibility = View.GONE
-                    databinding!!.ivMainToolbarMenu.visibility = View.VISIBLE
-                    databinding!!.ivUser.visibility = View.VISIBLE
-                    databinding!!.tvMainEmployeeName.text = getString(R.string.home)
-                    databinding!!.sideMenu.visibility = View.VISIBLE
-                    databinding!!.clMainToolbarContainer.visibility = View.VISIBLE
-                    if (SharedPreferencesImpl(this).getLanguage() == LANGUAGE_ARABIC)
-                        databinding!!.ivUser.setImageResource(R.drawable.flag_ksa)
-                    else
-                        databinding!!.ivUser.setImageResource(R.drawable.flag_uk)
-                    itemsNav(null)
-                }
-
-                "SettingFragment" -> {
-                    databinding!!.drawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                    databinding!!.ivBack.visibility = View.VISIBLE
-                    databinding!!.ivMainToolbarMenu.visibility = View.VISIBLE
-                    databinding!!.ivUser.visibility = View.GONE
-                    databinding!!.tvMainEmployeeName.text = getString(R.string.profile_setting)
-                    databinding!!.sideMenu.visibility = View.VISIBLE
-                    databinding!!.clMainToolbarContainer.visibility = View.VISIBLE
-
-                    itemsNav(null)
-                }
-
-                "NoConnectionFragment" , "ServerErrorFragment" -> {
-                    databinding!!.clMainToolbarContainer.visibility = View.GONE
-                }
-
-                else -> {
-                    databinding!!.ivBack.visibility = View.VISIBLE
-                    databinding!!.ivUser.visibility = View.GONE
-                    databinding!!.ivMainToolbarMenu.visibility = View.GONE
-                    databinding!!.sideMenu.visibility = View.VISIBLE
-                    databinding!!.clMainToolbarContainer.visibility = View.VISIBLE
-                    databinding!!.drawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-                    itemsNav(null)
-                    setTitleScreen(destination.label.toString())
-                }
             }
 
-            *//*            if (destination.label.toString().contains("SplashFragment") ||
-            destination.label.toString().contains("LoginFragment") ||
-            destination.label.toString().contains("ConfirmLoginFragment") ||
-            destination.label.toString().contains("ForgetPasswordFragment") ||
-            destination.label.toString().contains("ConfirmForgetPasswordFragment") ||
-            destination.label.toString().contains("changePasswordAfterLogin") ||
-            destination.label.toString().contains("ChangePassword")
-        ) {
-            databinding!!.ivBack.visibility = View.GONE
-            databinding!!.ivUser.visibility = View.GONE
-            databinding!!.sideMenu.visibility = View.GONE
-            databinding!!.clMainToolbarContainer.visibility = View.GONE
-
-
-        } else if (destination.label.toString()
-                .contains("fragment_home") ||
-            destination.label.toString()
-                .contains("MapsFragment") ||
-            destination.label.toString()
-                .contains("HomeNewFragment")
-        ) {
-
-            databinding!!.drawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            databinding!!.ivBack.visibility = View.GONE
-            databinding!!.ivMainToolbarMenu.visibility = View.VISIBLE
-            databinding!!.ivUser.visibility = View.VISIBLE
-            databinding!!.tvMainEmployeeName.text = getString(R.string.home)
-            databinding!!.sideMenu.visibility = View.VISIBLE
-            databinding!!.clMainToolbarContainer.visibility = View.VISIBLE
-            if (SharedPreferencesImpl(this).getLanguage() == LANGUAGE_ARABIC)
-                databinding!!.ivUser.setImageResource(R.drawable.flag_ksa)
-            else
-                databinding!!.ivUser.setImageResource(R.drawable.flag_uk)
-
-
-
-            itemsNav(null)
-
-
-        } else if (destination.label.toString().contains("NoConnectionFragment") ||
-            destination.label.toString().contains("ServerErrorFragment")
-        ) {
-            databinding!!.clMainToolbarContainer.visibility = View.GONE
-
-        } else if (destination.label.toString().contains("settingsFragment")) {
-
-            databinding!!.ivBack.visibility = View.VISIBLE
-            databinding!!.ivUser.visibility = View.GONE
-            databinding!!.sideMenu.visibility = View.VISIBLE
-            databinding!!.tvMainEmployeeName.text = getString(R.string.profile_setting)
-            databinding!!.ivMainToolbarMenu.visibility = View.VISIBLE
-            databinding!!.clMainToolbarContainer.visibility = View.VISIBLE
-            databinding!!.drawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-
-            itemsNav(null)
-        } else {
-            databinding!!.ivBack.visibility = View.VISIBLE
-            databinding!!.ivUser.visibility = View.GONE
-            databinding!!.ivMainToolbarMenu.visibility = View.GONE
-            databinding!!.sideMenu.visibility = View.VISIBLE
-            databinding!!.clMainToolbarContainer.visibility = View.VISIBLE
-            databinding!!.drawerlayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            itemsNav(null)
-            setTitleScreen(destination.label.toString())
-        }*//*
-        }*/
+        }
   var isLangChanged: Boolean = false
 
     override fun onDestroy() {

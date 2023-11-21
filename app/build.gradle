@@ -117,4 +117,7 @@ dependencies {
 
     //Secure Shared Preferences
     implementation 'com.github.rtoshiro.securesharedpreferences:securesharedpreferences:1.2.0'
+
+    implementation 'com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3'
+
 }

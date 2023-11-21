@@ -17,5 +17,41 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgetPasswordFragment"
+            app:destination="@id/forgetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forgetPasswordFragment"
+        android:name="com.rokneltayb.ui.login.forgetpassword.ForgetPasswordFragment"
+        android:label="ForgetPasswordFragment" >
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_verifyYourAccountFragment"
+            app:destination="@id/verifyYourAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetYourPasswordFragment"
+        android:name="com.rokneltayb.ui.login.forgetpassword.resetpassword.ResetYourPasswordFragment"
+        android:label="ResetYourPasswordFragment" >
+
+        <argument android:name="phone"
+            app:argType="integer"/>
+
+        <argument android:name="code"
+            app:argType="integer"/>
+        <action
+            android:id="@+id/action_resetYourPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyYourAccountFragment"
+        android:name="com.rokneltayb.ui.login.forgetpassword.verifyaccount.VerifyYourAccountFragment"
+        android:label="VerifyYourAccountFragment">
+
+        <argument android:name="phone"
+            app:argType="integer"/>
+        <action
+            android:id="@+id/action_verifyYourAccountFragment_to_resetYourPasswordFragment"
+            app:destination="@id/resetYourPasswordFragment" />
     </fragment>
 </navigation>
