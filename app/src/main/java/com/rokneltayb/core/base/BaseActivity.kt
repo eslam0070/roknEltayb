@@ -6,13 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
-import com.exas.qpmoemp.core.appUtils.localization.LocalizationUtils
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import com.rokneltayb.R
 import com.rokneltayb.core.appUtils.Constants
+import com.rokneltayb.core.appUtils.localization.LocalizationUtils
+import com.rokneltayb.core.appUtils.toast
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -26,6 +33,8 @@ class BaseActivity : AppCompatActivity() {
     private var progressDialog: Dialog? = null
     var dialogDismissThread: Job? = null
     var binding: ActivityBaseBinding? = null
+    private val mNavController by lazy { Navigation.findNavController(this, R.id.navHostFragment) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,58 +45,44 @@ class BaseActivity : AppCompatActivity() {
         windowManager.defaultDisplay.getMetrics(metrics)
         metrics.scaledDensity = configuration.fontScale * metrics.density
 
-
         if (!Constants.densities.contains(metrics.density))
             configuration.densityDpi = (LocalizationUtils.getDensity(this) * 170f).toInt()
         resources.updateConfiguration(configuration, metrics)
         binding = DataBindingUtil.setContentView(this@BaseActivity, R.layout.activity_base)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        val bottomNavigationItems = mutableListOf(
+            CurvedBottomNavigation.Model(R.id.homeFragment, getString(R.string.home),R.drawable.ic_home_gray),
+            CurvedBottomNavigation.Model(R.id.categoriesFragment, getString(R.string.categories),R.drawable.ic_categories_gray),
+            CurvedBottomNavigation.Model(R.id.cartFragment, getString(R.string.cart),R.drawable.ic_cart_gray),
+            CurvedBottomNavigation.Model(R.id.moreFragment, getString(R.string.more),R.drawable.more_gray2))
 
-        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(1, getString(R.string.home),R.drawable.ic_home))
-        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(2, getString(R.string.categories),R.drawable.ic_home))
-        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(3, getString(R.string.cart),R.drawable.ic_home))
-        binding!!.bottomNavigation.add(CurvedBottomNavigation.Model(4, getString(R.string.more),R.drawable.ic_home))
 
-        binding!!.bottomNavigation.setOnClickMenuListener {
-            when(it.id){
 
+        binding!!.bottomNavigation.apply {
+            bottomNavigationItems.forEach{
+                add(it)
             }
+            setOnClickMenuListener {
+                toast(it.title.toString())
+                mNavController.navigate(it.id)
+            }
+            setupNavController(mNavController)
         }
     }
 
-   /* override fun onBackPressed() {
-        when (mNavController!!.currentDestination!!.id) {
 
-            R.id.mailFragment, R.id.archiveFragment, R.id.settingsFragment, R.id.fragmentProjectDetails -> {
-                mNavController?.navigate(R.id.homeNewFragment)
-            }
-
-            else -> {
-                when (mNavController!!.currentDestination!!.id) {
-                    R.id.mailDetailsFragment -> {
-                        mNavController?.navigate(R.id.mailFragment)
-                    }
-
-                    R.id.fragmentContractorMail, R.id.fragmentTrackingProject, R.id.fragmentProjectFiles, R.id.showLocationFragment -> {
-                        mNavController!!.navigateUp() || super.onSupportNavigateUp()
-                    }
-
-                    else -> {
-                        super.onBackPressed()
-                    }
-
-                }
-//
-//                if (mNavController!!.currentDestination!!.id == R.id.mailDetailsFragment)
-//
-//                else if (mNavController!!.currentDestination!!.id == R.id.fragmentContractorMail||)
-//                Log.d("there", "onBackPressed: "+mNavController!!.currentDestination!!.id)
-//
-            }
-        }
-    }*/
-
-
+   override fun onBackPressed() {
+       if (mNavController.currentDestination!!.id == R.id.homeFragment)
+           super.onBackPressed()
+       else {
+           when (mNavController.currentDestination!!.id) {
+               R.id.categoriesFragment -> mNavController.popBackStack(R.id.homeFragment, false)
+               R.id.cartFragment -> mNavController.popBackStack(R.id.homeFragment, false)
+               R.id.moreFragment -> mNavController.popBackStack(R.id.homeFragment, false)
+               else -> mNavController.navigateUp()
+           }
+       }
+   }
     @DelicateCoroutinesApi
     fun showProgress(show: Boolean) {
         if (progressDialog == null) {
@@ -127,7 +122,33 @@ class BaseActivity : AppCompatActivity() {
     private val listener =
         NavController.OnDestinationChangedListener { _, destination, _ ->
             when (destination.label.toString()) {
+                "fragment_register","LoginFragment","ForgetPasswordFragment",
+                "ResetYourPasswordFragment","VerifyYourAccountFragment"->{
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.GONE
+                }
+                "fragment_categories","fragment_cart","fragment_home"->{
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.bottomNavigation.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivSearch.visibility = View.VISIBLE
 
+                }
+                "fragment_more" ->{
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+                }
+                else ->{
+                    binding!!.bottomNavigation.visibility = View.VISIBLE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivSearch.visibility = View.GONE
+
+                }
             }
 
         }
@@ -140,5 +161,18 @@ class BaseActivity : AppCompatActivity() {
         if (!isLangChanged)
             if (SharedPreferencesImpl(this).getRememberMe() == "false")
                 SharedPreferencesImpl(this).clearAll()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mNavController.addOnDestinationChangedListener(listener)
+    }
+    override fun onResume() {
+        super.onResume()
+        mNavController.addOnDestinationChangedListener(listener)
+    }
+    override fun onPause() {
+        super.onPause()
+        mNavController.removeOnDestinationChangedListener(listener)
     }
 }

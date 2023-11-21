@@ -1,15 +1,11 @@
-package com.exas.qpmoemp.core.appUtils.localization
+package com.rokneltayb.core.appUtils.localization
 
 import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.DisplayMetrics
 import android.util.Log
-import com.exas.qpmoemp.core.appUtils.Constants
-import com.exas.qpmoemp.core.appUtils.Constants.LANGUAGE_ARABIC
-import com.exas.qpmoemp.core.appUtils.Constants.LANGUAGE_ENGLISH
-import com.exas.qpmoemp.core.appUtils.localization.LocaleHelper
-import com.exas.qpmoemp.data.persistentStorage.sharedPref.SharedPreferencesImpl
+import com.rokneltayb.core.appUtils.Constants
 import java.util.*
 
 object LocalizationUtils {

@@ -5,8 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.preference.PreferenceManager
 import android.util.DisplayMetrics
-import com.app.monasba.core.appUtils.Constants
-import com.exas.qpmoemp.core.appUtils.localization.LocalizationUtils
+import com.rokneltayb.core.appUtils.Constants
 import java.util.Locale
 
 class LocaleHelper {

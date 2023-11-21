@@ -3,7 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="main">#0EBFB1</color>
+    <color name="main">#477B1D</color>
+    <color name="backgroundCurve">#E4E4E4</color>
+    <color name="backgroundCurve2">#707070</color>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
 

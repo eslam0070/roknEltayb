@@ -3,6 +3,9 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        jcenter()
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+
     }
 }
 dependencyResolutionManagement {
@@ -10,8 +13,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://www.jitpack.io' }
+        maven {url "http://dl.bintray.com/jlmd/maven"
+            setAllowInsecureProtocol(true)}
         jcenter()
+        maven { url 'https://jitpack.io' }
+        maven {url "https://plugins.gradle.org/m2/"}
     }
 }
 
