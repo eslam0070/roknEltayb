@@ -2,7 +2,10 @@ package com.rokneltayb.data.sharedPref
 
 
 import android.content.Context
+import android.os.Build
 import com.github.rtoshiro.secure.SecureSharedPreferences
+import com.google.gson.Gson
+import com.rokneltayb.data.model.login.login.ClientData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -19,6 +22,7 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
     private val rememberMeInSharedPreferences = "REMEMBER_ME_IN_SHARED_PREFERENCES"
     private val countNotificationInSharedPreferences = "COUNT_NOTIFICAITON_IN_SHARED_PREFERENCES"
     private val languageInSharedPreferences = "LANG_IN_SHARED_PREFERENCES"
+    private val userProfileInSharedPreferences = "USER_PROFILE_IN_SHARED_PREFERENCES"
 
 
     private var prefs: SecureSharedPreferences? = SecureSharedPreferences(context,sharedPreferencesFileName)
@@ -37,8 +41,8 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
         return prefs!!.getString(userPasswordInSharedPreferences,"") ?: ""
     }
 
-    override fun getRememberMe(): String {
-        return prefs!!.getString(rememberMeInSharedPreferences,"") ?:""
+    override fun getRememberMe(): Boolean {
+        return prefs!!.getBoolean(rememberMeInSharedPreferences,false)
     }
 
     override fun getNotificationCount(): String {
@@ -48,6 +52,15 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
 
     override fun getLanguage(): String {
         return prefs!!.getString(languageInSharedPreferences,"") ?: ""
+    }
+
+    override fun getUserProfil(): ClientData? {
+        val gson = Gson()
+        val json = prefs!!.getString(userProfileInSharedPreferences,"") ?: ""
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (json == "") return null
+        }
+        return gson.fromJson(json, ClientData::class.java)
     }
 
     override fun setApiKeyToken(token: String) {
@@ -63,8 +76,8 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
         edit.putString(userPasswordInSharedPreferences, password).apply()
     }
 
-    override fun setRememberMe(rememberMe: String) {
-        edit.putString(rememberMeInSharedPreferences, rememberMe).apply()
+    override fun setRememberMe(rememberMe: Boolean) {
+        edit.putBoolean(rememberMeInSharedPreferences, rememberMe).apply()
     }
 
     override fun setUserId(userId: String) {
@@ -78,6 +91,12 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
     override fun setIsManager(isManager: String) {
         edit.putString(isManagerPref, isManager).apply()
 
+    }
+
+    override fun setUserProfil(userProfile: ClientData) {
+        val gson = Gson()
+        val json = gson.toJson(userProfile)
+        edit.putString(userProfileInSharedPreferences, json).apply()
     }
 
     override fun getIsManager() : String {

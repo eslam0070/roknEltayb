@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.rokneltayb.R
-import com.rokneltayb.core.appUtils.snackBarFailure
 import com.rokneltayb.databinding.FragmentVerifyYourAccountBinding
+import com.rokneltayb.domain.util.snackBarFailure
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VerifyYourAccountFragment : Fragment() {
 
     private val args: VerifyYourAccountFragmentArgs by navArgs()

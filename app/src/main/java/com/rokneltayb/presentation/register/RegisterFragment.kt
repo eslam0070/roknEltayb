@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rokneltayb.R
-import com.rokneltayb.core.appUtils.Validate
-import com.rokneltayb.core.appUtils.toast
 import com.rokneltayb.databinding.FragmentRegisterBinding
+import com.rokneltayb.domain.util.Validate
+import com.rokneltayb.domain.util.toast
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private val binding by lazy { FragmentRegisterBinding.inflate(layoutInflater) }

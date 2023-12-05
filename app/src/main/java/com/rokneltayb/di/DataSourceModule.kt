@@ -1,5 +1,7 @@
 package com.rokneltayb.di
 
+import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSourceImpl
 import com.rokneltayb.data.sharedPref.SharedPreferences
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import dagger.Binds
@@ -15,13 +17,7 @@ abstract class DataSourceModule {
     @Binds
     abstract fun provideDataStore(sharedPreferencesImpl: SharedPreferencesImpl): SharedPreferences
 
-
-    //User Remote and local Data Source
-    /*@Binds
-    abstract fun provideLocalDataSource(localDataSourceImpl: UserLocalDataSourceImpl): UserLocalDataSource
-
     @Binds
     abstract fun provideRemoteDataSource(remoteDataSource: UserRemoteDataSourceImpl): UserRemoteDataSource
 
-*/
 }

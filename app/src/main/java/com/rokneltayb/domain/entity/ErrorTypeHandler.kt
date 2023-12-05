@@ -1,4 +1,4 @@
-package com.exas.crm.domain.entity
+package com.rokneltayb.domain.entity
 
 import com.rokneltayb.domain.entity.ErrorType
 

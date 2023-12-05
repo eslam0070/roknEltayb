@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.rokneltayb.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MoreFragment : Fragment() {
 
     companion object {

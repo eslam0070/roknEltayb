@@ -12,17 +12,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
-import com.rokneltayb.core.appUtils.Constants
-import com.rokneltayb.core.appUtils.localization.LocalizationUtils
-import com.rokneltayb.core.appUtils.toast
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
+import com.rokneltayb.domain.util.Constants
+import com.rokneltayb.domain.util.localization.LocalizationUtils
+import com.rokneltayb.domain.util.toast
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class BaseActivity : AppCompatActivity() {
 
     private var progressDialog: Dialog? = null
@@ -58,7 +60,7 @@ class BaseActivity : AppCompatActivity() {
                 add(it)
             }
             setOnClickMenuListener {
-                toast(it.title.toString())
+                toast(it.title)
                 mNavController.navigate(it.id)
             }
             setupNavController(mNavController)
@@ -154,7 +156,7 @@ class BaseActivity : AppCompatActivity() {
         Log.d("eee", "onDestroy: " + SharedPreferencesImpl(this).getRememberMe())
 
         if (!isLangChanged)
-            if (SharedPreferencesImpl(this).getRememberMe() == "false")
+            if (!SharedPreferencesImpl(this).getRememberMe())
                 SharedPreferencesImpl(this).clearAll()
     }
 

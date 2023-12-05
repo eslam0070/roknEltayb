@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.rokneltayb.R
 import com.rokneltayb.databinding.FragmentForgetPasswordBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForgetPasswordFragment : Fragment() {
 
     private val binding by lazy { FragmentForgetPasswordBinding.inflate(layoutInflater) }

@@ -10,29 +10,29 @@ import com.google.gson.annotations.Expose
 data class ClientData(
     @SerializedName("created_at")
     @Expose
-    val createdAt: String?,
+    val createdAt: String? = null,
     @SerializedName("email")
     @Expose
-    val email: String?,
+    val email: String? = null,
     @SerializedName("email_verified_at")
     @Expose
-    val emailVerifiedAt: String?,
+    val emailVerifiedAt: String? = null,
     @SerializedName("fcm_token")
     @Expose
-    val fcmToken: String?,
+    val fcmToken: String? = null,
     @SerializedName("id")
     @Expose
-    val id: Int?,
+    val id: Int? = null,
     @SerializedName("is_active")
     @Expose
-    val isActive: String?,
+    val isActive: String? = null,
     @SerializedName("name")
     @Expose
-    val name: String?,
+    val name: String? = null,
     @SerializedName("phone")
     @Expose
-    val phone: String?,
+    val phone: String? = null,
     @SerializedName("updated_at")
     @Expose
-    val updatedAt: String?
+    val updatedAt: String? = null
 ) : Parcelable

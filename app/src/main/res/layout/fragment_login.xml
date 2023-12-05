@@ -123,6 +123,7 @@
                         android:orientation="horizontal">
 
                         <CheckBox
+                            android:id="@+id/checkboxRememberMe"
                             android:layout_width="2dp"
                             android:text="@string/remember_me"
                             android:layout_height="@dimen/_28sdp"

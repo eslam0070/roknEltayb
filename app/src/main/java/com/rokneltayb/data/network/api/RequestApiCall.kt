@@ -1,10 +1,10 @@
-package com.exas.crm.data.network.api
+package com.rokneltayb.data.network.api
 
-import android.util.Log
-import com.exas.crm.domain.entity.ErrorType
-import com.exas.crm.domain.entity.ErrorTypeHandler
+import com.rokneltayb.domain.entity.ErrorTypeHandler
+import com.rokneltayb.domain.entity.ErrorType
+import com.rokneltayb.domain.entity.Result
+
 import retrofit2.Response
-import com.exas.crm.domain.entity.Result
 import javax.inject.Inject
 
 class RequestApiCall @Inject constructor(

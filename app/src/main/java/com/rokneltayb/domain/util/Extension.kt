@@ -10,8 +10,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.exas.crm.R
 import com.rokneltayb.R
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.domain.util.ui.MarginItemDecoration
 
 fun RecyclerView.addBasicItemDecoration(dimensionId: Int = R.dimen.item_decoration_small_margin) {
@@ -27,7 +27,11 @@ fun RecyclerView.addBasicItemDecoration(dimensionId: Int = R.dimen.item_decorati
     )
 }
 
+private val sharedPref by lazy {  }
 
+fun sharedPreferences(context: Context){
+    SharedPreferencesImpl(context)
+}
 fun Context.openKeyBoard(view: View) {
     view.requestFocus()
     val imm = ContextCompat.getSystemService(this, InputMethodManager::class.java)

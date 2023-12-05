@@ -9,7 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.rokneltayb.databinding.FragmentResetYourPasswordBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResetYourPasswordFragment : Fragment() {
 
     private val args: ResetYourPasswordFragmentArgs by navArgs()

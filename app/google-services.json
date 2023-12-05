@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "527732833949",
+    "project_id": "rokneltayb",
+    "storage_bucket": "rokneltayb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527732833949:android:ec1fb631a9de1f2a039e74",
+        "android_client_info": {
+          "package_name": "com.rokneltayb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCifSXoBPPsMsVBQDkZ2lvV1Hj-GLdQkNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

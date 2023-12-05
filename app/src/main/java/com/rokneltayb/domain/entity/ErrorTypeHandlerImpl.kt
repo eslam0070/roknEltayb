@@ -1,6 +1,5 @@
 package com.rokneltayb.domain.entity
 
-import com.exas.crm.domain.entity.ErrorTypeHandler
 import java.net.UnknownHostException
 import javax.inject.Inject
 
