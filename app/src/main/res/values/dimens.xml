@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_decoration_small_margin">4dp</dimen>
+    <dimen name="item_decoration_medium_margin">8dp</dimen>
+    <dimen name="item_decoration_large_margin">8dp</dimen>
+    <dimen name="item_decoration_extra_large_margin">16dp</dimen>
+    <dimen name="bottom_navigation_ui_height">40dp</dimen>
+</resources>

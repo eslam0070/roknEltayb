@@ -11,7 +11,7 @@
         android:background="@color/white"
         android:layout_height="match_parent"
         android:visibility="gone"
-        tools:context=".ui.splash.SplashFragment">
+        tools:context=".presentation.splash.SplashFragment">
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"

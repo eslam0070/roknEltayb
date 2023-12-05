@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.rokneltayb.ui.register.RegisterFragment"
+        android:name="com.rokneltayb.presentation.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.rokneltayb.ui.login.LoginFragment"
+        android:name="com.rokneltayb.presentation.login.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.rokneltayb.ui.login.forgetpassword.ForgetPasswordFragment"
+        android:name="com.rokneltayb.presentation.login.forgetpassword.ForgetPasswordFragment"
         android:label="ForgetPasswordFragment" >
         <action
             android:id="@+id/action_forgetPasswordFragment_to_verifyYourAccountFragment"
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/resetYourPasswordFragment"
-        android:name="com.rokneltayb.ui.login.forgetpassword.resetpassword.ResetYourPasswordFragment"
+        android:name="com.rokneltayb.presentation.login.forgetpassword.resetpassword.ResetYourPasswordFragment"
         android:label="ResetYourPasswordFragment" >
 
         <argument android:name="phone"
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/verifyYourAccountFragment"
-        android:name="com.rokneltayb.ui.login.forgetpassword.verifyaccount.VerifyYourAccountFragment"
+        android:name="com.rokneltayb.presentation.login.forgetpassword.verifyaccount.VerifyYourAccountFragment"
         android:label="VerifyYourAccountFragment">
 
         <argument android:name="phone"
@@ -59,22 +59,22 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.rokneltayb.ui.home.HomeFragment"
+        android:name="com.rokneltayb.presentation.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/cartFragment"
-        android:name="com.rokneltayb.ui.cart.CartFragment"
+        android:name="com.rokneltayb.presentation.cart.CartFragment"
         android:label="fragment_cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/categoriesFragment"
-        android:name="com.rokneltayb.ui.categories.CategoriesFragment"
+        android:name="com.rokneltayb.presentation.categories.CategoriesFragment"
         android:label="fragment_categories"
         tools:layout="@layout/fragment_categories" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="com.rokneltayb.ui.more.MoreFragment"
+        android:name="com.rokneltayb.presentation.more.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
 </navigation>
