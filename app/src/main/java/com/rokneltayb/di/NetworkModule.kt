@@ -24,13 +24,9 @@ object NetworkModule {
     private const val baseUrl = "https://roknaltayeb.com/api/"
     @Singleton
     @Provides
-    fun provideApiService(): NetworkServices {
-        val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        val httpClient = OkHttpClient.Builder()
-        httpClient.addInterceptor(logging)
+    fun provideApiService(httpClient:OkHttpClient): NetworkServices {
         return Retrofit.Builder()
-            .client(httpClient.build())
+            .client(httpClient)
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -45,11 +41,14 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .readTimeout(40, TimeUnit.SECONDS)
             .connectTimeout(40, TimeUnit.SECONDS)
             .writeTimeout(40, TimeUnit.SECONDS)
             .addInterceptor(authInterceptor)
+            .addInterceptor(interceptor)
             .build()
     }
     @Singleton
