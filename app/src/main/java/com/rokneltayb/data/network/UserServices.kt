@@ -31,7 +31,6 @@ interface UserServices {
     @FormUrlEncoded
     @POST("client/auth/reset-password")
     suspend fun resetPassword(
-        @Field("country_code") countryCode: String,
         @Field("phone") phone: String,
         @Field("token") code: String
     ): Response<ResetPasswordResponse>

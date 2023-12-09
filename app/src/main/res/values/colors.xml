@@ -28,7 +28,8 @@
     <color name="grey2">#ccc</color>
     <color name="orange">#FA6427</color>
     <color name="orange2">#F28D00</color>
-    <color name="backgroundGray">#F5F6F8</color>
+    <color name="backgroundGray">#F3EFEF</color>
+    <color name="backgroundGray2">#DDDBDB</color>
 
     <color name="rating">#ECB500</color>
 
@@ -54,4 +55,5 @@
     <color name="colorHome">#575656</color>
     <color name="forgetpassword">#477B1D</color>
     <color name="gradButton">#5C5C5C</color>
+    <color name="green">#477B1D</color>
 </resources>

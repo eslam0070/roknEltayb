@@ -5,42 +5,87 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.rokneltayb.data.model.slider.Image
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.rokneltayb.R
+import com.rokneltayb.data.model.home.home.Category
+import com.rokneltayb.data.model.home.home.Slider
 import com.rokneltayb.databinding.FragmentHomeBinding
+import com.rokneltayb.domain.util.LoadingScreen.hideProgress
+import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.toastError
+import com.rokneltayb.domain.util.ui.MarginItemDecoration
 import com.rokneltayb.presentation.home.adapters.AdvSliderAdapter
+import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private val binding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
+    private val viewModel: HomeViewModel by viewModels()
+    private var adapter: AdvSliderAdapter? = null
+    private lateinit var homeCategoriesAdapter: HomeCategoriesAdapter
 
-    var adapter: AdvSliderAdapter? = null
+    private fun observeUIState() =
+        lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
+        }
 
-    private lateinit var viewModel: HomeViewModel
-    var url1 = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq70AvDs-OIZrlcU0kAqvObihT8VhvedCurSyXCDCakQ&s"
-    var url2 = "https://images.unsplash.com/photo-1575936123452-b67c3203c357?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
-    var url3 = "https://media.istockphoto.com/id/1322277517/photo/wild-grass-in-the-mountains-at-sunset.jpg?s=612x612&w=0&k=20&c=6mItwwFFGqKNKEAzv0mv6TaxhLN3zSE43bWmFN--J5w="
+    private fun updateUI(uiState: HomeViewModel.UiState) {
+        when (uiState) {
+            is HomeViewModel.UiState.Loading -> {
+                showProgress()
+            }
+
+            is HomeViewModel.UiState.Success -> {
+                setSliderImage(uiState.data.data!!.slider!!)
+                setCategoriesRecyclerView(uiState.data.data.categories)
+                hideProgress()
+            }
+
+            is HomeViewModel.UiState.Error -> {
+                toastError(uiState.errorData.message)
+                hideProgress()
+            }
+
+        }
+    }
+
+    private fun setCategoriesRecyclerView(categories: List<Category?>?) {
+
+        homeCategoriesAdapter = HomeCategoriesAdapter {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!))
+        }
+
+        homeCategoriesAdapter.submitList(categories)
+
+        binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        binding.categoriesRecyclerView.adapter = homeCategoriesAdapter
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        observeUIState()
 
-        setSliderImage()
 
-
+        viewModel.home()
 
         return binding.root
     }
 
-    private fun setSliderImage() {
-        val images = mutableListOf<Image>()
-        images.add(Image(1,url1))
-        images.add(Image(2,url2))
-        images.add(Image(3,url3))
-        adapter = AdvSliderAdapter(images)
+
+    private fun setSliderImage(slider: List<Slider?> = ArrayList()) {
+        adapter = AdvSliderAdapter(slider)
         binding.imageSlider.setSliderAdapter(adapter!!)
         binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.DROP)
         binding.imageSlider.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)

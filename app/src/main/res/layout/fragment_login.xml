@@ -130,6 +130,7 @@
                             android:layout_weight="1"/>
 
                         <TextView
+                            android:id="@+id/forgetpasswordTextView"
                             android:layout_width="-2dp"
                             android:textColor="@color/forgetpassword"
                             android:layout_weight="1"

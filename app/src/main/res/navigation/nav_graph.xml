@@ -9,7 +9,11 @@
         android:id="@+id/registerFragment"
         android:name="com.rokneltayb.presentation.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.rokneltayb.presentation.login.LoginFragment"
@@ -28,6 +32,7 @@
         android:id="@+id/forgetPasswordFragment"
         android:name="com.rokneltayb.presentation.login.forgetpassword.ForgetPasswordFragment"
         android:label="ForgetPasswordFragment" >
+
         <action
             android:id="@+id/action_forgetPasswordFragment_to_verifyYourAccountFragment"
             app:destination="@id/verifyYourAccountFragment" />
@@ -37,11 +42,6 @@
         android:name="com.rokneltayb.presentation.login.forgetpassword.resetpassword.ResetYourPasswordFragment"
         android:label="ResetYourPasswordFragment" >
 
-        <argument android:name="phone"
-            app:argType="integer"/>
-
-        <argument android:name="code"
-            app:argType="integer"/>
         <action
             android:id="@+id/action_resetYourPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -52,7 +52,10 @@
         android:label="VerifyYourAccountFragment">
 
         <argument android:name="phone"
-            app:argType="integer"/>
+            app:argType="string"/>
+
+        <argument android:name="code"
+            app:argType="string"/>
         <action
             android:id="@+id/action_verifyYourAccountFragment_to_resetYourPasswordFragment"
             app:destination="@id/resetYourPasswordFragment" />
@@ -61,7 +64,11 @@
         android:id="@+id/homeFragment"
         android:name="com.rokneltayb.presentation.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.rokneltayb.presentation.cart.CartFragment"
@@ -77,4 +84,13 @@
         android:name="com.rokneltayb.presentation.more.MoreFragment"
         android:label="fragment_more"
         tools:layout="@layout/fragment_more" />
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.rokneltayb.presentation.home.details.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" >
+
+        <argument android:name="productId"
+            app:argType="integer"/>
+    </fragment>
 </navigation>

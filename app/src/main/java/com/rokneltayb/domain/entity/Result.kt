@@ -1,7 +1,7 @@
 package com.rokneltayb.domain.entity
 
-sealed class Result<T>(val data: T?, val errorType: ErrorType?) {
-    class Success<T>(data: T) : Result<T>(data, null)
+sealed class Result<T>(val data: T?,val errorType:ErrorResponse?) {
+    class Success<T>(data: T) : Result<T>(data,null)
     class Loading<T>() : Result<T>(null, null)
-    class Error<T>(errorType: ErrorType?) : Result<T>(null, errorType)
+    class Error<T>(message: ErrorResponse?) : Result<T>(null,message)
 }

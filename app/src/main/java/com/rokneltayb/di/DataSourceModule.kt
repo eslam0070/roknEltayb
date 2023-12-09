@@ -1,5 +1,7 @@
 package com.rokneltayb.di
 
+import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSourceImpl
 import com.rokneltayb.data.sharedPref.SharedPreferences
@@ -20,4 +22,6 @@ abstract class DataSourceModule {
     @Binds
     abstract fun provideRemoteDataSource(remoteDataSource: UserRemoteDataSourceImpl): UserRemoteDataSource
 
+    @Binds
+    abstract fun homeProvideRemoteDataSource(remoteDataSource: HomeRemoteDataSourceImpl): HomeRemoteDataSource
 }

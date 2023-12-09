@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.rokneltayb.R
-import com.rokneltayb.data.model.slider.Image
+import com.rokneltayb.data.model.home.home.Slider
 import com.smarteist.autoimageslider.SliderViewAdapter
 
-class AdvSliderAdapter(  var imgs: List<Image> = ArrayList()) :
+class AdvSliderAdapter(private var imgs: List<Slider?> = ArrayList()) :
     SliderViewAdapter<AdvSliderAdapter.SliderAdapterVH>() {
 
     override fun getCount(): Int {
@@ -27,7 +27,7 @@ class AdvSliderAdapter(  var imgs: List<Image> = ArrayList()) :
         Glide.with(viewHolder.itemView.context).clear(viewHolder.img)
 
         Glide.with(viewHolder.itemView.context)
-            .load(i.image)
+            .load(i!!.image)
             .into(viewHolder.img)
     }
 

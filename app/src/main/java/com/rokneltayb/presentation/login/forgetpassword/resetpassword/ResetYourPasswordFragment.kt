@@ -7,45 +7,155 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doBeforeTextChanged
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.rokneltayb.R
 import com.rokneltayb.databinding.FragmentResetYourPasswordBinding
+import com.rokneltayb.domain.util.Constants.passwordCharNumber
+import com.rokneltayb.domain.util.LoadingScreen.hideProgress
+import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.toastError
+import com.rokneltayb.presentation.login.forgetpassword.verifyaccount.VerifyYourAccountFragmentDirections
+import com.rokneltayb.presentation.login.forgetpassword.verifyaccount.VerifyYourAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ResetYourPasswordFragment : Fragment() {
 
-    private val args: ResetYourPasswordFragmentArgs by navArgs()
     private val binding by lazy { FragmentResetYourPasswordBinding.inflate(layoutInflater) }
+    private val viewModel: ResetYourPasswordViewModel by viewModels()
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        observeUIState()
 
-    private lateinit var viewModel: ResetYourPasswordViewModel
+        binding.newPasswordTextInputEditText.doAfterTextChanged {
+            if (it.toString().isNotEmpty())
+                binding.newPasswordTextInputLayout.hint = ""
+            else
+                binding.newPasswordTextInputLayout.hint = getString(R.string.password)
+        }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        binding.confirmPasswordTextInputEditText.doAfterTextChanged {
+            if (it.toString().isNotEmpty())
+                binding.confirmPasswordTextInputLayout.hint = ""
+            else
+                binding.confirmPasswordTextInputLayout.hint = getString(R.string.confirm_password)
+        }
+
+        binding.continueButton.setOnClickListener {
+            if (checkPasswordFields()) {
+                viewModel.resetPassword(
+                    binding.newPasswordTextInputEditText.text.toString(),
+                    binding.confirmPasswordTextInputEditText.text.toString()
+                )
+            }
+        }
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.password.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                binding.passLayout.isPasswordVisibilityToggleEnabled = true
+    private fun observeUIState() =
+        lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
+        }
+
+    private fun updateUI(uiState: ResetYourPasswordViewModel.UiState) {
+        when (uiState) {
+            is ResetYourPasswordViewModel.UiState.Loading -> {
+                showProgress()
             }
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {}
-        })
-
-        binding.confirmPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                binding.passLayout.isPasswordVisibilityToggleEnabled = true
+            is ResetYourPasswordViewModel.UiState.Success -> {
+                findNavController().navigate(ResetYourPasswordFragmentDirections.actionResetYourPasswordFragmentToLoginFragment())
+                hideProgress()
             }
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-            override fun afterTextChanged(editable: Editable) {}
-        })
+            is ResetYourPasswordViewModel.UiState.Error -> {
+                toastError(uiState.errorData.message)
+                hideProgress()
+            }
+
+            is ResetYourPasswordViewModel.UiState.Idle -> hideProgress()
+        }
+    }
+
+    private fun checkPasswordFields(): Boolean {
+
+        if (binding.newPasswordTextInputEditText.text.toString().isEmpty()) {
+            binding.newPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_is_empty)
+            return false
+        }
+        binding.newPasswordTextInputLayout.isErrorEnabled = false
+
+        if (binding.confirmPasswordTextInputEditText.text.toString().isEmpty()) {
+            binding.confirmPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_is_empty)
+            return false
+        }
+
+        if (binding.newPasswordTextInputEditText.text.toString().length < passwordCharNumber) {
+            binding.newPasswordTextInputLayout.isErrorEnabled = true
+            binding.newPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_is_too_short)
+            return false
+        }
+        binding.newPasswordTextInputLayout.isErrorEnabled = false
+
+        if (binding.confirmPasswordTextInputEditText.text.toString().length < passwordCharNumber) {
+            binding.confirmPasswordTextInputLayout.isErrorEnabled = true
+            binding.confirmPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_is_too_short)
+            return false
+        }
+        binding.confirmPasswordTextInputLayout.isErrorEnabled = false
+
+        if (!binding.newPasswordTextInputEditText.text.toString().contains(Regex("[A-Z]"))) {
+            binding.newPasswordTextInputLayout.isErrorEnabled = true
+            binding.newPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_must_contain_upper_case_letter)
+            return false
+        }
+        binding.newPasswordTextInputLayout.isErrorEnabled = false
+
+        if (!binding.newPasswordTextInputEditText.text.toString().contains(Regex("[a-z]"))) {
+            binding.newPasswordTextInputLayout.isErrorEnabled = true
+            binding.newPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_must_contain_lower_case_letter)
+            return false
+        }
+        binding.newPasswordTextInputLayout.isErrorEnabled = false
+
+        if (!binding.newPasswordTextInputEditText.text.toString()
+                .contains(Regex("[!@#\$%&*()_+=|<>?{}\\\\[\\\\]~-]"))
+        ) {
+            binding.newPasswordTextInputLayout.isErrorEnabled = true
+            binding.newPasswordTextInputLayout.error =
+                requireContext().getString(R.string.password_must_contain_special_char)
+            return false
+        }
+        binding.newPasswordTextInputLayout.isErrorEnabled = false
+
+        if (binding.confirmPasswordTextInputEditText.text.toString() != binding.newPasswordTextInputEditText.text.toString()) {
+            binding.confirmPasswordTextInputLayout.isErrorEnabled = true
+            binding.confirmPasswordTextInputLayout.error =
+                requireContext().getString(R.string.passwords_dont_match)
+
+            binding.newPasswordTextInputLayout.isErrorEnabled = true
+            binding.newPasswordTextInputLayout.error =
+                requireContext().getString(R.string.passwords_dont_match)
+            return false
+        }
+        binding.confirmPasswordTextInputLayout.isErrorEnabled = false
+        binding.newPasswordTextInputLayout.isErrorEnabled = false
+
+        return true
     }
 
 }

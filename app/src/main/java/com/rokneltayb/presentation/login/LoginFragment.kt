@@ -52,11 +52,8 @@ class LoginFragment : Fragment() {
 
     private fun updateUI(uiState: LoginViewModel.UiState) {
         when (uiState) {
-
-
-
-
             is LoginViewModel.UiState.Loading -> {
+                showProgress()
             }
 
             is LoginViewModel.UiState.Success -> {
@@ -67,15 +64,22 @@ class LoginFragment : Fragment() {
                     sharedPref.setApiKeyToken(uiState.data.data!!.token.toString())
                 }
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-
                 hideProgress()
             }
 
             is LoginViewModel.UiState.Error -> {
-                toastError(uiState.errorData.status.toString())
-
+                when (uiState.errorData.status) {
+                    400 -> toastError(uiState.errorData.message)
+                    406 -> toastError(uiState.errorData.message)
+                    422  -> {
+                        val str: String = TextUtils.join(",", uiState.errorData.data)
+                        toastError(str)
+                    }
+                }
                 hideProgress()
             }
+
+            is LoginViewModel.UiState.Idle -> hideProgress()
         }
     }
 
@@ -88,12 +92,19 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
+        if (sharedPref.getRememberMe() == true)
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+
         binding.loginBtn.setOnClickListener {
             if (validInputs()){
                 viewModel.login(fcmToken,binding.etLoginUser.text.toString(),binding.etLoginPassword.text.toString())
-                showProgress()
             }
         }
+
+        binding.forgetpasswordTextView.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment())
+        }
+
 
         binding.etLoginPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {

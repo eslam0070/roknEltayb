@@ -1,6 +1,8 @@
 package com.rokneltayb.di
 
+import com.rokneltayb.data.repository.HomeRepositoryImpl
 import com.rokneltayb.data.repository.UserRepositoryImpl
+import com.rokneltayb.domain.repository.HomeRepository
 import com.rokneltayb.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -14,5 +16,6 @@ abstract class RepoModule {
     @Binds
     abstract fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 
-
+    @Binds
+    abstract fun provideHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
 }

@@ -95,6 +95,7 @@
 
 
                     <Button
+                        android:id="@+id/verifyButton"
                         android:layout_width="match_parent"
                         android:layout_marginTop="@dimen/_100sdp"
                         android:layout_height="wrap_content"

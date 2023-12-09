@@ -9,7 +9,6 @@ import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
-import com.rokneltayb.domain.entity.Result2
 import com.rokneltayb.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -18,15 +17,14 @@ class UserRepositoryImpl @Inject constructor(private val remoteSource: UserRemot
         fcmToken: String,
         phone: String,
         password: String
-    ): Result2<LoginResponse> = remoteSource.login(fcmToken, phone, password)
+    ): Result<LoginResponse> = remoteSource.login(fcmToken, phone, password)
 
     override suspend fun sendOTP(phone: String): Result<SignUpResponse> = remoteSource.sendOTP(phone)
 
     override suspend fun resetPassword(
-        countryCode: String,
         phone: String,
         token: String
-    ): Result<ResetPasswordResponse> = remoteSource.resetPassword(countryCode, phone, token)
+    ): Result<ResetPasswordResponse> = remoteSource.resetPassword(phone, token)
 
     override suspend fun changePassword(
         password: String,

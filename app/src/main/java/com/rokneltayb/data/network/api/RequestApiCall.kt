@@ -1,21 +1,28 @@
 package com.rokneltayb.data.network.api
 
-import com.rokneltayb.domain.entity.ErrorTypeHandler
-import com.rokneltayb.domain.entity.ErrorType
-import com.rokneltayb.domain.entity.Result
 
+
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.rokneltayb.domain.entity.Result
+import com.rokneltayb.domain.entity.ErrorResponse
 import retrofit2.Response
 import javax.inject.Inject
 
 class RequestApiCall @Inject constructor(
-    private val errorTypeHandler: ErrorTypeHandler
 ) {
+
+    var gson: Gson = GsonBuilder().create()
+    private val type = object : TypeToken<ErrorResponse>() {}.type
+
     suspend fun <T : Any> requestApiCall(requestApi: suspend () -> Response<T>): Result<T> {
         return try {
             val response = requestApi.invoke()
             parseApiResponse(response)
         } catch (exception: Exception) {
-            Result.Error(errorTypeHandler.getError(exception))
+            val errorResponse: ErrorResponse? = gson.fromJson(requestApi.invoke().errorBody()!!.charStream(), type)
+            Result.Error(errorResponse)
         }
     }
 
@@ -26,9 +33,13 @@ class RequestApiCall @Inject constructor(
                     return Result.Success(apiRes)
                 }
             }
-            return Result.Error(ErrorType.ServerError)
-        } catch (e: Exception) {
-            return Result.Error(errorTypeHandler.getError(e))
+            val errorResponse: ErrorResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
+            return Result.Error(message = errorResponse)
+        }catch (e: Exception) {
+            val errorResponse: ErrorResponse? = gson.fromJson(response.errorBody()!!.charStream(), type)
+            return Result.Error(errorResponse)
         }
+
+
     }
 }

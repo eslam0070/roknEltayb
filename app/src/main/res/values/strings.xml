@@ -23,7 +23,6 @@
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="please_enter_your_phone_number_to_receive_a_verification_code_to_reset_the_password">Please enter your phone number to receive a verification code to reset the password</string>
     <string name="send">Send</string>
-    <string name="enter_verification_code">Enter Verification Code</string>
     <string name="an_sms_with_a_4_digit_verification_code_has_just_been_sent_to">An SMS with a 4-digit verification code has just been sent to</string>
     <string name="did_you_get_a_code">Did you get a code?</string>
     <string name="resend_verification_code">Resend verification code</string>
@@ -52,4 +51,20 @@
     <string name="categories">Categories</string>
     <string name="cart">Cart</string>
     <string name="more">More</string>
+    <string name="did_not_get_the_code">Didn\'t get the code? Resend in %d Seconds</string>
+    <string name="enter_verification_code">Enter the 4 digits verification code</string>
+    <string name="password_is_empty">Password cannot be empty</string>
+    <string name="phone_number_is_empty">Phone number cannot be empty</string>
+    <string name="phone_number_should_be_11_char">Phone number should be 11 digit</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="password_must_contain_upper_case_letter">Password must contain at least 1 uppercase letter</string>
+    <string name="password_must_contain_lower_case_letter">Password must contain at least 1 lower case letter</string>
+    <string name="password_must_contain_special_char">Password must at least contain 1 special character</string>
+    <string name="wrong_phone_or_password">Wrong phone or password</string>
+    <string name="password_is_too_short">Password too short</string>
+    <string name="confirm_password_is_less_than_8_letters">confirm password is less than 8 letters</string>
+    <string name="password_is_less_than_8_letters">password is less than 8 letters</string>
+    <string name="shop_by_categories">Shop by Categories</string>
+    <string name="popular_produts">Popular Produts</string>
+
 </resources>

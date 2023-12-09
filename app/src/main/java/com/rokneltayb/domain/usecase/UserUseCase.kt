@@ -7,9 +7,7 @@ import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
-import com.rokneltayb.domain.entity.Result2
 import com.rokneltayb.domain.repository.UserRepository
-import okhttp3.RequestBody
 import javax.inject.Inject
 
 class UserUseCase @Inject constructor(private val repo: UserRepository) {
@@ -17,15 +15,14 @@ class UserUseCase @Inject constructor(private val repo: UserRepository) {
         fcmToken: String,
         phone: String,
         password: String
-    ): Result2<LoginResponse> = repo.login(fcmToken, phone, password)
+    ): Result<LoginResponse> = repo.login(fcmToken, phone, password)
 
     suspend fun sendOTP(phone: String): Result<SignUpResponse> = repo.sendOTP(phone)
 
     suspend fun resetPassword(
-        countryCode: String,
         phone: String,
         token: String
-    ): Result<ResetPasswordResponse> = repo.resetPassword(countryCode, phone, token)
+    ): Result<ResetPasswordResponse> = repo.resetPassword(phone, token)
 
     suspend fun changePassword(
         password: String,
