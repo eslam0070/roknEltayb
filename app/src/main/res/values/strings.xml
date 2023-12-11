@@ -66,5 +66,6 @@
     <string name="password_is_less_than_8_letters">password is less than 8 letters</string>
     <string name="shop_by_categories">Shop by Categories</string>
     <string name="popular_produts">Popular Produts</string>
+    <string name="daily_best_sells">Daily Best Sells</string>
 
 </resources>

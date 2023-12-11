@@ -1,4 +1,4 @@
-package com.rokneltayb.presentation.home.adapters
+package com.rokneltayb.presentation.categories.products
 
 import android.content.Context
 import android.graphics.Paint
@@ -12,11 +12,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.data.model.home.home.PopularProduct
+import com.rokneltayb.data.model.products.Product
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 
-class HomeProductsAdapter(
-    private val itemClick: (PopularProduct) -> Unit
-) :  ListAdapter<PopularProduct, HomeProductsAdapter.ViewHolder>(DiffCallback) {
+class ProductsAdapter(
+    private val itemClick: (Product) -> Unit
+) :  ListAdapter<Product, ProductsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick)
@@ -28,9 +29,9 @@ class HomeProductsAdapter(
         holder.bind(category)
     }
 
-    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (PopularProduct) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (Product) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
-        fun bind(product: PopularProduct) {
+        fun bind(product: Product) {
             binding.root.setOnClickListener {
                 itemClick(product)
             }
@@ -56,12 +57,12 @@ class HomeProductsAdapter(
         }
 
     }
-    companion object DiffCallback : DiffUtil.ItemCallback<PopularProduct>() {
-        override fun areItemsTheSame(oldItem: PopularProduct, newItem: PopularProduct): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: PopularProduct, newItem: PopularProduct): Boolean {
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
         }
     }

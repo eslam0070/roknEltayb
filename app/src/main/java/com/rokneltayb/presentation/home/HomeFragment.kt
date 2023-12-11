@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rokneltayb.R
 import com.rokneltayb.data.model.home.home.Category
+import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.data.model.home.home.Slider
 import com.rokneltayb.databinding.FragmentHomeBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
@@ -21,6 +22,8 @@ import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.domain.util.ui.MarginItemDecoration
 import com.rokneltayb.presentation.home.adapters.AdvSliderAdapter
 import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
+import com.rokneltayb.presentation.home.adapters.HomeDailyBestSellsProductsAdapter
+import com.rokneltayb.presentation.home.adapters.HomeProductsAdapter
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +36,8 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var adapter: AdvSliderAdapter? = null
     private lateinit var homeCategoriesAdapter: HomeCategoriesAdapter
+    private lateinit var homeProductsAdapter: HomeProductsAdapter
+    private lateinit var homeDailyBestSellsProductsAdapter: HomeDailyBestSellsProductsAdapter
 
     private fun observeUIState() =
         lifecycleScope.launch {
@@ -48,6 +53,8 @@ class HomeFragment : Fragment() {
             is HomeViewModel.UiState.Success -> {
                 setSliderImage(uiState.data.data!!.slider!!)
                 setCategoriesRecyclerView(uiState.data.data.categories)
+                setProductsRecyclerView(uiState.data.data.popularProducts)
+                setDailySellsProductsRecyclerView(uiState.data.data.dailyProducts)
                 hideProgress()
             }
 
@@ -60,15 +67,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun setCategoriesRecyclerView(categories: List<Category?>?) {
-
         homeCategoriesAdapter = HomeCategoriesAdapter {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!))
-        }
-
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!)) }
         homeCategoriesAdapter.submitList(categories)
-
         binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         binding.categoriesRecyclerView.adapter = homeCategoriesAdapter
+    }
+
+    private fun setProductsRecyclerView(popularProduct: List<PopularProduct?>?) {
+        homeProductsAdapter = HomeProductsAdapter {}
+        homeProductsAdapter.submitList(popularProduct)
+        binding.popularProductsRecyclerView.adapter = homeProductsAdapter
+    }
+
+    private fun setDailySellsProductsRecyclerView(popularProduct: List<PopularProduct?>?) {
+        homeDailyBestSellsProductsAdapter = HomeDailyBestSellsProductsAdapter {}
+        homeDailyBestSellsProductsAdapter.submitList(popularProduct)
+        binding.dailyBestProductsRecyclerView.adapter = homeDailyBestSellsProductsAdapter
+
     }
 
     override fun onCreateView(
@@ -79,7 +95,6 @@ class HomeFragment : Fragment() {
 
 
         viewModel.home()
-
         return binding.root
     }
 

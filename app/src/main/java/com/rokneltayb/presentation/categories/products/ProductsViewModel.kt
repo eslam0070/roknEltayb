@@ -1,9 +1,9 @@
-package com.rokneltayb.presentation.categories
+package com.rokneltayb.presentation.categories.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rokneltayb.data.model.categories.CategoriesResponse
-import com.rokneltayb.data.model.home.home.HomeResponse
+import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.HomeUseCase
@@ -14,15 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModel @Inject constructor(private val useCase: HomeUseCase) : ViewModel() {
+class ProductsViewModel @Inject constructor(private val useCase: HomeUseCase) : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    fun categories() {
+    fun products(categoryId:Int,sort:String,search:String) {
         viewModelScope.launch {
-            when (val result = useCase.categories()) {
+            when (val result = useCase.products(categoryId, sort, search)) {
                 is Result.Error -> {
                     _uiState.value = UiState.Error(result.errorType!!)
                 }
@@ -45,6 +45,6 @@ class CategoriesViewModel @Inject constructor(private val useCase: HomeUseCase) 
     sealed class UiState {
         data object Loading : UiState()
         class Error(val errorData: ErrorResponse): UiState()
-        class Success(val data: CategoriesResponse) : UiState()
+        class Success(val data: ProductsResponse) : UiState()
     }
 }

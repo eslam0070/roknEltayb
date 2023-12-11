@@ -92,6 +92,9 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
+        binding.etLoginUser.setText("5055050531")
+        binding.etLoginPassword.setText("Aa@1234567")
+
         if (sharedPref.getRememberMe() == true)
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
 

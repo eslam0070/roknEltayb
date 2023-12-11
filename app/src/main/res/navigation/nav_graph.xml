@@ -78,7 +78,11 @@
         android:id="@+id/categoriesFragment"
         android:name="com.rokneltayb.presentation.categories.CategoriesFragment"
         android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" />
+        tools:layout="@layout/fragment_categories" >
+        <action
+            android:id="@+id/action_categoriesFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/moreFragment"
         android:name="com.rokneltayb.presentation.more.MoreFragment"
@@ -91,6 +95,14 @@
         tools:layout="@layout/fragment_product_details" >
 
         <argument android:name="productId"
+            app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.rokneltayb.presentation.categories.products.ProductsFragment"
+        android:label="fragment_products"
+        tools:layout="@layout/fragment_products" >
+        <argument android:name="id"
             app:argType="integer"/>
     </fragment>
 </navigation>

@@ -124,11 +124,12 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.GONE
                 }
-                "fragment_categories","fragment_cart","fragment_home"->{
+                "fragment_cart","fragment_home"->{
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.bottomNavigation.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivHome.visibility = View.VISIBLE
+                    binding!!.tvMainEmployeeName.text = ""
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivSearch.visibility = View.VISIBLE
 
@@ -136,6 +137,15 @@ class BaseActivity : AppCompatActivity() {
                 "fragment_more" ->{
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+                }
+                "fragment_categories"->{
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.tvMainEmployeeName.text = getString(R.string.categories)
+                    binding!!.bottomNavigation.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivSearch.visibility = View.GONE
                 }
                 else ->{

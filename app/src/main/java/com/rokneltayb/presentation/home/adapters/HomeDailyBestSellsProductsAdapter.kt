@@ -1,6 +1,5 @@
 package com.rokneltayb.presentation.home.adapters
 
-import android.content.Context
 import android.graphics.Paint
 import android.os.Build
 import android.view.LayoutInflater
@@ -12,14 +11,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.data.model.home.home.PopularProduct
+import com.rokneltayb.databinding.ItemHomeBestSellsProductsBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 
-class HomeProductsAdapter(
+class HomeDailyBestSellsProductsAdapter(
     private val itemClick: (PopularProduct) -> Unit
-) :  ListAdapter<PopularProduct, HomeProductsAdapter.ViewHolder>(DiffCallback) {
+) :  ListAdapter<PopularProduct, HomeDailyBestSellsProductsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick)
+        return ViewHolder(ItemHomeBestSellsProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick)
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -28,15 +28,17 @@ class HomeProductsAdapter(
         holder.bind(category)
     }
 
-    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (PopularProduct) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemHomeBestSellsProductsBinding, private val itemClick: (PopularProduct) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(product: PopularProduct) {
+
+
+
             binding.root.setOnClickListener {
                 itemClick(product)
             }
+
             Glide.with(binding.root.context).load(product.image).into(binding.imageProductImageView)
-
-
             binding.nameProductTextView.text = product.title
             if (product.discountValue != null && product.isDiscount == "active"){
                 binding.discountTextView.text = product.discountValue
