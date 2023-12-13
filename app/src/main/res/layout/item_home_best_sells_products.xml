@@ -35,7 +35,7 @@
                     android:id="@+id/addFavoriteImageView"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_45sdp"
-                    android:src="@drawable/addtofavourite"
+                    android:src="@drawable/deletefavourite"
                     android:layout_gravity="end"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_alignParentBottom="true"

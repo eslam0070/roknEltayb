@@ -25,9 +25,13 @@ class CategoriesAdapter (
         holder.bind(category)
     }
 
-    class ViewHolder(private val binding: ItemCategoriesBinding, private val itemClick: (Category) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemCategoriesBinding,
+                     private val itemClick: (Category) -> Unit
+    ) :
+        RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(category: Category) {
+
             binding.root.setOnClickListener {
                 itemClick(category)
             }

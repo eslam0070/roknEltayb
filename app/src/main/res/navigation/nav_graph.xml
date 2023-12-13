@@ -96,6 +96,7 @@
 
         <argument android:name="productId"
             app:argType="integer"/>
+
     </fragment>
     <fragment
         android:id="@+id/productsFragment"
@@ -104,5 +105,8 @@
         tools:layout="@layout/fragment_products" >
         <argument android:name="id"
             app:argType="integer"/>
+
+        <argument android:name="name"
+            app:argType="string"/>
     </fragment>
 </navigation>

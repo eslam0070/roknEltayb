@@ -67,5 +67,10 @@
     <string name="shop_by_categories">Shop by Categories</string>
     <string name="popular_produts">Popular Produts</string>
     <string name="daily_best_sells">Daily Best Sells</string>
+    <string name="sort_by">Sort By</string>
+    <string name="popularity">Popularity</string>
+    <string name="price_high_to_low">Price: High to Low</string>
+    <string name="price_low_to_high">Price: Low to High</string>
+    <string name="new_arrivals">New Arrivals</string>
 
 </resources>

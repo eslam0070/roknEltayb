@@ -52,9 +52,10 @@ class HomeFragment : Fragment() {
 
             is HomeViewModel.UiState.Success -> {
                 setSliderImage(uiState.data.data!!.slider!!)
-                setCategoriesRecyclerView(uiState.data.data.categories)
-                setProductsRecyclerView(uiState.data.data.popularProducts)
-                setDailySellsProductsRecyclerView(uiState.data.data.dailyProducts)
+                homeCategoriesAdapter.submitList(uiState.data.data.categories)
+                homeProductsAdapter.submitList(uiState.data.data.popularProducts)
+                homeDailyBestSellsProductsAdapter.submitList(uiState.data.data.dailyProducts)
+
                 hideProgress()
             }
 
@@ -66,23 +67,29 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setCategoriesRecyclerView(categories: List<Category?>?) {
+    private fun setCategoriesRecyclerView() {
         homeCategoriesAdapter = HomeCategoriesAdapter {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!)) }
-        homeCategoriesAdapter.submitList(categories)
         binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         binding.categoriesRecyclerView.adapter = homeCategoriesAdapter
     }
 
-    private fun setProductsRecyclerView(popularProduct: List<PopularProduct?>?) {
-        homeProductsAdapter = HomeProductsAdapter {}
-        homeProductsAdapter.submitList(popularProduct)
+    private fun setProductsRecyclerView() {
+        homeProductsAdapter = HomeProductsAdapter({},
+            {addToCart()},{addToFavorite()})
         binding.popularProductsRecyclerView.adapter = homeProductsAdapter
     }
 
-    private fun setDailySellsProductsRecyclerView(popularProduct: List<PopularProduct?>?) {
+    private fun addToCart() {
+
+    }
+
+    private fun addToFavorite() {
+
+    }
+
+    private fun setDailySellsProductsRecyclerView() {
         homeDailyBestSellsProductsAdapter = HomeDailyBestSellsProductsAdapter {}
-        homeDailyBestSellsProductsAdapter.submitList(popularProduct)
         binding.dailyBestProductsRecyclerView.adapter = homeDailyBestSellsProductsAdapter
 
     }
@@ -93,7 +100,9 @@ class HomeFragment : Fragment() {
     ): View {
         observeUIState()
 
-
+        setCategoriesRecyclerView()
+        setDailySellsProductsRecyclerView()
+        setProductsRecyclerView()
         viewModel.home()
         return binding.root
     }

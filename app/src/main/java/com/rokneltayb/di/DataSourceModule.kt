@@ -1,5 +1,7 @@
 package com.rokneltayb.di
 
+import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
@@ -23,5 +25,8 @@ abstract class DataSourceModule {
     abstract fun provideRemoteDataSource(remoteDataSource: UserRemoteDataSourceImpl): UserRemoteDataSource
 
     @Binds
-    abstract fun homeProvideRemoteDataSource(remoteDataSource: HomeRemoteDataSourceImpl): HomeRemoteDataSource
+    abstract fun provideHomeRemoteDataSource(remoteDataSource: HomeRemoteDataSourceImpl): HomeRemoteDataSource
+
+    @Binds
+    abstract fun provideCartRemoteDataSource(remoteDataSource: CartRemoteDataSourceImpl): CartRemoteDataSource
 }

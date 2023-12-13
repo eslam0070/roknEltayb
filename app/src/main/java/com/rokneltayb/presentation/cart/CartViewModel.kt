@@ -1,7 +1,88 @@
 package com.rokneltayb.presentation.cart
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.add.AddCartResponse
+import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.login.login.LoginResponse
+import com.rokneltayb.domain.entity.ErrorResponse
+import com.rokneltayb.domain.entity.Result
+import com.rokneltayb.domain.usecase.CartUseCase
+import com.rokneltayb.domain.usecase.UserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CartViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+@HiltViewModel
+class CartViewModel @Inject constructor(private val useCase: CartUseCase) : ViewModel() {
+
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
+    val uiState: StateFlow<UiState>
+        get() = _uiState
+
+    fun getCart() {
+        viewModelScope.launch {
+            when (val result = useCase.getCart()) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.GetCartSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+
+
+    fun addCard(productId: String, shapeId: String, count: String) {
+        viewModelScope.launch {
+            when (val result = useCase.addCart(productId, shapeId, count)) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.AddCartSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+
+    fun deleteCard(productId: String, shapeId: String) {
+        viewModelScope.launch {
+            when (val result = useCase.deleteCart(productId, shapeId)) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.DeleteCartSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+    sealed class UiState {
+        data object Loading : UiState()
+        data object Idle : UiState()
+        class Error(val errorData: ErrorResponse): UiState()
+        class GetCartSuccess(val data: CartResponse) : UiState()
+        class AddCartSuccess(val data: AddCartResponse) : UiState()
+        class DeleteCartSuccess(val data: DeleteCartResponse) : UiState()
+    }
 }

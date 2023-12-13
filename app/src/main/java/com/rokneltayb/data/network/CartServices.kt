@@ -1,0 +1,32 @@
+package com.rokneltayb.data.network
+
+
+import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.add.AddCartResponse
+import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
+import retrofit2.http.POST
+
+interface CartServices {
+
+
+    @GET("client/cart")
+    suspend fun getCart():Response<CartResponse>
+
+    @FormUrlEncoded
+    @POST("client/store-cart")
+    suspend fun addCart(
+        @Field("product_id") productId: String,
+        @Field("shape_id") shapeId: String,
+        @Field("count") count: String): Response<AddCartResponse>
+
+    @FormUrlEncoded
+    @POST("client/delete-cart")
+    suspend fun deleteCart(
+        @Field("product_id") productId: String,
+        @Field("shape_id") shapeId: String): Response<DeleteCartResponse>
+
+}

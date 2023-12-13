@@ -15,11 +15,13 @@ import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 
 class HomeProductsAdapter(
-    private val itemClick: (PopularProduct) -> Unit
+    private val itemClick: (PopularProduct) -> Unit,
+    private val cartItemClick: (PopularProduct) -> Unit,
+    private val favoriteItemClick: (PopularProduct) -> Unit
 ) :  ListAdapter<PopularProduct, HomeProductsAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick)
+        return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,cartItemClick,favoriteItemClick)
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -28,12 +30,22 @@ class HomeProductsAdapter(
         holder.bind(category)
     }
 
-    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (PopularProduct) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (PopularProduct) -> Unit,private val cartItemClick: (PopularProduct) -> Unit,
+                     private val favoriteItemClick: (PopularProduct) -> Unit,):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(product: PopularProduct) {
             binding.root.setOnClickListener {
                 itemClick(product)
             }
+
+            binding.addFavoriteImageView.setOnClickListener {
+                favoriteItemClick(product)
+            }
+
+            binding.addToCartImageView.setOnClickListener {
+                cartItemClick(product)
+            }
+
             Glide.with(binding.root.context).load(product.image).into(binding.imageProductImageView)
 
 

@@ -147,6 +147,13 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivSearch.visibility = View.GONE
+                } "fragment_products"->{
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivSearch.visibility = View.GONE
                 }
                 else ->{
                     binding!!.bottomNavigation.visibility = View.VISIBLE

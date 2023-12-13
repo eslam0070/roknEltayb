@@ -39,6 +39,11 @@ class CategoriesFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         observeUIState()
+        categoriesAdapter = CategoriesAdapter {
+            findNavController().navigate(CategoriesFragmentDirections.actionCategoriesFragmentToProductsFragment(it.id!!,it.title!!))
+        }
+
+        binding.categoriesRecyclerView.adapter = categoriesAdapter
         viewModel.categories()
         return binding.root
     }
@@ -50,7 +55,7 @@ class CategoriesFragment : Fragment() {
             }
 
             is CategoriesViewModel.UiState.Success -> {
-                setCategoriesRecyclerView(uiState.data.data!!.categories)
+                categoriesAdapter.submitList(uiState.data.data!!.categories)
                 hideProgress()
             }
 
@@ -59,13 +64,5 @@ class CategoriesFragment : Fragment() {
                 hideProgress()
             }
         }
-    }
-
-    private fun setCategoriesRecyclerView(categories: List<Category?>?) {
-        categoriesAdapter = CategoriesAdapter {
-            findNavController().navigate(CategoriesFragmentDirections.actionCategoriesFragmentToProductsFragment(it.id!!))
-        }
-        categoriesAdapter.submitList(categories)
-        binding.categoriesRecyclerView.adapter = categoriesAdapter
     }
 }

@@ -35,7 +35,7 @@
                     android:layout_height="@dimen/_45sdp"
                     android:layout_marginTop="@dimen/_90sdp"
                     android:layout_gravity="end"
-                    android:src="@drawable/addtofavourite" />
+                    android:src="@drawable/deletefavourite" />
                 <ImageView
                     android:id="@+id/addToCartImageView"
                     android:layout_width="@dimen/_44sdp"
