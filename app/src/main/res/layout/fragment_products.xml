@@ -23,6 +23,10 @@
             <EditText
                 android:id="@+id/searchEditText"
                 android:layout_width="0dp"
+                android:padding="10dp"
+                android:drawableStart="@drawable/ic_search"
+                android:background="@drawable/custom_bg_search"
+                android:hint="@string/what_are_you_looking_for"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"/>
 
@@ -30,7 +34,7 @@
                 android:id="@+id/sortButton"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_30sdp"
-                android:text="Sort"
+                android:text="@string/sort"
                 android:background="@drawable/custom_bg_button_sort"
                 android:textAllCaps="false"
                 android:textAlignment="center"

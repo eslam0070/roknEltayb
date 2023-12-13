@@ -9,6 +9,7 @@ import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.products.ProductsResponse
+import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Field
@@ -28,6 +29,7 @@ interface HomeServices {
     @GET("client/products")
     suspend fun products(@Query("category_id")categoryId:Int,@Query("sort")sort: String,@Query("search")search:String): Response<ProductsResponse>
 
-
+    @GET("client/product-details")
+    suspend fun productDetails(@Query("product_id")productId:Int): Response<ProductDetailsResponse>
 
 }

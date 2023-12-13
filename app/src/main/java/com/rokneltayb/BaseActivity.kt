@@ -156,7 +156,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivSearch.visibility = View.GONE
                 }
                 else ->{
-                    binding!!.bottomNavigation.visibility = View.VISIBLE
+                    binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.VISIBLE

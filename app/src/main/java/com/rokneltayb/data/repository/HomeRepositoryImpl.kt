@@ -11,6 +11,7 @@ import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.products.ProductsResponse
+import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.repository.HomeRepository
@@ -26,5 +27,7 @@ class HomeRepositoryImpl @Inject constructor(private val remoteSource: HomeRemot
         sort: String,
         search: String
     ): Result<ProductsResponse> = remoteSource.products(categoryId, sort, search)
+
+    override suspend fun productDetails(productId:Int): Result<ProductDetailsResponse> = remoteSource.productDetails(productId)
 
 }

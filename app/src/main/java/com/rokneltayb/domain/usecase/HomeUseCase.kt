@@ -8,6 +8,7 @@ import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.products.ProductsResponse
+import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.repository.HomeRepository
@@ -19,4 +20,6 @@ class HomeUseCase @Inject constructor(private val repo: HomeRepository) {
 
     suspend fun categories(): Result<CategoriesResponse> = repo.categories()
     suspend fun products(categoryId:Int,sort:String,search:String): Result<ProductsResponse> = repo.products(categoryId, sort, search)
+    suspend fun productDetails(productId:Int): Result<ProductDetailsResponse> = repo.productDetails(productId)
+
 }

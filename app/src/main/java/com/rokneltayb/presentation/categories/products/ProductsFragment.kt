@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rokneltayb.BaseActivity
@@ -38,8 +39,8 @@ class ProductsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        savedInstanceState: Bundle?): View {
+
         observeUIState()
         observeUIStateCart()
         (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = args.name
@@ -53,9 +54,11 @@ class ProductsFragment : Fragment() {
 
         binding.productsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
         setCategoriesRecyclerView()
+
         binding.sortButton.setOnClickListener {
             showBottomSheetDialogSort()
         }
+
         return binding.root
     }
 
@@ -145,7 +148,9 @@ class ProductsFragment : Fragment() {
     }
 
     private fun setCategoriesRecyclerView() {
-        productsAdapter = ProductsAdapter({},{position,product,count->
+        productsAdapter = ProductsAdapter({
+                                          findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it.id!!))
+        },{position,product,count->
             cartViewModel.addCard(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
         },{ position,product ->
             cartViewModel.deleteCard(product.id.toString(),product.shapes!![position]!!.id.toString())

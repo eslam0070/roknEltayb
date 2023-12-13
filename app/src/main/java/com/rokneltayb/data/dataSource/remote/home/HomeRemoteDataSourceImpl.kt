@@ -9,6 +9,7 @@ import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.products.ProductsResponse
+import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
@@ -43,6 +44,15 @@ class HomeRemoteDataSourceImpl @Inject constructor(
         search: String
     ): Result<ProductsResponse> {
         val res = requestApiCall.requestApiCall { networkServices.products(categoryId, sort, search) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun productDetails(productId: Int): Result<ProductDetailsResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.productDetails(productId) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

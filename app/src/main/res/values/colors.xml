@@ -29,7 +29,8 @@
     <color name="orange">#FA6427</color>
     <color name="orange2">#F28D00</color>
     <color name="backgroundGray">#F3EFEF</color>
-    <color name="backgroundGray2">#DDDBDB</color>
+    <color name="backgroundGray2">#D1CFCF</color>
+    <color name="backgroundGray3">#E4E2E2</color>
 
     <color name="rating">#ECB500</color>
 
