@@ -18,7 +18,8 @@ import com.rokneltayb.domain.repository.HomeRepository
 import com.rokneltayb.domain.repository.UserRepository
 import javax.inject.Inject
 
-class HomeRepositoryImpl @Inject constructor(private val remoteSource: HomeRemoteDataSource): HomeRepository {
+class HomeRepositoryImpl @Inject constructor(private val remoteSource: HomeRemoteDataSource) :
+    HomeRepository {
     override suspend fun home(): Result<HomeResponse> = remoteSource.home()
     override suspend fun categories(): Result<CategoriesResponse> = remoteSource.categories()
 
@@ -28,6 +29,9 @@ class HomeRepositoryImpl @Inject constructor(private val remoteSource: HomeRemot
         search: String
     ): Result<ProductsResponse> = remoteSource.products(categoryId, sort, search)
 
-    override suspend fun productDetails(productId:Int): Result<ProductDetailsResponse> = remoteSource.productDetails(productId)
+    override suspend fun searchOnProducts(search: String): Result<ProductsResponse> = remoteSource.searchOnProducts(search)
+
+    override suspend fun productDetails(productId: Int): Result<ProductDetailsResponse> =
+        remoteSource.productDetails(productId)
 
 }

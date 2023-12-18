@@ -29,6 +29,9 @@ interface HomeServices {
     @GET("client/products")
     suspend fun products(@Query("category_id")categoryId:Int,@Query("sort")sort: String,@Query("search")search:String): Response<ProductsResponse>
 
+    @GET("client/products")
+    suspend fun searchOnProducts(@Query("search")search:String): Response<ProductsResponse>
+
     @GET("client/product-details")
     suspend fun productDetails(@Query("product_id")productId:Int): Response<ProductDetailsResponse>
 

@@ -149,7 +149,7 @@ class ProductsFragment : Fragment() {
 
     private fun setCategoriesRecyclerView() {
         productsAdapter = ProductsAdapter({
-                                          findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it.id!!))
+            findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
             cartViewModel.addCard(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
         },{ position,product ->

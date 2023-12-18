@@ -60,8 +60,9 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
 
                 if (binding.checkboxRememberMe.isEnabled){
+                    sharedPref.setUserId(uiState.data.data!!.clientData!!.id!!)
                     sharedPref.setRememberMe(true)
-                    sharedPref.setApiKeyToken(uiState.data.data!!.token.toString())
+                    sharedPref.setApiKeyToken(uiState.data.data.token.toString())
                 }
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                 hideProgress()

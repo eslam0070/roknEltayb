@@ -36,14 +36,81 @@
                     android:layout_marginTop="@dimen/_90sdp"
                     android:layout_gravity="end"
                     android:src="@drawable/deletefavourite" />
-                <ImageView
-                    android:id="@+id/addToCartImageView"
-                    android:layout_width="@dimen/_44sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:src="@drawable/addcart"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_margin="@dimen/_5sdp">
+
+                    <ImageView
+                        android:id="@+id/removeImageView"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="10dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_bin_cart"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/miunsImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/miunsImageView"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_minus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/countTextView"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/countTextView"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_vertical"
+                        android:backgroundTint="@color/black"
+                        android:gravity="center|center_vertical"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/green"
+                        android:visibility="gone"
+                        android:textColorHint="@color/black"
+                        android:textCursorDrawable="@null"
+                        android:textSize="@dimen/_13sdp"
+                        android:textStyle="bold"
+                        android:text="1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/plusImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/plusImageView"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_plus"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/addToCartImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <ImageView
+                        android:id="@+id/addToCartImageView"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_gravity="start"
+                        android:src="@drawable/addcart"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.cardview.widget.CardView>
 

@@ -80,12 +80,12 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
         edit.putBoolean(rememberMeInSharedPreferences, rememberMe).apply()
     }
 
-    override fun setUserId(userId: String) {
-        edit.putString(userIdPerf, userId).apply()
+    override fun setUserId(userId: Int) {
+        edit.putInt(userIdPerf, userId).apply()
     }
 
-    override fun getUserId() : String {
-        return prefs!!.getString(userIdPerf,"")!!
+    override fun getUserId() : Int {
+        return prefs!!.getInt(userIdPerf,0)
     }
 
     override fun setIsManager(isManager: String) {

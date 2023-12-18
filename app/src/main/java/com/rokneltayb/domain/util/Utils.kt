@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 
 fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
     return ContextCompat.getDrawable(context, vectorResId)?.run {
@@ -15,4 +16,8 @@ fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescri
         draw(Canvas(bitmap))
         BitmapDescriptorFactory.fromBitmap(bitmap)
     }
+}
+
+fun sharedPrefrences(context: Context):SharedPreferencesImpl{
+    return SharedPreferencesImpl(context)
 }

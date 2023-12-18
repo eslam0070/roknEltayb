@@ -10,10 +10,21 @@ data class Data(
     val price: String,
     val rate: Int,
     val shapes: List<Shape>,
-    val title: String
+    val title: String,
+    val is_favorite:Int,
+    val rates:List<Rates>
 ) {
     data class Images (
         val id: Int,
         val image:String
+    )
+
+    data class Rates (
+        val id: Int,
+        val product_id: Int,
+        val rate: Int,
+        val description:String,
+        val user_name:String,
+        val date:String
     )
 }

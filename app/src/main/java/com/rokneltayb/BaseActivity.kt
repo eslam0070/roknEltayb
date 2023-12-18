@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
@@ -64,6 +65,14 @@ class BaseActivity : AppCompatActivity() {
                 mNavController.navigate(it.id)
             }
             setupNavController(mNavController)
+        }
+
+        binding!!.ivFav.setOnClickListener {
+            findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment)
+        }
+
+        binding!!.ivSearch.setOnClickListener {
+            findNavController(R.id.navHostFragment).navigate(R.id.searchHomeFragment)
         }
     }
 
@@ -155,11 +164,20 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivSearch.visibility = View.GONE
                 }
-                else ->{
+                "fragment_search" ->{
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.GONE
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+
+                } else ->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
-                    binding!!.ivBack.visibility = View.VISIBLE
-                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
 
                 }

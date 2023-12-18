@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.home.details.ProductDetailsFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,9 +52,9 @@
 
                 <TextView
                     android:id="@+id/discountTextView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.6"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/backgroundGray2"
                     app:layout_constraintStart_toStartOf="parent"
@@ -62,10 +62,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_weight="0.1"
-                    android:layout_gravity="end"
-                    android:background="@drawable/custom_bg_rate"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/custom_bg_rate2"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -80,7 +79,7 @@
                         android:id="@+id/rateTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:text="4.5"
                         android:textColor="@color/backgroundGray2"
@@ -92,7 +91,14 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPagerImageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="@dimen/_250sdp"/>
+            <ImageView
+                android:id="@+id/addFavoriteImageView"
+                android:layout_width="@dimen/_44sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_gravity="end"
+                android:layout_marginTop="-10dp"
+                android:src="@drawable/deletefavourite" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -113,40 +119,65 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/product_ratings_amp_reviews"
-                android:textStyle="bold"
-                android:textColor="@color/black"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp" />
+                android:layout_marginTop="@dimen/_10sdp"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/product_ratings_amp_reviews"
+                    android:textStyle="bold"
+                    android:layout_weight="1.5"
+                    android:textColor="@color/black" />
+
+
+                <ImageView
+                    android:id="@+id/addCommentImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/custom_bg_button"/>
+
+            </LinearLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/reviewProductRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
+                tools:listitem="@layout/rate_item"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:background="@color/white"
         android:orientation="vertical"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+      <!--  <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
+            android:layout_marginTop="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -157,14 +188,16 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_gravity="center_vertical"
                 android:scrollbars="horizontal"
+                android:visibility="gone"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:orientation="horizontal"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_20sdp"
                 android:padding="@dimen/_5sdp"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:background="@drawable/custom_bg_size_spinner"
                 android:layout_weight="0.8">
                 <Spinner
@@ -175,23 +208,39 @@
             </LinearLayout>
 
 
+        </LinearLayout>-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/custom_bg_size_spinner">
+            <Spinner
+                android:id="@+id/shapeProductSpinner"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:weightSum="2"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_40sdp"
                 android:orientation="vertical"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/custom_bg_size_spinner"
-                android:layout_weight="0.2">
+                android:layout_weight="0.3">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -199,20 +248,27 @@
                     android:layout_height="wrap_content"
                     android:text="QTY"
                     android:textColor="@color/forgetpassword"/>
-                <TextView
+
+                <EditText
+                    android:id="@+id/countEditText"
                     android:layout_width="match_parent"
-                    android:textAlignment="center"                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
                     android:text="1"
                     android:textColor="@color/forgetpassword"/>
             </LinearLayout>
 
             <Button
-                android:id="@+id/loginBtn"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_height="wrap_content"
+                android:id="@+id/addToCartButton"
+                android:layout_width="0dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:textColor="@color/white"
-                android:text="@string/log_in"
+                android:text="@string/add_to_cart"
+                android:layout_weight="1.7"
                 android:background="@drawable/custom_bg_button"/>
 
         </LinearLayout>

@@ -17,7 +17,8 @@
         app:spanCount="2"
         tools:listitem="@layout/item_categories"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

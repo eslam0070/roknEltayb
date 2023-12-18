@@ -15,8 +15,8 @@ interface SharedPreferences {
     fun setRefToken(refTokenData: String)
     fun setUserPassword(password: String)
     fun setRememberMe(rememberMe: Boolean)
-    fun setUserId(userId: String)
-    fun getUserId() : String
+    fun setUserId(userId: Int)
+    fun getUserId() : Int
     fun setIsManager(isManager: String)
 
     fun setUserProfil(userProfile:ClientData)

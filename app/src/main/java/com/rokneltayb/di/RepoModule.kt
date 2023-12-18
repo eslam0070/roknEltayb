@@ -1,10 +1,16 @@
 package com.rokneltayb.di
 
+import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSourceImpl
 import com.rokneltayb.data.repository.CartRepositoryImpl
+import com.rokneltayb.data.repository.FavoritesRepositoryImpl
 import com.rokneltayb.data.repository.HomeRepositoryImpl
+import com.rokneltayb.data.repository.RateRepositoryImpl
 import com.rokneltayb.data.repository.UserRepositoryImpl
 import com.rokneltayb.domain.repository.CartRepository
+import com.rokneltayb.domain.repository.FavoritesRepository
 import com.rokneltayb.domain.repository.HomeRepository
+import com.rokneltayb.domain.repository.RateRepository
 import com.rokneltayb.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -20,4 +26,8 @@ abstract class RepoModule {
     abstract fun provideHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
     @Binds
     abstract fun provideCartRepository(cartRepositoryImpl: CartRepositoryImpl): CartRepository
+    @Binds
+    abstract fun provideRateRepository(rateRepositoryImpl: RateRepositoryImpl): RateRepository
+    @Binds
+    abstract fun provideFavortiesRepository(favoritesRepositoryImpl: FavoritesRepositoryImpl): FavoritesRepository
 }

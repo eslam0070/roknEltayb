@@ -27,11 +27,7 @@ fun RecyclerView.addBasicItemDecoration(dimensionId: Int = R.dimen.item_decorati
     )
 }
 
-private val sharedPref by lazy {  }
 
-fun sharedPreferences(context: Context){
-    SharedPreferencesImpl(context)
-}
 fun Context.openKeyBoard(view: View) {
     view.requestFocus()
     val imm = ContextCompat.getSystemService(this, InputMethodManager::class.java)

@@ -20,6 +20,7 @@ class HomeUseCase @Inject constructor(private val repo: HomeRepository) {
 
     suspend fun categories(): Result<CategoriesResponse> = repo.categories()
     suspend fun products(categoryId:Int,sort:String,search:String): Result<ProductsResponse> = repo.products(categoryId, sort, search)
+    suspend fun searchOnProducts(search:String): Result<ProductsResponse> = repo.searchOnProducts(search)
     suspend fun productDetails(productId:Int): Result<ProductDetailsResponse> = repo.productDetails(productId)
 
 }

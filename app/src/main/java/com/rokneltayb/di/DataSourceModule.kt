@@ -2,8 +2,12 @@ package com.rokneltayb.di
 
 import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSourceImpl
+import com.rokneltayb.data.dataSource.remote.favorite.FavoritesRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.favorite.FavoritesRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSourceImpl
+import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSourceImpl
 import com.rokneltayb.data.sharedPref.SharedPreferences
@@ -29,4 +33,9 @@ abstract class DataSourceModule {
 
     @Binds
     abstract fun provideCartRemoteDataSource(remoteDataSource: CartRemoteDataSourceImpl): CartRemoteDataSource
+
+    @Binds
+    abstract fun provideRateRemoteDataSource(remoteDataSource: RateRemoteDataSourceImpl): RateRemoteDataSource
+    @Binds
+    abstract fun provideFavoritesRemoteDataSource(remoteDataSource: FavoritesRemoteDataSourceImpl): FavoritesRemoteDataSource
 }

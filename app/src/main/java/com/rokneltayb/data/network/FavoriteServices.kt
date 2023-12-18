@@ -1,6 +1,10 @@
 package com.rokneltayb.data.network
 
 
+import com.rokneltayb.data.model.StringMessageResponse
+import com.rokneltayb.data.model.favorite.FavoritesResponse
+import com.rokneltayb.data.model.favorite.add.AddFavoritesResponse
+import com.rokneltayb.data.model.favorite.delete.DeleteFavoritesResponse
 import com.rokneltayb.data.model.login.changepassword.ChangePasswordResponse
 import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
@@ -16,52 +20,18 @@ import retrofit2.http.POST
 
 interface FavoriteServices {
 
-    @FormUrlEncoded
-    @POST("client/auth/login")
-    suspend fun login(
-        @Field("fcm_token") token: String,
-        @Field("phone") phone: String,
-        @Field("password") password: String): Response<LoginResponse>
+    @GET("client/favorites")
+    suspend fun favorites(): Response<FavoritesResponse>
 
     @FormUrlEncoded
-    @POST("client/auth/forget-password")
-    suspend fun sendOTP(
-        @Field("phone") phone: String,
-    ): Response<SignUpResponse>
-
-    @FormUrlEncoded
-    @POST("client/auth/reset-password")
-    suspend fun resetPassword(
-        @Field("phone") phone: String,
-        @Field("token") code: String
-    ): Response<ResetPasswordResponse>
-
-    @FormUrlEncoded
-    @POST("client/auth/change-password")
-    suspend fun changePassword(
-        @Field("password") password: String,
-        @Field("password_confirmation") passwordConfirmation: String
-    ): Response<ChangePasswordResponse>
-
-    @Headers("Accept: application/json")
-    @GET("client/auth/logout")
-    suspend fun logout(): Response<LogoutResponse>
-
-    @FormUrlEncoded
-    @POST("client/auth/delete-account")
-    suspend fun deleteAccount(): Response<DeleteAccountResponse>
+    @POST("client/store-favorites")
+    suspend fun storeFavorites(
+        @Field("product_id") productId: Int
+    ): Response<AddFavoritesResponse>
 
 
     @FormUrlEncoded
-    @POST("client/auth/sign-up")
-    suspend fun signUp(
-        @Field("name")name:String,
-        @Field("phone")phone:String,
-        @Field("email")email:String,
-        @Field("password")password:String,
-        @Field("password_confirmation")passwordConfirmation:String,
-        @Field("fcm_token")fcmToken:String
-    ): Response<SignUpResponse>
-
+    @POST("client/delete-favorites")
+    suspend fun deleteFavorites(@Field("product_id")productId:Int):Response<DeleteFavoritesResponse>
 
 }

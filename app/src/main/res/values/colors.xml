@@ -49,8 +49,7 @@
     <color name="purple_500">#749BC4</color>
     <color name="purple_700">#749BC4</color>
 
-    <color name="color_coment">#9692A5</color>
-    <color name="color_editText">#E3E9EB</color>
+    <color name="color_editText">#F6F6F6</color>
     <color name="main_color">#0EBFB1</color>
     <color name="colorGrey">#F2F2F2</color>
     <color name="colorHome">#575656</color>
