@@ -34,6 +34,8 @@ class HomeProductsAdapter(
         return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,cartItemClick,removeCartItemClick,plusCartItemClick,munisItemClick,favoriteItemClick)
     }
 
+
+
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val product = getItem(position)

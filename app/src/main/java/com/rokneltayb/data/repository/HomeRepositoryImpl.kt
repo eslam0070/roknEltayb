@@ -29,6 +29,9 @@ class HomeRepositoryImpl @Inject constructor(private val remoteSource: HomeRemot
         search: String
     ): Result<ProductsResponse> = remoteSource.products(categoryId, sort, search)
 
+    override suspend fun prorudtsWithOutSearch(): Result<ProductsResponse> = remoteSource.prorudtsWithOutSearch()
+
+
     override suspend fun searchOnProducts(search: String): Result<ProductsResponse> = remoteSource.searchOnProducts(search)
 
     override suspend fun productDetails(productId: Int): Result<ProductDetailsResponse> =

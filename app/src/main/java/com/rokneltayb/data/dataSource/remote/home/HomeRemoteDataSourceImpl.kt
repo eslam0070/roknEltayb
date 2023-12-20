@@ -60,6 +60,15 @@ class HomeRemoteDataSourceImpl @Inject constructor(
             Result.Error(res.errorType)
     }
 
+    override suspend fun prorudtsWithOutSearch(): Result<ProductsResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.prorudtsWithOutSearch() }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
     override suspend fun productDetails(productId: Int): Result<ProductDetailsResponse> {
         val res = requestApiCall.requestApiCall { networkServices.productDetails(productId) }
 

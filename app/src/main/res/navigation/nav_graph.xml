@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_homeFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_popularProductsFragment"
+            app:destination="@id/popularProductsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -180,5 +183,24 @@
         android:id="@+id/profileFragment"
         android:name="com.rokneltayb.presentation.more.profile.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_newAddressFragment"
+            app:destination="@id/newAddressFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/popularProductsFragment"
+        android:name="com.rokneltayb.presentation.home.popular.PopularProductsFragment"
+        android:label="fragment_popular_products"
+        tools:layout="@layout/fragment_popular_products" >
+
+        <argument
+            android:name="popularProducts"
+            app:argType="com.rokneltayb.data.model.home.home.PopularProduct[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/newAddressFragment"
+        android:name="com.rokneltayb.presentation.more.profile.address.NewAddressFragment"
+        android:label="fragment_new_address"
+        tools:layout="@layout/fragment_new_address" />
 </navigation>

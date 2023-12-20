@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeDailyBestSellsProductsAdapter: HomeDailyBestSellsProductsAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
-
+    private var popularProduct:MutableList<PopularProduct> = ArrayList()
     private fun observeUIState() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
                 homeCategoriesAdapter.submitList(uiState.data.data.categories)
                 homeProductsAdapter.submitList(uiState.data.data.popularProducts)
                 homeDailyBestSellsProductsAdapter.submitList(uiState.data.data.dailyProducts)
-
+                popularProduct = uiState.data.data.popularProducts as MutableList<PopularProduct>
                 hideProgress()
             }
 
@@ -172,6 +172,12 @@ class HomeFragment : Fragment() {
         setDailySellsProductsRecyclerView()
         setProductsRecyclerView()
         viewModel.home()
+
+        binding.seeAllPopularProducts.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPopularProductsFragment(
+                popularProduct.toTypedArray()
+            ))
+        }
         return binding.root
     }
 

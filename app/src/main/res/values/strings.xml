@@ -99,5 +99,7 @@
     <string name="address">Address<font color='#F81212'> *</font></string>
     <string name="delete_you_account">Delete you account</string>
     <string name="update">Update</string>
+    <string name="name_address">Name address</string>
+    <string name="add_address">Add Address</string>
 
 </resources>

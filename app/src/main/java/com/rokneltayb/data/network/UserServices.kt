@@ -5,6 +5,8 @@ import com.rokneltayb.data.model.login.changepassword.ChangePasswordResponse
 import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
+import com.rokneltayb.data.model.login.profile.ProfileResponse
+import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import retrofit2.Response
@@ -62,5 +64,17 @@ interface UserServices {
         @Field("fcm_token")fcmToken:String
     ): Response<SignUpResponse>
 
+    @GET("client/auth/profile")
+    suspend fun profile(): Response<ProfileResponse>
 
+    @FormUrlEncoded
+    @POST("client/auth/profile/update")
+    suspend fun updateProfile(
+        @Field("name")name:String,
+        @Field("email")phone:String,
+        @Field("email")email:String,
+        @Field("password")password:String,
+        @Field("password_confirmation")passwordConfirmation:String,
+        @Field("fcm_token")fcmToken:String
+    ): Response<UpdateProfileResponse>
 }

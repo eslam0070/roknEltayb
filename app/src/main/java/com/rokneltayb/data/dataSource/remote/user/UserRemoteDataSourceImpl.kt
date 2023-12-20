@@ -5,6 +5,7 @@ import com.rokneltayb.data.model.login.changepassword.ChangePasswordResponse
 import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
+import com.rokneltayb.data.model.login.profile.ProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.data.network.NetworkServices
@@ -63,6 +64,15 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun logout(): Result<LogoutResponse> {
         val res = requestApiCall.requestApiCall { networkServices.logout() }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun profile(): Result<ProfileResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.profile() }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

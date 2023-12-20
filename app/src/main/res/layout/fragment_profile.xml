@@ -79,7 +79,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -92,7 +92,7 @@
                 <EditText
                     android:id="@+id/usernameEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
                     android:background="@null"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
@@ -123,7 +123,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -136,7 +136,7 @@
                 <EditText
                     android:id="@+id/emailAddressEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
                     android:background="@null"
                     android:textSize="@dimen/_10sdp" />
             </LinearLayout>
@@ -167,7 +167,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -180,7 +180,7 @@
                 <EditText
                     android:id="@+id/phoneEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
                     android:background="@null"
                     android:inputType="number"
                     android:textSize="@dimen/_10sdp" />
@@ -190,7 +190,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
+            android:weightSum="3"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/custom_bg_profile"
             android:layout_marginStart="@dimen/_10ssp"
@@ -212,7 +212,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -222,19 +222,28 @@
                     android:textSize="@dimen/_8sdp"
                     android:text="@string/address"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/AddressEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
                     android:background="@null"
                     android:textSize="@dimen/_10sdp" />
+
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/addNewAddressImageView"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_add_address"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2"
+            android:weightSum="3"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/custom_bg_profile"
             android:layout_marginStart="@dimen/_10ssp"
@@ -256,7 +265,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical">
@@ -269,12 +278,20 @@
                 <TextView
                     android:id="@+id/passwordEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_20ssp"
                     android:background="@null"
                     android:text="*****************"
                     android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/editPasswordImageView"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:src="@drawable/ic_edit"
+                android:layout_weight="0.5"
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
     </LinearLayout>
 
