@@ -102,5 +102,14 @@
     <string name="name_address">Name address</string>
     <string name="add_address">Add Address</string>
     <string name="see_all">See All</string>
+    <string name="new_address">New Address</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="name">Name</string>
+    <string name="please_select_a_city">Please select a city</string>
+    <string name="please_write_its_unique_tag">Please write its unique tag</string>
+    <string name="do_you_wand_delete_this_address">Do you want delete this address?</string>
+    <string name="do_you_want_delete_your_account">Do you want delete your account?</string>
+    <string name="do_you_want_to_log_out_of_the_account">Do you want to log out of the account?</string>
 
 </resources>

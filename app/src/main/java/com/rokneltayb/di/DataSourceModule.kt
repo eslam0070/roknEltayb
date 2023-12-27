@@ -1,5 +1,7 @@
 package com.rokneltayb.di
 
+import com.rokneltayb.data.dataSource.remote.address.AddressRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.address.AddressRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.favorite.FavoritesRemoteDataSource
@@ -38,4 +40,6 @@ abstract class DataSourceModule {
     abstract fun provideRateRemoteDataSource(remoteDataSource: RateRemoteDataSourceImpl): RateRemoteDataSource
     @Binds
     abstract fun provideFavoritesRemoteDataSource(remoteDataSource: FavoritesRemoteDataSourceImpl): FavoritesRemoteDataSource
+    @Binds
+    abstract fun provideAddressRemoteDataSource(remoteDataSource: AddressRemoteDataSourceImpl): AddressRemoteDataSource
 }

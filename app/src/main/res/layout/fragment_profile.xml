@@ -186,7 +186,7 @@
                     android:text="@string/address"/>
 
                 <TextView
-                    android:id="@+id/AddressEditText"
+                    android:id="@+id/addressTextView"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp"
                     android:background="@null"
@@ -259,7 +259,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/updateProfileButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_bg_button"
@@ -268,13 +268,13 @@
         android:layout_marginStart="@dimen/_40ssp"
         android:layout_marginEnd="@dimen/_40ssp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/deleteAccountTextView"
         tools:layout_editor_absoluteX="26dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/deleteAccountTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_50sdp"

@@ -178,6 +178,26 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
 
+                }
+
+                "fragment_new_address" -> {
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.GONE
+                    binding!!.tvMainEmployeeName.text = getString(R.string.new_address)
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+
+                }"fragment_address" -> {
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.GONE
+                    binding!!.tvMainEmployeeName.text = getString(R.string.address)
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+
                 }"fragment_popular_products","fragment_daily_products" ->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE

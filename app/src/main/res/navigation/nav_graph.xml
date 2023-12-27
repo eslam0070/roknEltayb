@@ -193,6 +193,9 @@
         <action
             android:id="@+id/action_profileFragment_to_newAddressFragment"
             app:destination="@id/newAddressFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
     <fragment
         android:id="@+id/popularProductsFragment"
@@ -206,7 +209,7 @@
 
     <fragment
         android:id="@+id/newAddressFragment"
-        android:name="com.rokneltayb.presentation.more.profile.address.NewAddressFragment"
+        android:name="com.rokneltayb.presentation.more.profile.address.add.NewAddressFragment"
         android:label="fragment_new_address"
         tools:layout="@layout/fragment_new_address" />
     <fragment
@@ -217,5 +220,14 @@
         <action
             android:id="@+id/action_dailyProductsFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addressFragment"
+        android:name="com.rokneltayb.presentation.more.profile.address.AddressFragment"
+        android:label="fragment_address"
+        tools:layout="@layout/fragment_address" >
+        <action
+            android:id="@+id/action_addressFragment_to_newAddressFragment"
+            app:destination="@id/newAddressFragment" />
     </fragment>
 </navigation>

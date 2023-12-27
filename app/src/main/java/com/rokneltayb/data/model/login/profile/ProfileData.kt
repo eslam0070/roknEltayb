@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
+import com.rokneltayb.data.model.address.AddressData
 
-@Parcelize
 data class ProfileData(
     @SerializedName("email")
     @Expose
@@ -19,5 +19,8 @@ data class ProfileData(
     val name: String?,
     @SerializedName("phone")
     @Expose
-    val phone: String?
-) : Parcelable
+    val phone: String?,
+    @Expose
+    @SerializedName("addresses")
+    val addresses:List<AddressData?>?
+)
