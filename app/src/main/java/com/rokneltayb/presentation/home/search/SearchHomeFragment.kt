@@ -52,6 +52,7 @@ class SearchHomeFragment : Fragment() {
         binding.searchEditText.doAfterTextChanged {
             if (it!!.length >3){
                 viewModel.search(it.toString())
+                showProgress()
                 Log.d("TAG", "onCreateView: "+it.toString())
             }
         }
@@ -72,7 +73,7 @@ class SearchHomeFragment : Fragment() {
 
     private fun updateUI(uiState: SearchHomeViewModel.UiState) {
         when (uiState) {
-            is SearchHomeViewModel.UiState.Loading -> showProgress()
+            is SearchHomeViewModel.UiState.Loading -> {}
 
             is SearchHomeViewModel.UiState.Success -> {
                 searchAdapter.submitList(uiState.data.data!!.products)

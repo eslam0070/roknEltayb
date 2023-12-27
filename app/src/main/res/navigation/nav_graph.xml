@@ -71,6 +71,12 @@
         <action
             android:id="@+id/action_homeFragment_to_popularProductsFragment"
             app:destination="@id/popularProductsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_dailyProductsFragment"
+            app:destination="@id/dailyProductsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoriesFragment"
+            app:destination="@id/categoriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -193,14 +199,23 @@
         android:name="com.rokneltayb.presentation.home.popular.PopularProductsFragment"
         android:label="fragment_popular_products"
         tools:layout="@layout/fragment_popular_products" >
-
-        <argument
-            android:name="popularProducts"
-            app:argType="com.rokneltayb.data.model.home.home.PopularProduct[]" />
+        <action
+            android:id="@+id/action_popularProductsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/newAddressFragment"
         android:name="com.rokneltayb.presentation.more.profile.address.NewAddressFragment"
         android:label="fragment_new_address"
         tools:layout="@layout/fragment_new_address" />
+    <fragment
+        android:id="@+id/dailyProductsFragment"
+        android:name="com.rokneltayb.presentation.home.daily.DailyProductsFragment"
+        android:label="fragment_daily_products"
+        tools:layout="@layout/fragment_daily_products" >
+        <action
+            android:id="@+id/action_dailyProductsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
 </navigation>

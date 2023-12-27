@@ -47,7 +47,7 @@ class HomeProductsAdapter(
                      private val removeCartItemClick: (Int, PopularProduct) -> Unit,
                      private val plusCartItemClick: (Int, Int, PopularProduct) -> Unit,
                      private val munisItemClick: (Int, Int, PopularProduct) -> Unit,
-                     private val favoriteItemClick: (Int,PopularProduct,Boolean) -> Unit,):RecyclerView.ViewHolder(binding.root){
+                     private val favoriteItemClick: (Int,PopularProduct,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(position: Int,product: PopularProduct, count: Int?, isFavorite2: Boolean) {
             val zoomInAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_in)

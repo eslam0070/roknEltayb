@@ -9,10 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rokneltayb.R
-import com.rokneltayb.data.model.home.home.Category
 import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.data.model.home.home.Slider
 import com.rokneltayb.databinding.FragmentHomeBinding
@@ -20,8 +17,6 @@ import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.domain.util.ui.MarginItemDecoration
-import com.rokneltayb.presentation.categories.products.ProductsAdapter
 import com.rokneltayb.presentation.categories.products.ProductsFragmentDirections
 import com.rokneltayb.presentation.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.adapters.AdvSliderAdapter
@@ -129,7 +124,7 @@ class HomeFragment : Fragment() {
     }
     private fun setCategoriesRecyclerView() {
         homeCategoriesAdapter = HomeCategoriesAdapter {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!)) }
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoriesFragment()) }
         binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         binding.categoriesRecyclerView.adapter = homeCategoriesAdapter
     }
@@ -158,7 +153,23 @@ class HomeFragment : Fragment() {
 
 
     private fun setDailySellsProductsRecyclerView() {
-        homeDailyBestSellsProductsAdapter = HomeDailyBestSellsProductsAdapter {}
+        homeDailyBestSellsProductsAdapter = HomeDailyBestSellsProductsAdapter ({
+            findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it.id!!))
+        },{position,product,count->
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
+        },{ position,product ->
+            cartViewModel.deleteCart(product.id.toString(),product.shapes!![position]!!.id.toString())
+        },{total,position,product ->
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+
+        },{total,position,product ->
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+        },{ position,product,isFavorite->
+            if (product.isFavorite == 0)
+                favoriteviewModel.storeFavorite(product.id!!)
+            else
+                favoriteviewModel.deleteFavorite(product.id!!)
+        })
         binding.dailyBestProductsRecyclerView.adapter = homeDailyBestSellsProductsAdapter
     }
 
@@ -173,10 +184,12 @@ class HomeFragment : Fragment() {
         setProductsRecyclerView()
         viewModel.home()
 
-        binding.seeAllPopularProducts.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPopularProductsFragment(
-                popularProduct.toTypedArray()
-            ))
+        binding.seeAllPopularProductsTextView.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPopularProductsFragment())
+        }
+
+        binding.seeAllDailyProductsTextView.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToDailyProductsFragment())
         }
         return binding.root
     }

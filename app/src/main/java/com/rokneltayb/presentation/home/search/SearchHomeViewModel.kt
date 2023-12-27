@@ -21,7 +21,6 @@ class SearchHomeViewModel @Inject constructor(private val useCase: HomeUseCase) 
         get() = _uiState
 
     fun search(search:String) {
-        _uiState.value = UiState.Loading
         viewModelScope.launch {
             when (val result = useCase.searchOnProducts(search)) {
                 is Result.Error -> {

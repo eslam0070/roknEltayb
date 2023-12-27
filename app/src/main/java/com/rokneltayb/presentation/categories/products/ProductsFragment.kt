@@ -23,6 +23,7 @@ import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.cart.CartViewModel
+import com.rokneltayb.presentation.favorite.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -33,23 +34,24 @@ class ProductsFragment : Fragment() {
     private val binding by lazy { FragmentProductsBinding.inflate(layoutInflater) }
     private val viewModel: ProductsViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
+    private val favoriteviewModel: FavoritesViewModel by viewModels()
+
     private lateinit var productsAdapter:ProductsAdapter
     private val args:ProductsFragmentArgs by navArgs()
     private var sort = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View {
-
+        savedInstanceSate: Bundle?): View {
         observeUIState()
-        observeUIStateCart()
+
         (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = args.name
-        viewModel.products(args.id,"","")
+        viewModel.products(args.id.toString(),"","","")
         binding.searchEditText.doAfterTextChanged {
             if (it!!.length > 3){
-                viewModel.products(args.id,sort,it.toString())
+                viewModel.products(args.id.toString(),sort,it.toString(),"")
             }else
-                viewModel.products(args.id,"","")
+                viewModel.products(args.id.toString(),"","","")
         }
 
         binding.productsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
@@ -75,21 +77,21 @@ class ProductsFragment : Fragment() {
                     R.id.higtRadioButton ->{
                         if (it.isChecked){
                             sort = "high_price"
-                            viewModel.products(args.id,sort,"")
+                            viewModel.products(args.id.toString(),sort,"","")
                             bottomSheetDialog.dismiss()
                         }
                     }
                     R.id.lowRadioButton ->{
                         if (it.isChecked){
                             sort = "low_price"
-                            viewModel.products(args.id,sort,"")
+                            viewModel.products(args.id.toString(),sort,"","")
                             bottomSheetDialog.dismiss()
                         }
                     }
                     R.id.newRadioButton ->{
                         if (it.isChecked){
                             sort = "new"
-                            viewModel.products(args.id,sort,"")
+                            viewModel.products(args.id.toString(),sort,"","")
                             bottomSheetDialog.dismiss()
                         }
                     }
@@ -100,14 +102,20 @@ class ProductsFragment : Fragment() {
         bottomSheetDialog.show()
     }
 
-    private fun observeUIState() =
+    private fun observeUIState() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
         }
-    private fun observeUIStateCart() =
+
         lifecycleScope.launch {
             cartViewModel.uiState.flowWithLifecycle(lifecycle).collect(::cartUI)
         }
+
+        lifecycleScope.launch {
+            favoriteviewModel.uiState.flowWithLifecycle(lifecycle).collect(::favoritesUI)
+        }
+    }
+
 
     private fun updateUI(uiState: ProductsViewModel.UiState) {
         when (uiState) {
@@ -147,6 +155,30 @@ class ProductsFragment : Fragment() {
         }
     }
 
+    private fun favoritesUI(uiState: FavoritesViewModel.UiState) {
+        when (uiState) {
+            is FavoritesViewModel.UiState.Loading -> {
+                showProgress()
+            }
+
+            is FavoritesViewModel.UiState.Error -> {
+                toastError(uiState.errorData.message)
+                hideProgress()
+            }
+
+            is FavoritesViewModel.UiState.StoreFavoriteSuccess -> {
+
+                hideProgress()
+            }
+
+            is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
+
+                hideProgress()
+            }
+
+            else ->{}
+        }
+    }
     private fun setCategoriesRecyclerView() {
         productsAdapter = ProductsAdapter({
             findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it.id!!))
@@ -161,10 +193,13 @@ class ProductsFragment : Fragment() {
             cartViewModel.addCard(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
 
         },{ position,product,isFavorite->
-            if (isFavorite == true){
-
-            }else{
-
+            if (product.isFavorite == 0){
+                viewModel.products(args.id.toString(),sort,"","")
+                favoriteviewModel.storeFavorite(product.id!!)
+            }
+            else{
+                viewModel.products(args.id.toString(),sort,"","")
+                favoriteviewModel.deleteFavorite(product.id!!)
             }
 
         })

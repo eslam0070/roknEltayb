@@ -1,5 +1,6 @@
-package com.rokneltayb.presentation.home.popular
+package com.rokneltayb.presentation.home.daily
 
+import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.databinding.FragmentDailyProductsBinding
 import com.rokneltayb.databinding.FragmentPopularProductsBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
@@ -21,28 +23,29 @@ import com.rokneltayb.presentation.categories.products.ProductsFragmentDirection
 import com.rokneltayb.presentation.categories.products.ProductsViewModel
 import com.rokneltayb.presentation.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
+import com.rokneltayb.presentation.home.popular.PopularProductsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PopularProductsFragment : Fragment() {
+class DailyProductsFragment : Fragment() {
 
-
-    private val binding by lazy { FragmentPopularProductsBinding.inflate(layoutInflater) }
+    private val binding by lazy { FragmentDailyProductsBinding.inflate(layoutInflater) }
     private lateinit var popularProductsAdapter: PopularProductsAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
     private val viewModel: ProductsViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         observeUIState()
-        (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = getString(R.string.popular_produts)
-
+        (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = getString(R.string.daily_best_sells)
 
         setProductsRecyclerView()
         return binding.root
     }
-
     private fun observeUIState() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
@@ -91,7 +94,7 @@ class PopularProductsFragment : Fragment() {
             }
 
             is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
-                
+
                 hideProgress()
             }
 
@@ -118,11 +121,11 @@ class PopularProductsFragment : Fragment() {
             else ->{}
         }
     }
-   private fun setProductsRecyclerView() {
-       binding.popularProductsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
 
-       popularProductsAdapter = PopularProductsAdapter({
-            findNavController().navigate(PopularProductsFragmentDirections.actionPopularProductsFragmentToProductDetailsFragment(it.id!!))
+    private fun setProductsRecyclerView() {
+        binding.dailyProductsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
+        popularProductsAdapter = PopularProductsAdapter({
+            findNavController().navigate(DailyProductsFragmentDirections.actionDailyProductsFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
             cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
         },{ position,product ->
@@ -142,11 +145,11 @@ class PopularProductsFragment : Fragment() {
         })
 
 
-        binding.popularProductsRecyclerView.adapter = popularProductsAdapter
+        binding.dailyProductsRecyclerView.adapter = popularProductsAdapter
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.products("","","","popular")
+        viewModel.products("","","","daily")
     }
 }

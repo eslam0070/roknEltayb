@@ -1,4 +1,4 @@
-package com.rokneltayb.presentation.home.adapters
+package com.rokneltayb.presentation.home.popular
 
 import android.graphics.Paint
 import android.os.Build
@@ -15,22 +15,23 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.R
-import com.rokneltayb.data.model.home.home.PopularProduct
-import com.rokneltayb.databinding.ItemHomeBestSellsProductsBinding
-import com.rokneltayb.databinding.ItemHomePupularProductsBinding
+import com.rokneltayb.data.model.products.Product
+import com.rokneltayb.databinding.ItemProductsBinding
 
-class HomeDailyBestSellsProductsAdapter(
-    private val itemClick: (PopularProduct) -> Unit,
-    private val cartItemClick: (Int, PopularProduct, Int) -> Unit,
-    private val removeCartItemClick: (Int, PopularProduct) -> Unit,
-    private val plusCartItemClick: (Int, Int, PopularProduct) -> Unit,
-    private val munisItemClick: (Int, Int, PopularProduct) -> Unit,
-    private val favoriteItemClick: (Int,PopularProduct,Boolean) -> Unit
-) :  ListAdapter<PopularProduct, HomeDailyBestSellsProductsAdapter.ViewHolder>(DiffCallback) {
+class PopularProductsAdapter(
+    private val itemClick: (Product) -> Unit,
+    private val cartItemClick: (Int, Product,Int) -> Unit,
+    private val removeCartItemClick: (Int, Product) -> Unit,
+    private val plusCartItemClick: (Int,Int, Product) -> Unit,
+    private val munisItemClick: (Int,Int, Product) -> Unit,
+    private val favoriteItemClick: (Int, Product,Boolean) -> Unit
+) :  ListAdapter<Product, PopularProductsAdapter.ViewHolder>(DiffCallback) {
+
     var count:Int? = 1
     val isFavorite = false
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemHomeBestSellsProductsBinding.inflate(LayoutInflater.from(parent.context)),  itemClick,cartItemClick,removeCartItemClick,plusCartItemClick,munisItemClick,favoriteItemClick)
+        return ViewHolder(ItemProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,cartItemClick,removeCartItemClick,plusCartItemClick,munisItemClick,favoriteItemClick)
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -39,15 +40,14 @@ class HomeDailyBestSellsProductsAdapter(
         holder.bind(position,product,count,isFavorite)
     }
 
-    class ViewHolder(private val binding: ItemHomeBestSellsProductsBinding, private val itemClick: (PopularProduct) -> Unit
-                     ,private val cartItemClick: (Int, PopularProduct, Int) -> Unit,
-                     private val removeCartItemClick: (Int, PopularProduct) -> Unit,
-                     private val plusCartItemClick: (Int, Int, PopularProduct) -> Unit,
-                     private val munisItemClick: (Int, Int, PopularProduct) -> Unit,
-                     private val favoriteItemClick: (Int,PopularProduct,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemProductsBinding, private val itemClick: (Product) -> Unit,
+                     private val cartItemClick: (Int,Product,Int) -> Unit,
+                     private val removeCartItemClick: (Int, Product) -> Unit,
+                     private val plusCartItemClick: (Int,Int, Product) -> Unit,
+                     private val munisItemClick: (Int,Int, Product) -> Unit,
+                     private val favoriteItemClick: (Int,Product,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
-        fun bind(position: Int,product: PopularProduct,count: Int?, isFavorite2: Boolean) {
-
+        fun bind(position: Int, product: Product, count: Int?, isFavorite2: Boolean) {
             val zoomInAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_in)
             val zoomOutAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_out)
             var isFavorite = isFavorite2
@@ -56,7 +56,6 @@ class HomeDailyBestSellsProductsAdapter(
             binding.root.setOnClickListener {
                 itemClick(product)
             }
-
             binding.addFavoriteImageView.setOnClickListener {
                 if (isFavorite){
                     binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
@@ -76,11 +75,12 @@ class HomeDailyBestSellsProductsAdapter(
                 binding.addToCartImageView.visibility = View.GONE
                 binding.plusImageView.visibility = View.VISIBLE
                 binding.countTextView.visibility = View.VISIBLE
-                binding.miunsImageView.visibility = View.GONE
+                binding.miunsImageView.visibility = View.VISIBLE
                 binding.removeImageView.visibility = View.VISIBLE
                 cartItemClick(position,product,1)
             }
-            binding.countTextView.addTextChangedListener(object : TextWatcher {
+
+            binding.countTextView.addTextChangedListener(object :TextWatcher{
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
@@ -100,23 +100,18 @@ class HomeDailyBestSellsProductsAdapter(
                 }
 
             })
-
             binding.plusImageView.setOnClickListener {
                 total = binding.countTextView.text.toString().toInt()
                 total++
-                if (total > 1){
+                if (total > 1)
                     binding.removeImageView.visibility = View.GONE
-                    binding.miunsImageView.visibility = View.VISIBLE
-                }
-                else{
+                else
                     binding.removeImageView.visibility = View.VISIBLE
-                    binding.miunsImageView.visibility = View.GONE
-                }
-
                 binding.countTextView.text = total.toString()
 
-                plusCartItemClick(1,position,product)
+                plusCartItemClick(total,position,product)
             }
+
 
             binding.miunsImageView.setOnClickListener {
                 if (total > 1) {
@@ -133,6 +128,8 @@ class HomeDailyBestSellsProductsAdapter(
 
                 munisItemClick(total,position,product)
             }
+
+
 
             binding.removeImageView.setOnClickListener {
                 binding.addToCartImageView.visibility = View.VISIBLE
@@ -161,22 +158,19 @@ class HomeDailyBestSellsProductsAdapter(
 
             binding.rateTextView.text = product.rate.toString()
 
-
             if (product.isFavorite == 0)
                 binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
             else
                 binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
-
-
         }
 
     }
-    companion object DiffCallback : DiffUtil.ItemCallback<PopularProduct>() {
-        override fun areItemsTheSame(oldItem: PopularProduct, newItem: PopularProduct): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
+        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: PopularProduct, newItem: PopularProduct): Boolean {
+        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
         }
     }

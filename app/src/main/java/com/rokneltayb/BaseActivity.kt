@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
@@ -54,7 +55,9 @@ class BaseActivity : AppCompatActivity() {
             CurvedBottomNavigation.Model(R.id.cartFragment, getString(R.string.cart),R.drawable.ic_cart_gray),
             CurvedBottomNavigation.Model(R.id.moreFragment, getString(R.string.more),R.drawable.more_gray2))
 
-
+        binding!!.ivBack.setOnClickListener {
+            findNavController(R.id.navHostFragment).navigateUp()
+        }
 
         binding!!.bottomNavigation.apply {
             bottomNavigationItems.forEach{
@@ -144,7 +147,10 @@ class BaseActivity : AppCompatActivity() {
 
                 }
                 "fragment_more" ->{
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.tvMainEmployeeName.text = getString(R.string.more)
                     binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
                 }
@@ -172,10 +178,18 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
 
+                }"fragment_popular_products","fragment_daily_products" ->{
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.VISIBLE
+
                 } else ->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
-                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE

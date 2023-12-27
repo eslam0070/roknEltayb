@@ -15,7 +15,7 @@ import com.rokneltayb.domain.entity.Result
 interface HomeRepository {
     suspend fun home(): Result<HomeResponse>
     suspend fun categories(): Result<CategoriesResponse>
-    suspend fun products(categoryId:Int,sort:String,search:String): Result<ProductsResponse>
+    suspend fun products(categoryId:String,sort:String,search:String,type:String): Result<ProductsResponse>
     suspend fun prorudtsWithOutSearch(): Result<ProductsResponse>
     suspend fun searchOnProducts(search:String): Result<ProductsResponse>
     suspend fun productDetails(productId:Int): Result<ProductDetailsResponse>

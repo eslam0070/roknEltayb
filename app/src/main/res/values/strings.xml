@@ -101,5 +101,6 @@
     <string name="update">Update</string>
     <string name="name_address">Name address</string>
     <string name="add_address">Add Address</string>
+    <string name="see_all">See All</string>
 
 </resources>

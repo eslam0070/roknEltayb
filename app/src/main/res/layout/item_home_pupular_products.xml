@@ -31,8 +31,8 @@
                     android:scaleType="centerCrop" />
                 <ImageView
                     android:id="@+id/addFavoriteImageView"
-                    android:layout_width="@dimen/_44sdp"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_90sdp"
                     android:layout_gravity="end"
                     android:src="@drawable/deletefavourite" />

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
 import com.rokneltayb.data.model.login.profile.ProfileData
 import com.rokneltayb.databinding.FragmentMoreBinding
@@ -68,9 +69,7 @@ class ProfileFragment : Fragment() {
     ): View {
         observeUIState()
 
-        binding.ivBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = getString(R.string.my_profile)
 
         binding.addNewAddressImageView.setOnClickListener {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToNewAddressFragment())

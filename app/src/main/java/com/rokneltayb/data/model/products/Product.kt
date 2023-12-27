@@ -38,5 +38,8 @@ data class Product(
     val shapes: List<Shape?>?,
     @SerializedName("title")
     @Expose
-    val title: String?
+    val title: String?,
+    @Expose
+    @SerializedName("is_favorite")
+    val isFavorite:Int?
 ) : Parcelable
