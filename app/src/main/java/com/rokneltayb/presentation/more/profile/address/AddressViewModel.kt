@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddressViewModel @Inject constructor(private val useCase: AddressUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -111,6 +111,7 @@ class AddressViewModel @Inject constructor(private val useCase: AddressUseCase) 
     }
     sealed class UiState {
         data object Loading : UiState()
+        data object Idle : UiState()
         class Error(val errorData: ErrorResponse) : UiState()
         class AddressSuccess(val data: AddressResponse) : UiState()
         class CitiesSuccess(val data: CityResponse) : UiState()

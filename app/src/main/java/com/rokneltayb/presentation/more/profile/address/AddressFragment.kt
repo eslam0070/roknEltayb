@@ -28,8 +28,10 @@ import com.rokneltayb.presentation.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.HomeFragmentDirections
 import com.rokneltayb.presentation.home.HomeViewModel
 import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AddressFragment : Fragment() {
 
     private val binding by lazy { FragmentAddressBinding.inflate(layoutInflater) }
@@ -72,6 +74,7 @@ class AddressFragment : Fragment() {
 
         observeUIState()
 
+        viewModel.address()
         binding.addNewAddressTextView.setOnClickListener {
                 findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment())
         }
@@ -96,7 +99,10 @@ class AddressFragment : Fragment() {
         dialog.window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_whtite_button, null))
 
 
-        binding.yesButton.setOnClickListener {viewModel.delete(id) }
+        binding.yesButton.setOnClickListener {
+            viewModel.delete(id)
+            dialog.dismiss()
+        }
         binding.noButton.setOnClickListener { dialog.dismiss() }
 
         dialog.show()

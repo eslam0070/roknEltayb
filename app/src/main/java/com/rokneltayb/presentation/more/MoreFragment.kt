@@ -46,7 +46,6 @@ class MoreFragment : Fragment() {
     private fun updateUI(uiState: ProfileViewModel.UiState) {
         when (uiState) {
             is ProfileViewModel.UiState.Loading -> {
-                showProgress()
             }
 
             is ProfileViewModel.UiState.Error -> {

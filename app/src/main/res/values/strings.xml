@@ -111,5 +111,16 @@
     <string name="do_you_wand_delete_this_address">Do you want delete this address?</string>
     <string name="do_you_want_delete_your_account">Do you want delete your account?</string>
     <string name="do_you_want_to_log_out_of_the_account">Do you want to log out of the account?</string>
+    <string name="token_expite">Token is Expire</string>
+    <string name="contact_from">Contact From</string>
+    <string name="name_contact">Name<font color='#F81212'> *</font></string>
+    <string name="enter_you_name">Enter you name</string>
+    <string name="phone">Phone<font color='#F81212'> *</font></string>
+    <string name="subject">Subject<font color='#F81212'> *</font></string>
+    <string name="message">Message<font color='#F81212'> *</font></string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="enter_your_message_here">Enter your message here.......</string>
+    <string name="enter_subject_of_message">Enter Subject of message</string>
+    <string name="fill_all_fildes">Fill all fields</string>
 
 </resources>

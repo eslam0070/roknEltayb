@@ -211,7 +211,11 @@
         android:id="@+id/newAddressFragment"
         android:name="com.rokneltayb.presentation.more.profile.address.add.NewAddressFragment"
         android:label="fragment_new_address"
-        tools:layout="@layout/fragment_new_address" />
+        tools:layout="@layout/fragment_new_address" >
+        <action
+            android:id="@+id/action_newAddressFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dailyProductsFragment"
         android:name="com.rokneltayb.presentation.home.daily.DailyProductsFragment"

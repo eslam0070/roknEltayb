@@ -10,6 +10,8 @@ import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSourceImpl
+import com.rokneltayb.data.dataSource.remote.settings.SettingsRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.settings.SettingsRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSourceImpl
 import com.rokneltayb.data.sharedPref.SharedPreferences
@@ -42,4 +44,7 @@ abstract class DataSourceModule {
     abstract fun provideFavoritesRemoteDataSource(remoteDataSource: FavoritesRemoteDataSourceImpl): FavoritesRemoteDataSource
     @Binds
     abstract fun provideAddressRemoteDataSource(remoteDataSource: AddressRemoteDataSourceImpl): AddressRemoteDataSource
+    @Binds
+    abstract fun provideSettingsRemoteDataSource(remoteDataSource: SettingsRemoteDataSourceImpl): SettingsRemoteDataSource
+
 }

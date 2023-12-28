@@ -10,11 +10,13 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.rokneltayb.R
 import com.rokneltayb.data.model.address.city.City
 import com.rokneltayb.databinding.FragmentNewAddressBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.more.profile.address.AddressViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +37,7 @@ class NewAddressFragment : Fragment() {
     ): View {
         observeUIState()
 
+        viewModel.cities()
         binding.addAddressButton.setOnClickListener {
             if (cityId == 0)
                 toastError(getString(R.string.please_select_a_city))
@@ -59,11 +62,11 @@ class NewAddressFragment : Fragment() {
     private fun updateUI(uiState: AddressViewModel.UiState) {
         when (uiState) {
             is AddressViewModel.UiState.Loading -> {
-                showProgress()
             }
 
             is AddressViewModel.UiState.AddressSuccess ->{
-                toastError(uiState.data.message)
+                toast(uiState.data.message)
+                findNavController().navigate(NewAddressFragmentDirections.actionNewAddressFragmentToProfileFragment())
                 hideProgress()
             }
 

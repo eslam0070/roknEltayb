@@ -191,13 +191,30 @@ class BaseActivity : AppCompatActivity() {
 
                 }"fragment_address" -> {
                     binding!!.bottomNavigation.visibility = View.GONE
-                    binding!!.clMainToolbarContainer.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.tvMainEmployeeName.text = getString(R.string.address)
                     binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
 
+                }"fragment_contact_us" -> {
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.tvMainEmployeeName.text = getString(R.string.contact_us)
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+
+                }"fragment_privacy_policy" -> {
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.tvMainEmployeeName.text = getString(R.string.privacy_policy)
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.GONE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
                 }"fragment_popular_products","fragment_daily_products" ->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE

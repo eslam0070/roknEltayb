@@ -30,6 +30,7 @@ import com.rokneltayb.databinding.FragmentProductDetailsBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
+import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.home.details.slideAdapter.SliderAdapter
@@ -88,7 +89,10 @@ class ProductDetailsFragment : Fragment() {
             }
 
             is ProductDetailsViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 
@@ -107,7 +111,10 @@ class ProductDetailsFragment : Fragment() {
             }
 
             is StoreRateViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 
@@ -120,7 +127,10 @@ class ProductDetailsFragment : Fragment() {
             }
 
             is CartViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 
@@ -141,7 +151,10 @@ class ProductDetailsFragment : Fragment() {
             }
 
             is FavoritesViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 

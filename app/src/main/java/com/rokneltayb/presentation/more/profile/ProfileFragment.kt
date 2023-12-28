@@ -25,6 +25,7 @@ import com.rokneltayb.databinding.FragmentProductsBinding
 import com.rokneltayb.databinding.FragmentProfileBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.home.HomeViewModel
@@ -57,7 +58,10 @@ class ProfileFragment : Fragment() {
             }
 
             is ProfileViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 

@@ -21,6 +21,7 @@ import com.rokneltayb.databinding.FragmentProductsBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
+import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.cart.CartViewModel
 import com.rokneltayb.presentation.favorite.FavoritesViewModel
@@ -129,7 +130,10 @@ class ProductsFragment : Fragment() {
             }
 
             is ProductsViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
         }
@@ -140,7 +144,10 @@ class ProductsFragment : Fragment() {
                 showProgress()
             }
             is CartViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 
@@ -162,7 +169,10 @@ class ProductsFragment : Fragment() {
             }
 
             is FavoritesViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 

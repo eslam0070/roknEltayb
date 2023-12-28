@@ -1,4 +1,4 @@
-package com.rokneltayb.data.model.login.profile
+package com.rokneltayb.data.model.settings
 
 
 import com.google.gson.annotations.SerializedName
@@ -6,14 +6,15 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
 
-data class ProfileResponse(
+@Parcelize
+data class SettingsResponse(
     @SerializedName("data")
     @Expose
-    val profileData: ProfileData?,
+    val `data`: Data?,
     @SerializedName("message")
     @Expose
     val message: String?,
     @SerializedName("status")
     @Expose
     val status: Int?
-)
+) : Parcelable

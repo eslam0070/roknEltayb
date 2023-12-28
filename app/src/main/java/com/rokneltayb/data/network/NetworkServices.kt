@@ -1,3 +1,3 @@
 package com.rokneltayb.data.network
 
-interface NetworkServices : UserServices,HomeServices,FavoriteServices,CartServices,RateServices,AddressServices
+interface NetworkServices : UserServices,HomeServices,FavoriteServices,CartServices,RateServices,AddressServices,SettingsServices

@@ -1,5 +1,6 @@
 package com.rokneltayb.domain.util
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,6 +9,7 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rokneltayb.R
@@ -46,3 +48,15 @@ fun DialogFragment.setupDialogWindowForDialog() {
     windowParams?.flags = windowParams?.flags?.or(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
     window?.attributes = windowParams
 }
+
+fun logoutNoAuth(activity: Activity) {
+    activity.toast(activity.getString(R.string.token_expite))
+
+    val lang = SharedPreferencesImpl(activity).getLanguage()
+    SharedPreferencesImpl(activity).clearAll()
+    SharedPreferencesImpl(activity).setLanguage(lang)
+    Navigation.findNavController(activity, R.id.navHostFragment).navigate(R.id.loginFragment)
+
+}
+
+

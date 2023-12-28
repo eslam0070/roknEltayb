@@ -17,6 +17,7 @@ import com.rokneltayb.databinding.FragmentHomeBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
+import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.categories.CategoriesAdapter
 import com.rokneltayb.presentation.categories.CategoriesFragmentDirections
@@ -66,7 +67,10 @@ class FavoritesFragment : Fragment() {
             }
 
             is FavoritesViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
             }
 

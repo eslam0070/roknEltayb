@@ -19,6 +19,7 @@ import com.rokneltayb.R
 import com.rokneltayb.data.model.address.AddressData
 import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.data.model.products.Product
+import com.rokneltayb.databinding.ItemAddressBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 
 class AddressAdapter(
@@ -26,7 +27,7 @@ class AddressAdapter(
     private val longItemClick:(AddressData) -> Unit
 ) :  ListAdapter<AddressData, AddressAdapter.ViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,longItemClick)
+        return ViewHolder(ItemAddressBinding.inflate(LayoutInflater.from(parent.context)), itemClick,longItemClick)
     }
 
 
@@ -37,7 +38,7 @@ class AddressAdapter(
         holder.bind(address)
     }
 
-    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (AddressData) -> Unit,
+    class ViewHolder(private val binding: ItemAddressBinding, private val itemClick: (AddressData) -> Unit,
                      private val longItemClick:(AddressData) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(address: AddressData) {
