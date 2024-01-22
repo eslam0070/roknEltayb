@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.settings.SettingsResponse
 import com.rokneltayb.data.model.settings.contact.ContactUsResponse
+import com.rokneltayb.data.model.settings.pages.PagesResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.HomeUseCase
@@ -57,11 +58,28 @@ class ContactUsViewModel @Inject constructor(private val useCase: SettingsUseCas
             }
         }
     }
+    fun getPages() {
+        viewModelScope.launch {
+            when (val result = useCase.getPages()) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
 
+                is Result.Success -> {
+                    _uiState.value = UiState.PagesSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
     sealed class UiState {
         data object Loading : UiState()
         class Error(val errorData: ErrorResponse): UiState()
         class Success(val data: SettingsResponse) : UiState()
         class StoreContactSuccess(val data: ContactUsResponse) : UiState()
+        class PagesSuccess(val data: PagesResponse) : UiState()
     }
 }

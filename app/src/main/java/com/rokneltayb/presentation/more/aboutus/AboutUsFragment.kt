@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.rokneltayb.R
 import com.rokneltayb.databinding.FragmentAboutUsBinding
 import com.rokneltayb.databinding.FragmentContactUsBinding
@@ -49,15 +50,13 @@ class AboutUsFragment : Fragment() {
                 hideProgress()
             }
 
-            is ContactUsViewModel.UiState.Success -> {
-
-                hideProgress()
+            is ContactUsViewModel.UiState.PagesSuccess -> {
+                binding.aboutUsTextView.text = uiState.data.data!![0]!!.description
+                Glide.with(requireActivity()).load(uiState.data.data[0]!!.image).into(binding.imageView)
             }
 
-            is ContactUsViewModel.UiState.StoreContactSuccess -> {
-                toast(uiState.data.message!!)
-                hideProgress()
-            }
+            else ->{}
+
         }
     }
 
@@ -66,6 +65,7 @@ class AboutUsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         observeUIState()
+        viewModel.getPages()
 
         return binding.root
     }

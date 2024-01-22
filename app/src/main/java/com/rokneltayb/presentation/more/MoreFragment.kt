@@ -22,6 +22,7 @@ import com.rokneltayb.databinding.FragmentMoreBinding
 import com.rokneltayb.databinding.LogoutDialogBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.more.profile.ProfileViewModel
@@ -55,6 +56,7 @@ class MoreFragment : Fragment() {
 
             is ProfileViewModel.UiState.LogoutSuccess -> {
                 toast("You have successfully logged out")
+                logoutNoAuth(requireActivity())
                 hideProgress()
             }
 

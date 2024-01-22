@@ -6,6 +6,7 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
+import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.data.network.NetworkServices
@@ -50,17 +51,21 @@ class UserRemoteDataSourceImpl @Inject constructor(
             Result.Error(res.errorType)
     }
 
+
     override suspend fun changePassword(
+        oldPassword: String,
         password: String,
         passwordConfirmation: String
     ): Result<ChangePasswordResponse> {
-        val res = requestApiCall.requestApiCall { networkServices.changePassword(password,passwordConfirmation = passwordConfirmation) }
+        val res = requestApiCall.requestApiCall { networkServices.changePassword(oldPassword,password,passwordConfirmation = passwordConfirmation) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)
         else
             Result.Error(res.errorType)
     }
+
+
 
     override suspend fun logout(): Result<LogoutResponse> {
         val res = requestApiCall.requestApiCall { networkServices.logout() }
@@ -73,6 +78,19 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun profile(): Result<ProfileResponse> {
         val res = requestApiCall.requestApiCall { networkServices.profile() }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun updateProfile(
+        name: String,
+        phone: String,
+        email: String
+    ): Result<UpdateProfileResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.updateProfile(name, phone, email) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

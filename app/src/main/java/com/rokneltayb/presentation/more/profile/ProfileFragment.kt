@@ -10,16 +10,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doBeforeTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
 import com.rokneltayb.data.model.login.profile.ProfileData
 import com.rokneltayb.databinding.DeleteAccountDialogBinding
 import com.rokneltayb.databinding.DeleteAddressDialogBinding
+import com.rokneltayb.databinding.EditProfileDialogBinding
 import com.rokneltayb.databinding.FragmentMoreBinding
 import com.rokneltayb.databinding.FragmentProductsBinding
 import com.rokneltayb.databinding.FragmentProfileBinding
@@ -70,8 +74,17 @@ class ProfileFragment : Fragment() {
                 hideProgress()
             }
             is ProfileViewModel.UiState.LogoutSuccess -> {
-                toast("You have successfully logged out")
+                toast(getString(R.string.you_have_successfully_logged_out))
                 hideProgress()
+            }
+
+            is ProfileViewModel.UiState.ChangePasswordSuccess -> {
+
+            }
+
+            is ProfileViewModel.UiState.UpdateSuccess -> {
+                viewModel.profile()
+                toast(uiState.data.message!!)
             }
         }
     }
@@ -102,6 +115,14 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToAddressFragment())
         }
 
+        binding.updateProfileButton.setOnClickListener {
+            viewModel.updateProfile(binding.usernameEditText.text.toString(),binding.phoneEditText.text.toString(),binding.emailAddressEditText.text.toString())
+        }
+
+        binding.editPasswordImageView.setOnClickListener {
+            editProfileDialog()
+        }
+
         binding.deleteAccountTextView.setOnClickListener {
             deleteAccountDialog()
         }
@@ -109,6 +130,59 @@ class ProfileFragment : Fragment() {
         viewModel.profile()
         return binding.root
     }
+    private fun editProfileDialog() {
+        val dialog = Dialog(requireContext())
+        val binding: EditProfileDialogBinding = DataBindingUtil
+            .inflate(LayoutInflater.from(requireContext()), R.layout.edit_profile_dialog, null, false)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(binding.root)
+        dialog.window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_whtite_button, null))
+
+
+        binding.etOldPassword.doBeforeTextChanged { _, _, _, _ ->
+            binding.layoutOldPass.isPasswordVisibilityToggleEnabled = true
+        }
+        binding.etLoginPassword.doBeforeTextChanged { _, _, _, _ ->
+            binding.passLayout.isPasswordVisibilityToggleEnabled = true
+        }
+        binding.etLoginPasswordConfirm.doBeforeTextChanged { _, _, _, _ ->
+            binding.passConfirmLayout.isPasswordVisibilityToggleEnabled = true
+        }
+
+        binding.forgotYourPassword.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToForgetPasswordFragment())
+        }
+
+        binding.updateBtn.setOnClickListener {
+            if (checkValidation(binding.etOldPassword,
+                    binding.etLoginPassword,
+                    binding.etLoginPasswordConfirm,
+                    binding.layoutOldPass,
+                    binding.passLayout,
+                    binding.passConfirmLayout)) {
+                viewModel.changePassword(
+                    oldPassword = binding.etOldPassword.text.toString(),
+                    newPassword = binding.etLoginPassword.text.toString(),
+                    confirmNewPassword = binding.etLoginPasswordConfirm.text.toString()
+                )
+
+                dialog.dismiss()
+            }
+
+        }
+
+        binding.buDismiss.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+        val metrics: DisplayMetrics = requireActivity().resources.displayMetrics
+        val width: Int = metrics.widthPixels
+        dialog.window?.setLayout(
+            width - 58,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+    }
+
     private fun deleteAccountDialog() {
         val dialog = Dialog(requireContext())
         val binding: DeleteAccountDialogBinding = DataBindingUtil
@@ -129,5 +203,47 @@ class ProfileFragment : Fragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
+
+    private fun checkValidation(
+        oldPassword: TextInputEditText,
+        newPassword: TextInputEditText,
+        confirmNewPassword: TextInputEditText,
+        layoutOldPass: TextInputLayout,
+        layoutNewPass: TextInputLayout,
+        layoutConfirmNewPass: TextInputLayout
+    ): Boolean {
+        if (oldPassword.text.toString().isEmpty()) {
+            layoutOldPass.isPasswordVisibilityToggleEnabled = false
+            oldPassword.error = getString(R.string.w_pass_check)
+            return false
+        } else if (newPassword.text.toString().isEmpty()) {
+            layoutNewPass.isPasswordVisibilityToggleEnabled = false
+            newPassword.error = getString(R.string.w_pass_check)
+            return false
+        } else if (confirmNewPassword.text.toString().isEmpty()) {
+            layoutConfirmNewPass.isPasswordVisibilityToggleEnabled = false
+            confirmNewPassword.error = getString(R.string.w_pass_check)
+            return false
+        } else if (oldPassword.text.toString().length < 8) {
+            layoutOldPass.isPasswordVisibilityToggleEnabled = false
+            oldPassword.error = getString(R.string.label_enter_password_length)
+            return false
+        } else if (newPassword.text.toString().length < 8) {
+            layoutNewPass.isPasswordVisibilityToggleEnabled = false
+            newPassword.error = getString(R.string.label_enter_password_length)
+            return false
+        } else if (confirmNewPassword.text.toString().length < 8) {
+            layoutConfirmNewPass.isPasswordVisibilityToggleEnabled = false
+            confirmNewPassword.error = getString(R.string.label_enter_password_length)
+            return false
+        }else if ((confirmNewPassword.text.toString() != newPassword.text.toString())) {
+            layoutConfirmNewPass.isPasswordVisibilityToggleEnabled = false
+            confirmNewPassword.error = getString(R.string.Confirm_password_does_not_match)
+            return false
+        } else return true
+
+
+    }
+
 
 }

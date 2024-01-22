@@ -83,7 +83,7 @@ class AddressFragment : Fragment() {
             {
 
             }, {
-                deleteAddressDialog(it.id)
+                deleteAddressDialog(it.id!!)
             })
 
         binding.addressRecyclerView.adapter = addressAdapter

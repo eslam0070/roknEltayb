@@ -60,6 +60,8 @@ class ContactUsFragment : Fragment() {
                 toast(uiState.data.message!!)
                 hideProgress()
             }
+
+            else ->{}
         }
     }
     override fun onCreateView(

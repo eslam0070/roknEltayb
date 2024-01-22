@@ -5,6 +5,7 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
+import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
@@ -26,13 +27,18 @@ class UserUseCase @Inject constructor(private val repo: UserRepository) {
     ): Result<ResetPasswordResponse> = repo.resetPassword(phone, token)
 
     suspend fun changePassword(
+        oldPassword: String,
         password: String,
         passwordConfirmation: String
-    ): Result<ChangePasswordResponse> = repo.changePassword(password, passwordConfirmation)
+    ): Result<ChangePasswordResponse> = repo.changePassword(oldPassword,password, passwordConfirmation)
 
     suspend fun logout(): Result<LogoutResponse> = repo.logout()
     suspend fun profile(): Result<ProfileResponse> = repo.profile()
-
+    suspend fun updateProfile(
+        name: String,
+        phone: String,
+        email: String
+    ): Result<UpdateProfileResponse> = repo.updateProfile(name, phone, email)
     suspend fun deleteAccount(): Result<DeleteAccountResponse> = repo.deleteAccount()
 
     suspend fun signUp(

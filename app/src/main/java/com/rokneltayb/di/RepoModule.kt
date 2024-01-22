@@ -6,6 +6,7 @@ import com.rokneltayb.data.repository.AddressRepositoryImpl
 import com.rokneltayb.data.repository.CartRepositoryImpl
 import com.rokneltayb.data.repository.FavoritesRepositoryImpl
 import com.rokneltayb.data.repository.HomeRepositoryImpl
+import com.rokneltayb.data.repository.OrdersRepositoryImpl
 import com.rokneltayb.data.repository.RateRepositoryImpl
 import com.rokneltayb.data.repository.SettingsRepositoryImpl
 import com.rokneltayb.data.repository.UserRepositoryImpl
@@ -13,6 +14,7 @@ import com.rokneltayb.domain.repository.AddressRepository
 import com.rokneltayb.domain.repository.CartRepository
 import com.rokneltayb.domain.repository.FavoritesRepository
 import com.rokneltayb.domain.repository.HomeRepository
+import com.rokneltayb.domain.repository.OrdersRepository
 import com.rokneltayb.domain.repository.RateRepository
 import com.rokneltayb.domain.repository.SettingsRepository
 import com.rokneltayb.domain.repository.UserRepository
@@ -38,4 +40,6 @@ abstract class RepoModule {
     abstract fun provideAddressRepository(addressRepositoryImpl: AddressRepositoryImpl): AddressRepository
     @Binds
     abstract fun provideSettingsRepository(settingsRepositoryImpl: SettingsRepositoryImpl): SettingsRepository
+    @Binds
+    abstract fun provideOrdersRepository(ordersRepositoryImpl: OrdersRepositoryImpl): OrdersRepository
 }

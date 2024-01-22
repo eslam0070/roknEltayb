@@ -4,6 +4,7 @@ import javax.inject.Inject
 import com.rokneltayb.data.model.rate.AddRateResponse
 import com.rokneltayb.data.model.settings.SettingsResponse
 import com.rokneltayb.data.model.settings.contact.ContactUsResponse
+import com.rokneltayb.data.model.settings.pages.PagesResponse
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
 import com.rokneltayb.domain.entity.Result
@@ -29,6 +30,15 @@ class SettingsRemoteDataSourceImpl @Inject constructor(
         message: String
     ): Result<ContactUsResponse> {
         val res = requestApiCall.requestApiCall { networkServices.storeContact(name, phone, email, subject, message) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun getPages(): Result<PagesResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.getPages() }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

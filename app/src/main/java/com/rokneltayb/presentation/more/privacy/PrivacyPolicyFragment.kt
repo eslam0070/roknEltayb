@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.rokneltayb.R
 import com.rokneltayb.databinding.FragmentAboutUsBinding
 import com.rokneltayb.databinding.FragmentPrivacyPolicyBinding
@@ -18,8 +19,10 @@ import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.more.contactus.ContactUsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class PrivacyPolicyFragment : Fragment() {
 
     private val binding by lazy { FragmentPrivacyPolicyBinding.inflate(layoutInflater) }
@@ -47,15 +50,13 @@ class PrivacyPolicyFragment : Fragment() {
                 hideProgress()
             }
 
-            is ContactUsViewModel.UiState.Success -> {
-
-                hideProgress()
+            is ContactUsViewModel.UiState.PagesSuccess -> {
+                binding.privacyPolicyTextView.text = uiState.data.data!![1]!!.description
+                Glide.with(requireActivity()).load(uiState.data.data[1]!!.image).into(binding.imageView)
             }
 
-            is ContactUsViewModel.UiState.StoreContactSuccess -> {
-                toast(uiState.data.message!!)
-                hideProgress()
-            }
+            else ->{}
+
         }
     }
 
@@ -65,6 +66,7 @@ class PrivacyPolicyFragment : Fragment() {
     ): View {
 
         observeUIState()
+        viewModel.getPages()
         return binding.root
     }
 

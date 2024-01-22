@@ -40,6 +40,7 @@ interface UserServices {
     @FormUrlEncoded
     @POST("client/auth/change-password")
     suspend fun changePassword(
+        @Field("old_password") oldPassword: String,
         @Field("password") password: String,
         @Field("password_confirmation") passwordConfirmation: String
     ): Response<ChangePasswordResponse>
@@ -68,15 +69,20 @@ interface UserServices {
     suspend fun profile(): Response<ProfileResponse>
 
     @FormUrlEncoded
+    @POST("client/auth/change-password")
+    suspend fun changePasswordWithOld(
+        @Field("old_password") oldPassword: String,
+        @Field("password") password: String,
+        @Field("password_confirmation") passwordConfirmation: String
+    ): Response<ChangePasswordResponse>
+
+
+    @FormUrlEncoded
     @POST("client/auth/profile/update")
     suspend fun updateProfile(
         @Field("name")name:String,
         @Field("email")phone:String,
-        @Field("email")email:String,
-        @Field("password")password:String,
-        @Field("password_confirmation")passwordConfirmation:String,
-        @Field("fcm_token")fcmToken:String
-    ): Response<UpdateProfileResponse>
+        @Field("phone")email:String): Response<UpdateProfileResponse>
 
 
 }

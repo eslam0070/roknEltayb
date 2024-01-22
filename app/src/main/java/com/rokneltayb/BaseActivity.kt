@@ -136,7 +136,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.GONE
                 }
-                "fragment_cart","fragment_home"->{
+                "fragment_home"->{
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.bottomNavigation.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.GONE
@@ -222,6 +222,30 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.VISIBLE
+
+                }"fragment_cart" ->{
+                    binding!!.bottomNavigation.visibility = View.VISIBLE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.GONE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+
+                }"fragment_check_out" ->{
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
+
+                } "fragment_order" ->{
+                    binding!!.bottomNavigation.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.ivBack.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivHome.visibility = View.GONE
+                    binding!!.ivSearch.visibility = View.GONE
 
                 } else ->{
                     binding!!.bottomNavigation.visibility = View.GONE

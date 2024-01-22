@@ -8,6 +8,8 @@ import com.rokneltayb.data.dataSource.remote.favorite.FavoritesRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.favorite.FavoritesRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSourceImpl
+import com.rokneltayb.data.dataSource.remote.orders.OrdersRemoteDataSource
+import com.rokneltayb.data.dataSource.remote.orders.OrdersRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.rate.RateRemoteDataSourceImpl
 import com.rokneltayb.data.dataSource.remote.settings.SettingsRemoteDataSource
@@ -46,5 +48,7 @@ abstract class DataSourceModule {
     abstract fun provideAddressRemoteDataSource(remoteDataSource: AddressRemoteDataSourceImpl): AddressRemoteDataSource
     @Binds
     abstract fun provideSettingsRemoteDataSource(remoteDataSource: SettingsRemoteDataSourceImpl): SettingsRemoteDataSource
+    @Binds
+    abstract fun provideOrdersRemoteDataSource(remoteDataSource: OrdersRemoteDataSourceImpl): OrdersRemoteDataSource
 
 }

@@ -7,6 +7,7 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
+import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
@@ -28,12 +29,19 @@ class UserRepositoryImpl @Inject constructor(private val remoteSource: UserRemot
     ): Result<ResetPasswordResponse> = remoteSource.resetPassword(phone, token)
 
     override suspend fun changePassword(
+        oldPassword: String,
         password: String,
         passwordConfirmation: String
-    ): Result<ChangePasswordResponse> = remoteSource.changePassword(password, passwordConfirmation)
+    ): Result<ChangePasswordResponse> = remoteSource.changePassword(oldPassword,password, passwordConfirmation)
+
 
     override suspend fun logout(): Result<LogoutResponse> = remoteSource.logout()
     override suspend fun profile(): Result<ProfileResponse> = remoteSource.profile()
+    override suspend fun updateProfile(
+        name: String,
+        phone: String,
+        email: String
+    ): Result<UpdateProfileResponse> = remoteSource.updateProfile(name, phone, email)
 
     override suspend fun deleteAccount(): Result<DeleteAccountResponse> = remoteSource.deleteAccount()
 
