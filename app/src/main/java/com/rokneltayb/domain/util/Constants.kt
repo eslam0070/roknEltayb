@@ -51,5 +51,5 @@ object Constants {
         }
     }
     const val mobilePhoneDigitsNumber = 10
-    const val passwordCharNumber = 8
+    const val passwordCharNumber = 6
 }

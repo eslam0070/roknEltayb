@@ -51,7 +51,7 @@ class ResetYourPasswordFragment : Fragment() {
 
         binding.continueButton.setOnClickListener {
             if (checkPasswordFields()) {
-                viewModel.resetPassword(
+                viewModel.changePassword(
                     binding.newPasswordTextInputEditText.text.toString(),
                     binding.confirmPasswordTextInputEditText.text.toString()
                 )
@@ -71,17 +71,17 @@ class ResetYourPasswordFragment : Fragment() {
                 showProgress()
             }
 
-            is ResetYourPasswordViewModel.UiState.Success -> {
-                findNavController().navigate(ResetYourPasswordFragmentDirections.actionResetYourPasswordFragmentToLoginFragment())
-                hideProgress()
-            }
-
             is ResetYourPasswordViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
             }
 
-            is ResetYourPasswordViewModel.UiState.Idle -> hideProgress()
+            is ResetYourPasswordViewModel.UiState.ChangePasswordSuccess -> {
+                findNavController().navigate(ResetYourPasswordFragmentDirections.actionResetYourPasswordFragmentToLoginFragment())
+                hideProgress()
+            }
+
+            else -> {}
         }
     }
 
@@ -115,32 +115,6 @@ class ResetYourPasswordFragment : Fragment() {
             return false
         }
         binding.confirmPasswordTextInputLayout.isErrorEnabled = false
-
-        if (!binding.newPasswordTextInputEditText.text.toString().contains(Regex("[A-Z]"))) {
-            binding.newPasswordTextInputLayout.isErrorEnabled = true
-            binding.newPasswordTextInputLayout.error =
-                requireContext().getString(R.string.password_must_contain_upper_case_letter)
-            return false
-        }
-        binding.newPasswordTextInputLayout.isErrorEnabled = false
-
-        if (!binding.newPasswordTextInputEditText.text.toString().contains(Regex("[a-z]"))) {
-            binding.newPasswordTextInputLayout.isErrorEnabled = true
-            binding.newPasswordTextInputLayout.error =
-                requireContext().getString(R.string.password_must_contain_lower_case_letter)
-            return false
-        }
-        binding.newPasswordTextInputLayout.isErrorEnabled = false
-
-        if (!binding.newPasswordTextInputEditText.text.toString()
-                .contains(Regex("[!@#\$%&*()_+=|<>?{}\\\\[\\\\]~-]"))
-        ) {
-            binding.newPasswordTextInputLayout.isErrorEnabled = true
-            binding.newPasswordTextInputLayout.error =
-                requireContext().getString(R.string.password_must_contain_special_char)
-            return false
-        }
-        binding.newPasswordTextInputLayout.isErrorEnabled = false
 
         if (binding.confirmPasswordTextInputEditText.text.toString() != binding.newPasswordTextInputEditText.text.toString()) {
             binding.confirmPasswordTextInputLayout.isErrorEnabled = true

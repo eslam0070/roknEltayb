@@ -257,5 +257,16 @@
         tools:layout="@layout/fragment_order_details" >
         <argument android:name="id"
             app:argType="integer"/>
+        <action
+            android:id="@+id/action_orderDetailsFragment_to_trackOrderFragment"
+            app:destination="@id/trackOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackOrderFragment"
+        android:name="com.rokneltayb.presentation.more.order.details.track.TrackOrderFragment"
+        android:label="fragment_track_order"
+        tools:layout="@layout/fragment_track_order" >
+
+        <argument android:name="status" app:argType="string"/>
     </fragment>
 </navigation>
