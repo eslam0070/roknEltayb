@@ -11,6 +11,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
 import com.rokneltayb.data.model.orders.details.OrderDetailsData
 import com.rokneltayb.databinding.FragmentOrderBinding
@@ -66,6 +67,10 @@ class OrderDetailsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = getString(R.string.my_orders)
+        (requireActivity() as BaseActivity).binding!!.ivBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
         observeUIState()
         binding.myOrderRecyclerView.addBasicItemDecoration()
 
@@ -82,9 +87,24 @@ class OrderDetailsFragment : Fragment() {
         binding.placeOnTextView.text = getString(R.string.place_on) + orderDetailsData.date
 
 
-        binding.trackYouOrderButton.setOnClickListener {
 
+        if (args.status == "canceled")
+            binding.trackYouOrderButton.visibility = View.GONE
+        else if (args.status == "delivered"){
+            binding.trackYouOrderButton.visibility = View.VISIBLE
+            binding.trackYouOrderButton.text = getString(R.string.see_status_history)
+            binding.trackYouOrderButton.setOnClickListener {
+                findNavController().navigate(OrderDetailsFragmentDirections.actionOrderDetailsFragmentToTrackOrderFragment(orderDetailsData.type!!))
+            }
         }
+        else{
+            binding.trackYouOrderButton.visibility = View.VISIBLE
+            binding.trackYouOrderButton.setOnClickListener {
+                findNavController().navigate(OrderDetailsFragmentDirections.actionOrderDetailsFragmentToTrackOrderFragment(orderDetailsData.type!!))
+            }
+        }
+
+
 
         binding.itemCountTextView.text = "("+orderDetailsData.orderDetails!!.size.toString()+" "+getString(R.string.items)+")"
 

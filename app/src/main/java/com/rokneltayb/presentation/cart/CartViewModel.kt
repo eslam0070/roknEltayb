@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
@@ -60,6 +61,24 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         }
     }
 
+    fun updateCart(productId: String, shapeId: String, count: String) {
+        viewModelScope.launch {
+            when (val result = useCase.updateCart(productId, shapeId, count)) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.UpdateCartSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+
     fun deleteCard(productId: String, shapeId: String) {
         viewModelScope.launch {
             when (val result = useCase.deleteCart(productId, shapeId)) {
@@ -83,6 +102,7 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         class Error(val errorData: ErrorResponse): UiState()
         class GetCartSuccess(val data: CartResponse) : UiState()
         class AddCartSuccess(val data: AddCartResponse) : UiState()
+        class UpdateCartSuccess(val data: UpdateCartResponse) : UiState()
         class DeleteCartSuccess(val data: DeleteCartResponse) : UiState()
     }
 }

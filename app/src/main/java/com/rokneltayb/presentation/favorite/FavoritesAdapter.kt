@@ -18,7 +18,7 @@ import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 
 class FavoritesAdapter(
     private val itemClick: (Int) -> Unit,
-    private val addToCartItemClick: (Int) -> Unit,
+    private val addToCartItemClick: (FavoritesData) -> Unit,
     private val deleteFavoriteItemClick: (Int) -> Unit
 ) :  ListAdapter<FavoritesData, FavoritesAdapter.ViewHolder>(DiffCallback) {
 
@@ -33,7 +33,7 @@ class FavoritesAdapter(
     }
 
     class ViewHolder(private val binding: ItemFavoritesBinding, private val itemClick: (Int) -> Unit,
-                     private val addToCartItemClick: (Int) -> Unit,
+                     private val addToCartItemClick: (FavoritesData) -> Unit,
                      private val deleteFavoriteItemClick: (Int) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(favorte: FavoritesData) {
@@ -42,7 +42,7 @@ class FavoritesAdapter(
             }
 
             binding.addToCartButton.setOnClickListener {
-                addToCartItemClick(favorte.id!!)
+                addToCartItemClick(favorte)
             }
 
             binding.deleteFavoriteImageView.setOnClickListener {

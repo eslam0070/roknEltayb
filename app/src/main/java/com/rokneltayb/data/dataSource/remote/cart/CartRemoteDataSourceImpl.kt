@@ -3,6 +3,7 @@ package com.rokneltayb.data.dataSource.remote.cart
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
 import javax.inject.Inject
@@ -30,6 +31,19 @@ class CartRemoteDataSourceImpl @Inject constructor(
         count: String
     ): Result<AddCartResponse> {
         val res = requestApiCall.requestApiCall { networkServices.addCart(productId, shapeId, count) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun updateCart(
+        productId: String,
+        shapeId: String,
+        count: String
+    ): Result<UpdateCartResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.updateCart(productId, shapeId, count) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

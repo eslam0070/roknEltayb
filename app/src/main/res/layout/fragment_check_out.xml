@@ -42,7 +42,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cartRecyclerView"
+                android:id="@+id/ordersRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
@@ -65,6 +65,7 @@
                 android:id="@+id/cash"
                 android:layout_width="match_parent"
                 android:checked="true"
+                android:clickable="false"
                 android:layout_height="wrap_content"
                 android:text="@string/cash_on_delivery"/>
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
 import com.rokneltayb.databinding.FragmentCartBinding
@@ -19,6 +20,7 @@ import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
+import com.rokneltayb.presentation.cart.checkout.CheckOutAdapter
 import com.rokneltayb.presentation.favorite.FavoritesAdapter
 import com.rokneltayb.presentation.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
@@ -101,7 +103,7 @@ class CartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         observeUIState()
         (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = getString(R.string.cart)
 
@@ -120,7 +122,7 @@ class CartFragment : Fragment() {
         viewModel.getCart()
 
         binding.checkOutButton.setOnClickListener {
-
+            findNavController().navigate(CartFragmentDirections.actionCartFragmentToCheckOutFragment())
         }
 
         return binding.root

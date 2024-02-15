@@ -155,7 +155,7 @@ class HomeDailyBestSellsProductsAdapter(
                 binding.discountTextView.visibility = View.INVISIBLE
 
             if (product.price != null)
-                binding.priceTextView.text = product.price
+                binding.priceTextView.text = product.price.toString()
             else
                 binding.priceTextView.text = "500 KWD"
 

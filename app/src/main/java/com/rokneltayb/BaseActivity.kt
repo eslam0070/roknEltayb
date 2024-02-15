@@ -2,12 +2,15 @@ package com.rokneltayb
 
 import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -17,6 +20,8 @@ import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
 import com.rokneltayb.domain.util.Constants
+import com.rokneltayb.domain.util.Constants.LANGUAGE_ARABIC
+import com.rokneltayb.domain.util.localization.LocaleHelper
 import com.rokneltayb.domain.util.localization.LocalizationUtils
 import com.rokneltayb.domain.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,21 +38,19 @@ class BaseActivity : AppCompatActivity() {
     var dialogDismissThread: Job? = null
     var binding: ActivityBaseBinding? = null
     private val mNavController by lazy { Navigation.findNavController(this, R.id.navHostFragment) }
+    private val sharedPref by lazy { SharedPreferencesImpl(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val configuration = resources.configuration
-        configuration.fontScale = 1.toFloat() //0.85 small size, 1 normal size, 1,15 big etc
-        val metrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(metrics)
-        metrics.scaledDensity = configuration.fontScale * metrics.density
+        if (Build.VERSION.SDK_INT >= 31) {
+            window.decorView.layoutDirection = resources.configuration.layoutDirection
+        }
 
-        if (!Constants.densities.contains(metrics.density))
-            configuration.densityDpi = (LocalizationUtils.getDensity(this) * 170f).toInt()
-        resources.updateConfiguration(configuration, metrics)
+
         binding = DataBindingUtil.setContentView(this@BaseActivity, R.layout.activity_base)
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         val bottomNavigationItems = mutableListOf(
             CurvedBottomNavigation.Model(R.id.homeFragment, getString(R.string.home),R.drawable.ic_home_gray),
@@ -64,7 +67,6 @@ class BaseActivity : AppCompatActivity() {
                 add(it)
             }
             setOnClickMenuListener {
-                toast(it.title)
                 mNavController.navigate(it.id)
             }
             setupNavController(mNavController)
@@ -272,6 +274,16 @@ class BaseActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        if (sharedPref.getLanguage().isEmpty() ||
+            sharedPref.getLanguage() == LANGUAGE_ARABIC) {
+            sharedPref.setLanguage(LANGUAGE_ARABIC)
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
+            binding!!.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+            SharedPreferencesImpl(this).setLanguage(Constants.LANGUAGE_ENGLISH)
+            binding!!.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         mNavController.addOnDestinationChangedListener(listener)
     }
     override fun onResume() {

@@ -23,7 +23,6 @@ class LocaleHelper {
         }
 
         fun getLanguage(context: Context): String? {
-//        return getPersistedData(context, Locale.getDefault().getLanguage());
             return getPersistedData(context, "ar")
         }
 
@@ -48,7 +47,7 @@ class LocaleHelper {
         private fun updateResources(context: Context, language: String?): Context {
             val locale: Locale = if (language.equals("ar", ignoreCase = true)) Locale(
                 language.toString(),
-                "rSA"
+                "eg"
             ) else Locale(language.toString())
             Locale.setDefault(locale)
             val configuration = context.resources.configuration

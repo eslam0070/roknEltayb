@@ -7,6 +7,7 @@ import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
 import com.rokneltayb.data.model.login.changepassword.ChangePasswordResponse
@@ -25,6 +26,7 @@ import javax.inject.Inject
 class CartRepositoryImpl @Inject constructor(private val remoteSource: CartRemoteDataSource): CartRepository {
     override suspend fun getCart(): Result<CartResponse> = remoteSource.getCart()
     override suspend fun addCart(productId: String, shapeId: String, count: String): Result<AddCartResponse> = remoteSource.addCart(productId, shapeId, count)
+    override suspend fun updateCart(productId: String, shapeId: String, count: String): Result<UpdateCartResponse> = remoteSource.updateCart(productId, shapeId, count)
     override suspend fun deleteCart(productId: String, shapeId: String): Result<DeleteCartResponse> = remoteSource.deleteCart(productId, shapeId)
 
 }

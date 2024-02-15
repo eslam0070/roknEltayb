@@ -86,10 +86,10 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
             binding.countSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (cart.count != dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number.toInt())
-                        viewmodel.addCard(cart.productId.toString(),cart.shapeId.toString(), dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number)
+                        viewmodel.updateCart(cart.productId.toString(),cart.shapeId.toString(), dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
+
                 }
             }
 

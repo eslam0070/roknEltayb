@@ -1,13 +1,333 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.more.order.details.track.TrackOrderFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/custom_bg_edittext_more_curve">
+
+            <!--pending-->
+            <LinearLayout
+                android:id="@+id/layoutPending"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePendingImageView"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/statusPendingTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/circlePendingImageView"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/dateOrderTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintEnd_toEndOf="@+id/statusPendingTextVIew"
+                        app:layout_constraintStart_toStartOf="@+id/statusPendingTextVIew"
+                        app:layout_constraintTop_toBottomOf="@id/statusPendingTextVIew" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePending1ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="10dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circlePendingImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circlePendingImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circlePendingImageView" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePending2ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circlePending1ImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circlePending1ImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circlePending1ImageView" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePending3ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circlePending2ImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circlePending2ImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circlePending2ImageView" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <!--Perpearing-->
+            <LinearLayout
+                android:id="@+id/layoutPerpearing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPending">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePerparingImageView"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/statusPerparingTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/circlePerparingImageView"
+                        app:layout_constraintTop_toTopOf="@+id/circlePerparingImageView" />
+
+                    <TextView
+                        android:id="@+id/dateOrderPerparingTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintEnd_toEndOf="@+id/statusPerparingTextVIew"
+                        app:layout_constraintStart_toStartOf="@+id/statusPerparingTextVIew"
+                        app:layout_constraintTop_toBottomOf="@id/statusPerparingTextVIew" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePerparing1ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="10dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circlePerparingImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circlePerparingImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circlePerparingImageView" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePerparing2ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circlePerparing1ImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circlePerparing1ImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circlePerparing1ImageView" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circlePerparing3ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circlePerparing2ImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circlePerparing2ImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circlePerparing2ImageView" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <!--OnWay-->
+            <LinearLayout
+                android:id="@+id/layoutOnWay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPerpearing">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleOnWayImageView"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/statusOnWayTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/circleOnWayImageView"
+                        app:layout_constraintTop_toTopOf="@+id/circleOnWayImageView" />
+
+                    <TextView
+                        android:id="@+id/dateOrderOnWayTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintEnd_toEndOf="@+id/statusOnWayTextVIew"
+                        app:layout_constraintStart_toStartOf="@+id/statusOnWayTextVIew"
+                        app:layout_constraintTop_toBottomOf="@id/statusOnWayTextVIew" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleOnWay1ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="10dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circleOnWayImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circleOnWayImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circleOnWayImageView" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleOnWay2ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circleOnWay1ImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circleOnWay1ImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circleOnWay1ImageView" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleOnWay3ImageView"
+                        android:layout_width="@dimen/_5sdp"
+                        android:layout_height="@dimen/_5sdp"
+                        android:layout_marginTop="4dp"
+                        app:civ_border_color="@color/white"
+                        app:layout_constraintEnd_toEndOf="@+id/circleOnWay2ImageView"
+                        app:layout_constraintStart_toStartOf="@+id/circleOnWay2ImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/circleOnWay2ImageView" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <!--Delivered-->
+            <LinearLayout
+                android:id="@+id/layoutDelivered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutOnWay">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleDeliveredImageView"
+                        android:layout_width="@dimen/_25sdp"
+                        android:layout_height="@dimen/_25sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/statusDeliveredTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/circleDeliveredImageView"
+                        app:layout_constraintTop_toTopOf="@+id/circleDeliveredImageView" />
+
+                    <TextView
+                        android:id="@+id/dateOrderDeliveredTextVIew"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:layout_constraintStart_toStartOf="@+id/statusDeliveredTextVIew"
+                        app:layout_constraintTop_toBottomOf="@id/statusDeliveredTextVIew" />
+
+
+                    <TextView
+                        android:id="@+id/successfullyDeliveredTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_40sdp"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:visibility="invisible"
+                        android:text="@string/your_order_has_been_delivery_successfully"
+                        android:textColor="@color/green"
+                        app:layout_constraintStart_toStartOf="@+id/statusDeliveredTextVIew"
+                        app:layout_constraintTop_toBottomOf="@+id/dateOrderDeliveredTextVIew"
+                        tools:layout_editor_absoluteX="6dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

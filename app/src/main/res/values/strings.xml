@@ -158,7 +158,16 @@
     <string name="delivery">Delivery</string>
     <string name="shipping_details">Shipping Details</string>
     <string name="shipping_address">Shipping Address</string>
-    <string name="order_id">Order ID -\n</string>
+    <string name="order_id">Order ID</string>
     <string name="place_on">"Place on "</string>
     <string name="qty">"QTY: "</string>
+    <string name="your_order_has_been_delivery_successfully">your order has been delivery successfully!</string>
+    <string name="pending_confirmation">Pending</string>
+    <string name="waiting_to_be_shipped">Waiting To Be Shipped</string>
+    <string name="on_way">On Way</string>
+    <string name="delivered">Delivered</string>
+    <string name="see_status_history">See Status history</string>
+    <string name="order_id2">"Order ID: "</string>
+    <string name="order_status">Order status</string>
+    <string name="please_select_address">Please select address</string>
 </resources>

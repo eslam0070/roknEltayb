@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
 
     private fun setProductsRecyclerView() {
         homeProductsAdapter = HomeProductsAdapter({
-            findNavController().navigate(ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(it.id!!))
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
             cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
         },{ position,product ->

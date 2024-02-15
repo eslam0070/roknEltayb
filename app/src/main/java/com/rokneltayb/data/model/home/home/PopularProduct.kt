@@ -28,7 +28,7 @@ data class PopularProduct(
     val isDiscount: String?,
     @SerializedName("price")
     @Expose
-    val price: String?,
+    val price: Float?,
     @SerializedName("rate")
     @Expose
     val rate: Int?,

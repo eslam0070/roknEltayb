@@ -79,7 +79,7 @@ class OrderFragment : Fragment() {
         binding.myOrderRecyclerView.addBasicItemDecoration()
 
         ordersAdapter = OrdersAdapter{
-            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(it.id!!))
+            findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToOrderDetailsFragment(it.id!!,it.type!!))
         }
 
         binding.myOrderRecyclerView.adapter = ordersAdapter

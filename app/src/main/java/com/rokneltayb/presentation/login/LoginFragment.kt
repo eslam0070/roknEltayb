@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -20,8 +22,11 @@ import com.rokneltayb.R
 import com.rokneltayb.data.model.login.login.ClientData
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentLoginBinding
+import com.rokneltayb.domain.util.Constants
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.localization.LocaleHelper
+import com.rokneltayb.domain.util.localization.LocalizationUtils
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,7 +92,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.signUpTxt.paintFlags = binding.signUpTxt.paintFlags or Paint.UNDERLINE_TEXT_FLAG
         binding.signUpTxt.setOnClickListener {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
@@ -135,6 +139,17 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        if (sharedPref.getLanguage().isEmpty() ||
+            sharedPref.getLanguage() == Constants.LANGUAGE_ARABIC
+        ) {
+            sharedPref.setLanguage(Constants.LANGUAGE_ARABIC)
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
+            SharedPreferencesImpl(requireContext()).setLanguage(Constants.LANGUAGE_ENGLISH)
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
         getFcmToken()
     }
     var fcmToken = ""

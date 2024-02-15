@@ -1,6 +1,7 @@
 package com.rokneltayb.presentation.more.order
 
 import android.R
+import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,7 @@ class OrdersAdapter(private val itemClick: (OrdersData) -> Unit) :  ListAdapter<
         fun bind(order: OrdersData) {
 
             Glide.with(binding.root.context).load(order.image).into(binding.imageCartImageView)
-            binding.nameOrderTextView.text = order.orderNum.toString()
+            binding.nameOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.order_id2)+order.orderNum.toString()
             binding.dateOrderTextView.text = order.date
 
             binding.root.setOnClickListener {
@@ -54,20 +55,31 @@ class OrdersAdapter(private val itemClick: (OrdersData) -> Unit) :  ListAdapter<
             when(order.type){
                 "pending"->{
                     binding.stateOrderTextView.setBackgroundResource(com.rokneltayb.R.drawable.custom_bg_statue_pending)
+                    binding.stateOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.pending_confirmation)
+                    binding.stateOrderTextView.setTextColor(Color.BLACK)
                 }
                 "preparing"->{
                     binding.stateOrderTextView.setBackgroundResource(com.rokneltayb.R.drawable.custom_bg_statue_preparing)
+                    binding.stateOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.waiting_to_be_shipped)
+                    binding.stateOrderTextView.setTextColor(Color.BLACK)
                 }
                 "on_way"->{
                     binding.stateOrderTextView.setBackgroundResource(com.rokneltayb.R.drawable.custom_bg_statue_onway)
+                    binding.stateOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.on_way)
+                    binding.stateOrderTextView.setTextColor(Color.BLACK)
                 }
                 "delivered"->{
                     binding.stateOrderTextView.setBackgroundResource(com.rokneltayb.R.drawable.custom_bg_statue_delivered)
+                    binding.stateOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.delivered)
+                    binding.stateOrderTextView.setTextColor(Color.WHITE)
                 }
                 "canceled"->{
                     binding.stateOrderTextView.setBackgroundResource(com.rokneltayb.R.drawable.custom_bg_statue_canceled)
+                    binding.stateOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.cancel)
+                    binding.stateOrderTextView.setTextColor(Color.WHITE)
                 }
             }
+
 
 
         }

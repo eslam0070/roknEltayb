@@ -249,7 +249,11 @@
         android:id="@+id/checkOutFragment"
         android:name="com.rokneltayb.presentation.cart.checkout.CheckOutFragment"
         android:label="fragment_check_out"
-        tools:layout="@layout/fragment_check_out" />
+        tools:layout="@layout/fragment_check_out" >
+        <action
+            android:id="@+id/action_checkOutFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"
         android:name="com.rokneltayb.presentation.more.order.details.OrderDetailsFragment"
@@ -257,6 +261,9 @@
         tools:layout="@layout/fragment_order_details" >
         <argument android:name="id"
             app:argType="integer"/>
+
+        <argument android:name="status"
+            app:argType="string"/>
         <action
             android:id="@+id/action_orderDetailsFragment_to_trackOrderFragment"
             app:destination="@id/trackOrderFragment" />

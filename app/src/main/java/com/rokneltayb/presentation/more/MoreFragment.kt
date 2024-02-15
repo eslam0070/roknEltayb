@@ -1,6 +1,9 @@
 package com.rokneltayb.presentation.more
 
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -9,19 +12,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.LocaleListCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.DeleteAccountDialogBinding
 import com.rokneltayb.databinding.FragmentHomeBinding
 import com.rokneltayb.databinding.FragmentMoreBinding
 import com.rokneltayb.databinding.LogoutDialogBinding
+import com.rokneltayb.domain.util.Constants
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.localization.LocaleHelper
 import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
@@ -70,6 +79,15 @@ class MoreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         observeUIState()
+        if (Build.VERSION.SDK_INT >= 31) {
+            requireActivity().window.decorView.layoutDirection = resources.configuration.layoutDirection
+        }
+        if (SharedPreferencesImpl(requireContext()).getLanguage() == "en") {
+            binding.langTextView.text = "En"
+        } else {
+            binding.langTextView.text = "Ar"
+        }
+
         binding.myOrdersLinearLayout.setOnClickListener {
             findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToOrderFragment())
         }
@@ -95,13 +113,42 @@ class MoreFragment : Fragment() {
         }
 
         binding.changeLanguageLinearLayout.setOnClickListener {
-
+            changeLanguage()
         }
 
         binding.logoutLinearLayout.setOnClickListener {
             logoutDialog()
         }
         return binding.root
+    }
+
+    private fun changeLanguage() {
+        val locale: LocaleListCompat?
+
+        if (SharedPreferencesImpl(requireContext()).getLanguage() == Constants.LANGUAGE_ARABIC) {
+            LocaleHelper.setLocale(requireContext(), "en")
+            SharedPreferencesImpl(requireContext()).setLanguage(Constants.LANGUAGE_ENGLISH)
+            locale = LocaleListCompat.forLanguageTags("en")
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
+        } else {
+            LocaleHelper.setLocale(requireContext(), "ar")
+            SharedPreferencesImpl(requireContext()).setLanguage(Constants.LANGUAGE_ARABIC)
+            locale = LocaleListCompat.forLanguageTags("ar")
+            binding.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
+        }
+
+        when (Build.VERSION.SDK_INT) {
+            Build.VERSION_CODES.S, Build.VERSION_CODES.S_V2 -> {
+                val intent = Intent(requireContext(), BaseActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK //this will always start your activity as a new task
+                startActivity(intent)
+                requireActivity().finish()
+            }
+
+            else -> {
+                AppCompatDelegate.setApplicationLocales(locale)
+            }
+        }
     }
 
     private fun logoutDialog() {
@@ -113,7 +160,9 @@ class MoreFragment : Fragment() {
         dialog.window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_whtite_button, null))
 
 
-        binding.yesButton.setOnClickListener {viewModel.logout() }
+        binding.yesButton.setOnClickListener {
+            viewModel.logout()
+            dialog.dismiss()}
         binding.noButton.setOnClickListener { dialog.dismiss() }
 
 

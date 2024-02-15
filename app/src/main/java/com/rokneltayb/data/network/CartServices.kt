@@ -4,6 +4,7 @@ package com.rokneltayb.data.network
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -22,6 +23,13 @@ interface CartServices {
         @Field("product_id") productId: String,
         @Field("shape_id") shapeId: String,
         @Field("count") count: String): Response<AddCartResponse>
+
+    @FormUrlEncoded
+    @POST("client/update-cart")
+    suspend fun updateCart(
+        @Field("product_id") productId: String,
+        @Field("shape_id") shapeId: String,
+        @Field("count") count: String): Response<UpdateCartResponse>
 
     @FormUrlEncoded
     @POST("client/delete-cart")

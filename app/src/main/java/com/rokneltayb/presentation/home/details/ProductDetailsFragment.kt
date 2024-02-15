@@ -19,9 +19,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.model.cart.CountModel
 import com.rokneltayb.data.model.products.details.Data
 import com.rokneltayb.data.model.products.details.Shape
 import com.rokneltayb.databinding.AddComentDialogBinding
@@ -57,6 +59,9 @@ class ProductDetailsFragment : Fragment() {
     private lateinit var rateAdapter: RateAdapter
     private var nameProduct:String? = null
     private var priceProduct:String? = null
+    private var count:String? = null
+    val list: ArrayList<CountModel> = ArrayList()
+
 
     private fun observeUIState() {
         lifecycleScope.launch {
@@ -215,7 +220,7 @@ class ProductDetailsFragment : Fragment() {
         }
 
         binding.addToCartButton.setOnClickListener {
-            cartViewModel.storeCart(args.productId.toString(),shapeId.toString(),binding.countEditText.text.toString())
+            cartViewModel.storeCart(args.productId.toString(),shapeId.toString(),count!!)
         }
         return binding.root
     }
@@ -269,9 +274,18 @@ class ProductDetailsFragment : Fragment() {
         binding.rateTextView.text = data.rate.toString()
 
         binding.descriptionProductTextView.text = data.description
-        setImageSliders(data.images as MutableList<Data.Images>)
+
+        if (data.images.isNotEmpty())
+            setImageSliders(data.images as MutableList<Data.Images>)
+        else{
+            val images = mutableListOf<Data.Images>()
+            images.add(Data.Images(1, data.image))
+            setImageSliders(images)
+        }
+
 
         setShapepinner(data.shapes)
+        setCountSpinner()
 
         binding.addFavoriteImageView.setOnClickListener {
             if (data.is_favorite == 0)
@@ -284,6 +298,35 @@ class ProductDetailsFragment : Fragment() {
 
         setRatingsRecyclerView(data.rates)
 
+    }
+
+    private fun setCountSpinner() {
+        list.add(CountModel(1,"1"))
+        list.add(CountModel(2,"2"))
+        list.add(CountModel(3,"3"))
+        list.add(CountModel(4,"4"))
+        list.add(CountModel(5,"5"))
+        list.add(CountModel(9,"6"))
+        list.add(CountModel(7,"7"))
+        list.add(CountModel(8,"8"))
+        list.add(CountModel(9,"9"))
+        list.add(CountModel(10,"10"))
+
+        val dataAdapter: ArrayAdapter<CountModel> = ArrayAdapter<CountModel>(
+            binding.root.context,
+            android.R.layout.simple_spinner_item, list
+        )
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.countSpinner.adapter = dataAdapter
+
+        binding.countSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                count = dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
     }
 
     private fun setRatingsRecyclerView(rateList: List<Data.Rates>) {
