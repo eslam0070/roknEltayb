@@ -59,9 +59,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_weight="1"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:text="00 KWD"
                 android:textColor="@color/green"
-                android:textSize="@dimen/_15sdp"
+                android:textSize="@dimen/_13sdp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,21 +88,21 @@
                     android:id="@+id/addToCartButton"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.8"
                     android:background="@drawable/custom_bg_button_fav"
                     android:text="@string/add_to_cart"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_8sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <ImageView
                     android:id="@+id/deleteFavoriteImageView"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginStart="@dimen/_50sdp"
                     android:src="@drawable/ic_bin_red"
-                    android:layout_weight="0.5"/>
+                    android:layout_weight="0.2"/>
 
             </LinearLayout>
 

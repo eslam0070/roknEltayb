@@ -2,6 +2,7 @@ package com.rokneltayb.domain.usecase
 
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
+import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
@@ -24,4 +25,6 @@ class CartUseCase @Inject constructor(private val repo: CartRepository) {
     suspend fun addCart(productId: String, shapeId: String, count: String): Result<AddCartResponse> = repo.addCart(productId, shapeId, count)
     suspend fun updateCart(productId: String, shapeId: String, count: String): Result<UpdateCartResponse> = repo.updateCart(productId, shapeId, count)
     suspend fun deleteCart(productId: String, shapeId: String): Result<DeleteCartResponse> = repo.deleteCart(productId, shapeId)
+    suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse> = repo.applyCouponCart(coupon)
+    suspend fun deleteCouponCart(): Result<AddCouponResponse> = repo.deleteCouponCart()
 }

@@ -15,6 +15,7 @@ import com.rokneltayb.data.model.favorite.FavoritesData
 import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.databinding.ItemFavoritesBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
+import java.text.DecimalFormat
 
 class FavoritesAdapter(
     private val itemClick: (Int) -> Unit,
@@ -54,10 +55,15 @@ class FavoritesAdapter(
 
             binding.nameProductTextView.text = favorte.title
 
-            if (favorte.price != null)
-                binding.priceTextView.text = favorte.price
-            else
-                binding.priceTextView.text = "500 KWD"
+            val value = favorte.price
+            val numPlaces = 5
+            var format = "0."
+            for (i in 0 until numPlaces) {
+                format += "#"
+            }
+            val fmt = DecimalFormat(format)
+
+            binding.priceTextView.text = fmt.format(value)
         }
 
     }

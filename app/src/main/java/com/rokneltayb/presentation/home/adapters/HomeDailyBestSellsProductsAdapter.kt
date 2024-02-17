@@ -18,6 +18,7 @@ import com.rokneltayb.R
 import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.databinding.ItemHomeBestSellsProductsBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
+import java.text.DecimalFormat
 
 class HomeDailyBestSellsProductsAdapter(
     private val itemClick: (PopularProduct) -> Unit,
@@ -108,10 +109,9 @@ class HomeDailyBestSellsProductsAdapter(
                     binding.removeImageView.visibility = View.GONE
                     binding.miunsImageView.visibility = View.VISIBLE
                 }
-                else{
+                else
                     binding.removeImageView.visibility = View.VISIBLE
-                    binding.miunsImageView.visibility = View.GONE
-                }
+
 
                 binding.countTextView.text = total.toString()
 
@@ -128,8 +128,10 @@ class HomeDailyBestSellsProductsAdapter(
 
                 if (total > 1)
                     binding.removeImageView.visibility = View.GONE
-                else
+                else{
+                    binding.miunsImageView.visibility = View.GONE
                     binding.removeImageView.visibility = View.VISIBLE
+                }
 
                 munisItemClick(total,position,product)
             }
@@ -154,10 +156,16 @@ class HomeDailyBestSellsProductsAdapter(
             else
                 binding.discountTextView.visibility = View.INVISIBLE
 
-            if (product.price != null)
-                binding.priceTextView.text = product.price.toString()
-            else
-                binding.priceTextView.text = "500 KWD"
+
+
+            val value = product.price
+            val numPlaces = 5
+            var format = "0."
+            for (i in 0 until numPlaces) {
+                format += "#"
+            }
+            val fmt = DecimalFormat(format)
+            binding.priceTextView.text = fmt.format(value) + " KWD"
 
             binding.rateTextView.text = product.rate.toString()
 
@@ -166,7 +174,6 @@ class HomeDailyBestSellsProductsAdapter(
                 binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
             else
                 binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
-
 
         }
 

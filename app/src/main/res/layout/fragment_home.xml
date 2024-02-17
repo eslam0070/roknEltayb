@@ -62,11 +62,11 @@
                             android:textStyle="bold" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:id="@+id/categoriesRecyclerView"
-                            tools:listitem=""
+                            tools:listitem="@layout/item_home_categories"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_120sdp"/>
+                            android:layout_height="@dimen/_70sdp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -118,7 +118,7 @@
                             tools:listitem="@layout/item_home_pupular_products"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            android:layout_height="@dimen/_190sdp"/>
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -164,7 +164,7 @@
                             tools:listitem="@layout/item_home_best_sells_products"
                             android:orientation="horizontal"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            android:layout_height="@dimen/_190sdp"/>
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
 
                 </LinearLayout>

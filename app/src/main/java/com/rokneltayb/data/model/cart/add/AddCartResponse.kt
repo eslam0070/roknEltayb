@@ -6,15 +6,14 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
 
-@Parcelize
 data class AddCartResponse(
     @SerializedName("data")
     @Expose
-    val `data`: List<String?>?,
+    val `data`: TotalCart,
     @SerializedName("message")
     @Expose
     val message: String?,
     @SerializedName("status")
     @Expose
     val status: Int?
-) : Parcelable
+)

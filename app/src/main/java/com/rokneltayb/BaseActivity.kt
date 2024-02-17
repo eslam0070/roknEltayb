@@ -119,14 +119,18 @@ class BaseActivity : AppCompatActivity() {
                 dismissProgressDialog()
             } catch (e: Exception) {
                 e.printStackTrace()
+            }catch (i: IllegalArgumentException){
+                i.printStackTrace()
             }
         }
     }
 
     private fun dismissProgressDialog() {
-        if (progressDialog?.isShowing!! && !isFinishing) {
-            dialogDismissThread?.cancel()
-            progressDialog?.dismiss()
+        if (progressDialog != null){
+            if (progressDialog?.isShowing!! && !isFinishing) {
+                dialogDismissThread?.cancel()
+                progressDialog?.dismiss()
+            }
         }
     }
 
@@ -266,6 +270,10 @@ class BaseActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d("eee", "onDestroy: " + SharedPreferencesImpl(this).getRememberMe())
+            if(progressDialog != null){
+                progressDialog?.dismiss();
+                progressDialog = null;
+            }
 
         if (!isLangChanged)
             if (!SharedPreferencesImpl(this).getRememberMe())

@@ -6,6 +6,7 @@ import com.rokneltayb.data.dataSource.remote.home.HomeRemoteDataSource
 import com.rokneltayb.data.dataSource.remote.user.UserRemoteDataSource
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
+import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
@@ -28,5 +29,8 @@ class CartRepositoryImpl @Inject constructor(private val remoteSource: CartRemot
     override suspend fun addCart(productId: String, shapeId: String, count: String): Result<AddCartResponse> = remoteSource.addCart(productId, shapeId, count)
     override suspend fun updateCart(productId: String, shapeId: String, count: String): Result<UpdateCartResponse> = remoteSource.updateCart(productId, shapeId, count)
     override suspend fun deleteCart(productId: String, shapeId: String): Result<DeleteCartResponse> = remoteSource.deleteCart(productId, shapeId)
+
+    override suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse> = remoteSource.applyCouponCart(coupon)
+    override suspend fun deleteCouponCart(): Result<AddCouponResponse> = remoteSource.deleteCouponCart()
 
 }

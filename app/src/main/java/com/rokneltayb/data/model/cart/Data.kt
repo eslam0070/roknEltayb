@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
+import com.rokneltayb.data.model.cart.coupon.Coupon
 
-@Parcelize
 data class Data(
     @SerializedName("cart")
     @Expose
@@ -19,5 +19,8 @@ data class Data(
     val total: Double?,
     @SerializedName("total_after_tax")
     @Expose
-    val totalAfterTax: Double?
-) : Parcelable
+    val totalAfterTax: Double?,
+    @SerializedName("coupon")
+    @Expose
+    val coupon: Coupon?
+)

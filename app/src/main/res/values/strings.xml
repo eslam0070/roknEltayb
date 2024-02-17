@@ -170,4 +170,7 @@
     <string name="order_id2">"Order ID: "</string>
     <string name="order_status">Order status</string>
     <string name="please_select_address">Please select address</string>
+    <string name="move_to_wishlist">Move To Wishlist</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

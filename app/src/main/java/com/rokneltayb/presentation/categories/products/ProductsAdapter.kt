@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.rokneltayb.R
 import com.rokneltayb.data.model.products.Product
 import com.rokneltayb.databinding.ItemProductsBinding
+import java.text.DecimalFormat
 
 class ProductsAdapter(
     private val itemClick: (Product) -> Unit,
@@ -123,8 +124,11 @@ class ProductsAdapter(
 
                 if (total > 1)
                     binding.removeImageView.visibility = View.GONE
-                else
+                else{
                     binding.removeImageView.visibility = View.VISIBLE
+                    binding.miunsImageView.visibility = View.GONE
+
+                }
 
                 munisItemClick(total,position,product)
             }
@@ -151,10 +155,14 @@ class ProductsAdapter(
             else
                 binding.discountTextView.visibility = View.INVISIBLE
 
-            if (product.price != null)
-                binding.priceTextView.text = product.price
-            else
-                binding.priceTextView.text = "500 KWD"
+            val value = product.price
+            val numPlaces = 5
+            var format = "0."
+            for (i in 0 until numPlaces) {
+                format += "#"
+            }
+            val fmt = DecimalFormat(format)
+            binding.priceTextView.text = fmt.format(value) + " KWD"
 
             binding.rateTextView.text = product.rate.toString()
 

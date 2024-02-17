@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
+import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
@@ -96,6 +97,42 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
             }
         }
     }
+
+    fun applyCouponCart(coupon: String) {
+        viewModelScope.launch {
+            when (val result = useCase.applyCouponCart(coupon)) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.AddOrDeleteCouponCartSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+
+    fun deleteCouponCart() {
+        viewModelScope.launch {
+            when (val result = useCase.deleteCouponCart()) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.AddOrDeleteCouponCartSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
     sealed class UiState {
         data object Loading : UiState()
         data object Idle : UiState()
@@ -104,5 +141,6 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         class AddCartSuccess(val data: AddCartResponse) : UiState()
         class UpdateCartSuccess(val data: UpdateCartResponse) : UiState()
         class DeleteCartSuccess(val data: DeleteCartResponse) : UiState()
+        class AddOrDeleteCouponCartSuccess(val data: AddCouponResponse) : UiState()
     }
 }

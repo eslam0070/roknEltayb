@@ -133,14 +133,14 @@ class HomeFragment : Fragment() {
         homeProductsAdapter = HomeProductsAdapter({
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),count.toString())
         },{ position,product ->
-            cartViewModel.deleteCart(product.id.toString(),product.shapes!![position]!!.id.toString())
+            cartViewModel.deleteCart(product.id.toString(),product.shapes!![0]!!.id.toString())
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
 
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
         },{ position,product,isFavorite->
             if (product.isFavorite == 0)
                 favoriteviewModel.storeFavorite(product.id!!)

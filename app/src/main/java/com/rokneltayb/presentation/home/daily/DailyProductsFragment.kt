@@ -123,7 +123,6 @@ class DailyProductsFragment : Fragment() {
     }
 
     private fun setProductsRecyclerView() {
-        binding.dailyProductsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
         popularProductsAdapter = PopularProductsAdapter({
             findNavController().navigate(DailyProductsFragmentDirections.actionDailyProductsFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->

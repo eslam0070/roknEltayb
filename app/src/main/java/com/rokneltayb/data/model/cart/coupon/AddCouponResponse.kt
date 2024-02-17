@@ -1,15 +1,13 @@
-package com.rokneltayb.data.model.cart
+package com.rokneltayb.data.model.cart.coupon
 
 
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import android.os.Parcelable
 import com.google.gson.annotations.Expose
 
-data class CartResponse(
+data class AddCouponResponse(
     @SerializedName("data")
     @Expose
-    val `data`: Data?,
+    val `data`: List<Any?>?,
     @SerializedName("message")
     @Expose
     val message: String?,

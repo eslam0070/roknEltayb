@@ -2,6 +2,7 @@ package com.rokneltayb.data.dataSource.remote.cart
 
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
+import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
@@ -56,6 +57,24 @@ class CartRemoteDataSourceImpl @Inject constructor(
         shapeId: String
     ): Result<DeleteCartResponse> {
         val res = requestApiCall.requestApiCall { networkServices.deleteCart(productId, shapeId) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.applyCouponCart(coupon) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun deleteCouponCart(): Result<AddCouponResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.deleteCouponCart() }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

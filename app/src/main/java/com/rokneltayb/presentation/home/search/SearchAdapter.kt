@@ -17,6 +17,7 @@ import com.rokneltayb.data.model.products.Product
 import com.rokneltayb.databinding.ItemFavoritesBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 import com.rokneltayb.databinding.ItemSearchHomeBinding
+import java.text.DecimalFormat
 
 class SearchAdapter(
     private val itemClick: (Int) -> Unit,
@@ -51,10 +52,15 @@ class SearchAdapter(
 
             binding.nameProductTextView.text = product.title
 
-            if (product.price != null)
-                binding.priceTextView.text = product.price
-            else
-                binding.priceTextView.text = "500 KWD"
+            val value = product.price
+            val numPlaces = 5
+            var format = "0."
+            for (i in 0 until numPlaces) {
+                format += "#"
+            }
+            val fmt = DecimalFormat(format)
+            binding.priceTextView.text = fmt.format(value) + " KWD"
+
         }
 
     }

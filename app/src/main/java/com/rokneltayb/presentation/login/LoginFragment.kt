@@ -139,17 +139,7 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if (sharedPref.getLanguage().isEmpty() ||
-            sharedPref.getLanguage() == Constants.LANGUAGE_ARABIC
-        ) {
-            sharedPref.setLanguage(Constants.LANGUAGE_ARABIC)
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
-            binding.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
-        } else {
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
-            SharedPreferencesImpl(requireContext()).setLanguage(Constants.LANGUAGE_ENGLISH)
-            binding.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
-        }
+
         getFcmToken()
     }
     var fcmToken = ""

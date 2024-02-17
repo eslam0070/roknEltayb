@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.model.cart.coupon.Coupon
 import com.rokneltayb.databinding.FragmentCartBinding
 import com.rokneltayb.databinding.FragmentProfileBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
@@ -35,6 +36,7 @@ class CartFragment : Fragment() {
     private val binding by lazy { FragmentCartBinding.inflate(layoutInflater) }
     private val viewModel: CartViewModel by viewModels()
     private lateinit var cartAdapter: CartAdapter
+    private lateinit var couponAdapter: DiscountAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
 
     private fun observeUIState() {
@@ -84,6 +86,15 @@ class CartFragment : Fragment() {
                 binding.totalCartTextView.text = uiState.data.data.totalAfterTax.toString()
                 binding.totalTextView.text = uiState.data.data.totalAfterTax.toString()
                 cartAdapter.submitList(uiState.data.data.cart)
+                if (uiState.data.data.coupon != null){
+                    val list = mutableListOf<Coupon>()
+                    list.add(0,uiState.data.data.coupon)
+                    couponAdapter.submitList(list)
+                    binding.layoutDiscount.visibility = View.GONE
+                }else{
+                    binding.discountCodeRecyclerView.visibility = View.GONE
+                    binding.layoutDiscount.visibility = View.VISIBLE
+                }
                 hideProgress()
             }
 
@@ -95,6 +106,10 @@ class CartFragment : Fragment() {
                 hideProgress()
             }
 
+            is CartViewModel.UiState.AddOrDeleteCouponCartSuccess ->{
+                toast(uiState.data.message.toString())
+                viewModel.getCart()
+            }
            else ->{}
         }
     }
@@ -109,6 +124,7 @@ class CartFragment : Fragment() {
 
 
         binding.cartRecyclerView.addBasicItemDecoration()
+        binding.discountCodeRecyclerView.addBasicItemDecoration()
 
         cartAdapter = CartAdapter(viewModel) { item, cart ->
             if (item == 1) {
@@ -117,10 +133,14 @@ class CartFragment : Fragment() {
                 favoriteviewModel.storeFavorite(cart.productId!!)
             }
         }
-
+        couponAdapter = DiscountAdapter { viewModel.deleteCouponCart() }
         binding.cartRecyclerView.adapter = cartAdapter
+        binding.discountCodeRecyclerView.adapter = couponAdapter
         viewModel.getCart()
 
+        binding.applyButton.setOnClickListener {
+            viewModel.applyCouponCart(binding.discountCodeEditText.text.toString())
+        }
         binding.checkOutButton.setOnClickListener {
             findNavController().navigate(CartFragmentDirections.actionCartFragmentToCheckOutFragment())
         }

@@ -36,6 +36,7 @@
                 android:layout_height="1dp"
                 android:background="@color/white"/>
             <LinearLayout
+                android:id="@+id/layoutDiscount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -61,6 +62,16 @@
                     android:text="@string/apply"/>
             </LinearLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/discountCodeRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10ssp"
+                android:scrollbars="vertical"
+                app:spanCount="1"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_discount"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
