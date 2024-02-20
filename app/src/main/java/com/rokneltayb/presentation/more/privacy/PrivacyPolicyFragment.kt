@@ -48,13 +48,19 @@ class PrivacyPolicyFragment : Fragment() {
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ContactUsViewModel.UiState.PagesSuccess -> {
                 binding.privacyPolicyTextView.text = uiState.data.data!![1]!!.description
                 Glide.with(requireActivity()).load(uiState.data.data[1]!!.image).into(binding.imageView)
+                hideProgress()
+                viewModel.removeState()
             }
 
+            is ContactUsViewModel.UiState.Idle ->{
+                hideProgress()
+            }
             else ->{}
 
         }

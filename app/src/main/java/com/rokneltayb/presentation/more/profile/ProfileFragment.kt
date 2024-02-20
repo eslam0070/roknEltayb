@@ -1,5 +1,6 @@
 package com.rokneltayb.presentation.more.profile
 
+import android.app.Activity
 import android.app.Dialog
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -15,12 +16,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
 import com.rokneltayb.data.model.login.profile.ProfileData
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.DeleteAccountDialogBinding
 import com.rokneltayb.databinding.DeleteAddressDialogBinding
 import com.rokneltayb.databinding.EditProfileDialogBinding
@@ -58,6 +61,7 @@ class ProfileFragment : Fragment() {
 
             is ProfileViewModel.UiState.Success -> {
                 setDataProfile(uiState.data.profileData)
+                viewModel.removeState()
                 hideProgress()
             }
 
@@ -67,25 +71,34 @@ class ProfileFragment : Fragment() {
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ProfileViewModel.UiState.DeleteSuccess -> {
                 toast(uiState.data.message!!)
                 hideProgress()
+                viewModel.removeState()
             }
             is ProfileViewModel.UiState.LogoutSuccess -> {
                 toast(getString(R.string.you_have_successfully_logged_out))
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ProfileViewModel.UiState.ChangePasswordSuccess -> {
+                viewModel.removeState()
+                hideProgress()
 
             }
 
             is ProfileViewModel.UiState.UpdateSuccess -> {
                 viewModel.profile()
                 toast(uiState.data.message!!)
+                hideProgress()
+                viewModel.removeState()
             }
+
+            ProfileViewModel.UiState.Idle -> hideProgress()
         }
     }
 
@@ -245,5 +258,10 @@ class ProfileFragment : Fragment() {
 
     }
 
-
+    fun logout() {
+        val lang = SharedPreferencesImpl(requireContext()).getLanguage()
+        SharedPreferencesImpl(requireContext()).clearAll()
+        SharedPreferencesImpl(requireContext()).setLanguage(lang)
+        Navigation.findNavController(requireActivity(), R.id.navHostFragment).navigate(R.id.loginFragment)
+    }
 }

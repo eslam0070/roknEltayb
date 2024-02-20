@@ -18,11 +18,13 @@ import com.rokneltayb.R
 import com.rokneltayb.data.model.address.AddressData
 import com.rokneltayb.data.model.address.city.City
 import com.rokneltayb.data.model.cart.Data
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentCartBinding
 import com.rokneltayb.databinding.FragmentCheckOutBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.logoutNoAuth
+import com.rokneltayb.domain.util.logoutNoPremission
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.cart.CartAdapter
@@ -44,6 +46,7 @@ class CheckOutFragment : Fragment() {
     private var addressId = 0
     private val addressList = mutableListOf<AddressData>()
     var addressAdapter: ArrayAdapter<AddressData>? = null
+
     private fun observeUIState() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
@@ -159,10 +162,10 @@ class CheckOutFragment : Fragment() {
 
 
         binding.checkOutButton.setOnClickListener {
-            if (addressId == 0)
-                toastError(getString(R.string.please_select_address))
-            else
-                orderViewModel.addOrder(addressId)
+                if (addressId == 0)
+                    toastError(getString(R.string.please_select_address))
+                else
+                    orderViewModel.addOrder(addressId)
         }
 
         return binding.root

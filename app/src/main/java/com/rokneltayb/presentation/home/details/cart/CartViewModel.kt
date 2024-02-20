@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(private val useCase: CartUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -77,8 +77,14 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         }
     }
 
+    fun removeState() {
+        _uiState.value = UiState.Idle
+    }
+
     sealed class UiState {
         data object Loading : UiState()
+        data object Idle : UiState()
+
         class Error(val errorData: ErrorResponse): UiState()
         class CartSuccess(val data: CartResponse) : UiState()
         class AddToCartSuccess(val data: AddCartResponse) : UiState()

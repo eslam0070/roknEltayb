@@ -16,7 +16,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/categoryImageView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_110sdp"
+            android:layout_height="@dimen/_60sdp"
             android:src="@color/black"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"

@@ -61,14 +61,16 @@ class RegisterFragment : Fragment() {
             }
 
             is RegisterViewModel.UiState.Success -> {
-                Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
+                toast(getString(R.string.register_success))
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 hideProgress()
+                viewModel.removeState()
             }
 
             is RegisterViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is RegisterViewModel.UiState.Idle -> hideProgress()

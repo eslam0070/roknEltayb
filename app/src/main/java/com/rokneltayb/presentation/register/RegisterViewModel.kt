@@ -47,6 +47,9 @@ class RegisterViewModel @Inject constructor(private val useCase: UserUseCase) : 
     }
 
 
+    fun removeState(){
+        _uiState.value = UiState.Idle
+    }
 
     sealed class UiState {
         data object Loading : UiState()

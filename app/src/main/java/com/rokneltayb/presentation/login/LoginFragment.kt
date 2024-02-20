@@ -62,8 +62,7 @@ class LoginFragment : Fragment() {
             }
 
             is LoginViewModel.UiState.Success -> {
-                Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
-
+                toast(getString(R.string.login_success))
                 if (binding.checkboxRememberMe.isEnabled){
                     sharedPref.setUserId(uiState.data.data!!.clientData!!.id!!)
                     sharedPref.setRememberMe(true)
@@ -71,6 +70,7 @@ class LoginFragment : Fragment() {
                 }
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                 hideProgress()
+                viewModel.removeState()
             }
 
             is LoginViewModel.UiState.Error -> {
@@ -82,6 +82,7 @@ class LoginFragment : Fragment() {
                         toastError(str)
                     }
                 }
+                viewModel.removeState()
                 hideProgress()
             }
 
@@ -100,7 +101,7 @@ class LoginFragment : Fragment() {
         binding.etLoginUser.setText("5055050531")
         binding.etLoginPassword.setText("123456")
 
-        if (sharedPref.getRememberMe() == true)
+        if (sharedPref.getRememberMe())
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
 
         binding.loginBtn.setOnClickListener {
@@ -113,6 +114,9 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgetPasswordFragment())
         }
 
+        binding.giestBtn.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+        }
 
         binding.etLoginPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {

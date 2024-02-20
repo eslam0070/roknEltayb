@@ -63,7 +63,7 @@ class FavoritesAdapter(
             }
             val fmt = DecimalFormat(format)
 
-            binding.priceTextView.text = fmt.format(value)
+            binding.priceTextView.text = favorte.price + " KWD"
         }
 
     }

@@ -50,7 +50,7 @@
     <string name="home">بيت</string>
     <string name="categories">فئات</string>
     <string name="cart">عربة التسوق</string>
-    <string name="more">أكثر</string>
+    <string name="more">المزيد</string>
     <string name="did_not_get_the_code">لم تحصل على الرمز؟ إعادة الإرسال خلال  ثانية</string>
     <string name="enter_verification_code">أدخل رمز التحقق المكون من 4 أرقام</string>
     <string name="password_is_empty">لا يمكن أن تكون كلمة المرور فارغة</string>
@@ -78,14 +78,13 @@
     <string name="description">وصف</string>
     <string name="product_ratings_amp_reviews"><![CDATA[تقييمات ومراجعات المنتج]]></string>
     <string name="my_orders">طلباتي</string>
-    <string name="my_wishlist">قائمة امنياتي</string>
-    <string name="my_profile">ملفي</string>
+    <string name="my_wishlist">المفضلة</string>
+    <string name="my_profile">الملف الشخصي</string>
     <string name="about_us">معلومات عنا</string>
     <string name="contact_us">اتصل بنا</string>
     <string name="privacy_policy">سياسة الخصوصية</string>
     <string name="change_language">تغيير اللغة</string>
     <string name="logout">تسجيل خروج</string>
-    <string name="ar">آر</string>
     <string name="add_to_cart">أضف إلى السلة</string>
     <string name="add_comment">أضف تعليق</string>
     <string name="rate_the_product">تقييم المنتج؟</string>
@@ -94,10 +93,10 @@
     <string name="added_to_cart">تمت إضافته إلى سلة التسوق</string>
     <string name="continue_shoppting">مواصلة التسوق</string>
     <string name="view_cart">عرض العربة</string>
-    <string name="items_found">العناصر التي تم العثور عليها</string>
+    <string name="items_found">عناصر التي تم العثور عليها</string>
     <string name="mobile_number">رقم الهاتف المحمول<font color='#F81212'>*</font></string>
     <string name="address">عنوان<font color='#F81212'>*</font></string>
-    <string name="delete_you_account">حذف حسابك</string>
+    <string name="delete_you_account">حذف حسابي</string>
     <string name="update">تحديث</string>
     <string name="name_address">عنوان اسم</string>
     <string name="add_address">اضف عنوان</string>
@@ -111,7 +110,8 @@
     <string name="do_you_wand_delete_this_address">هل تريد حذف هذا العنوان؟</string>
     <string name="do_you_want_delete_your_account">هل تريد حذف حسابك؟</string>
     <string name="do_you_want_to_log_out_of_the_account">هل تريد تسجيل الخروج من الحساب؟</string>
-    <string name="token_expite">انتهت صلاحية الرمز المميز</string>
+    <string name="token_expite">انتهت الجلسة</string>
+    <string name="you_should_login">لابد من تسجيل الدخول</string>
     <string name="contact_from">الاتصال من</string>
     <string name="name_contact">اسم<font color='#F81212'>*</font></string>
     <string name="enter_you_name">ادخل لك اسم</string>
@@ -160,7 +160,7 @@
     <string name="shipping_address">عنوان الشحن</string>
     <string name="order_id">رقم الطلب</string>
     <string name="place_on">ضع على</string>
-    <string name="qty">عدد:</string>
+    <string name="qty">الكمية</string>
     <string name="your_order_has_been_delivery_successfully">لقد تم تسليم طلبك بنجاح!</string>
     <string name="pending_confirmation">قيد الانتظار</string>
     <string name="waiting_to_be_shipped">في انتظار أن يتم شحنها</string>
@@ -170,5 +170,10 @@
     <string name="order_id2">رقم الطلب:</string>
     <string name="order_status">حالة الطلب</string>
     <string name="please_select_address">الرجاء تحديد العنوان</string>
-    <string name="move_to_wishlist">الانتقال إلى قائمة المفضلة</string>
+    <string name="move_to_wishlist">الانتقال إلى المفضلة</string>
+    <string name="login_success">تم تسجيل الدخول بنجاح</string>
+    <string name="how_can_help_you_n_let_us_know_how_we_can_help_you">أخبرنا كيف يمكننا مساعدتك</string>
+    <string name="send_a_message">ارسل رسالة</string>
+    <string name="welcome">إهلا بك </string>
+    <string name="register_success">تم النسجيل بنجاح</string>
 </resources>

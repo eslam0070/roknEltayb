@@ -15,7 +15,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo2"
+            android:src="@drawable/logo_home_ar"
             android:layout_margin="@dimen/_10sdp"
             android:adjustViewBounds="true"
             app:layout_constraintEnd_toEndOf="parent"

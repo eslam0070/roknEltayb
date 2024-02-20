@@ -133,6 +133,10 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
             }
         }
     }
+
+    fun removeState(){
+        _uiState.value = UiState.Idle
+    }
     sealed class UiState {
         data object Loading : UiState()
         data object Idle : UiState()

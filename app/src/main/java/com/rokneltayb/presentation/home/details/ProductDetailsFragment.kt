@@ -1,7 +1,9 @@
 package com.rokneltayb.presentation.home.details
 
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.text.Html
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -44,6 +46,8 @@ import com.rokneltayb.presentation.home.details.cart.CartViewModel
 import com.rokneltayb.presentation.home.details.rate.RateAdapter
 import com.rokneltayb.presentation.home.details.rate.StoreRateViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
+import java.util.Locale
 
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
@@ -250,14 +254,24 @@ class ProductDetailsFragment : Fragment() {
 
         binding.titleProductTextView.text = data.title
         nameProduct = data.title
-        if (data.price == null){
-            binding.priceTextView.text = "100 KWD"
-            priceProduct = "100 KWD"
+        val value = data.price
+
+        if (data.price.toString().length > 6){
+            val numPlaces = 5
+            var format = "0."
+            for (i in 0 until numPlaces) {
+                format += "#"
+            }
+            val fmt = DecimalFormat(format)
+            binding.priceTextView.text = fmt.format(value) + " KWD"
+            priceProduct = fmt.format(value)
+        }else{
+            priceProduct = value.toString()
+            binding.priceTextView.text = "$value KWD"
+
         }
-        else{
-            binding.priceTextView.text = data.price
-            priceProduct = data.price
-        }
+
+
 
         if (data.is_favorite == 0)
             binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
@@ -273,7 +287,9 @@ class ProductDetailsFragment : Fragment() {
 
         binding.rateTextView.text = data.rate.toString()
 
-        binding.descriptionProductTextView.text = data.description
+        binding.descriptionProductTextView.text =
+            Html.fromHtml(data.description, Html.FROM_HTML_MODE_COMPACT)
+
 
         if (data.images.isNotEmpty())
             setImageSliders(data.images as MutableList<Data.Images>)

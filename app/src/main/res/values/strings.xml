@@ -111,7 +111,8 @@
     <string name="do_you_wand_delete_this_address">Do you want delete this address?</string>
     <string name="do_you_want_delete_your_account">Do you want delete your account?</string>
     <string name="do_you_want_to_log_out_of_the_account">Do you want to log out of the account?</string>
-    <string name="token_expite">Token is Expire</string>
+    <string name="token_expite">The session has ended</string>
+    <string name="you_should_login">You must login</string>
     <string name="contact_from">Contact From</string>
     <string name="name_contact">Name<font color='#F81212'> *</font></string>
     <string name="enter_you_name">Enter you name</string>
@@ -160,7 +161,7 @@
     <string name="shipping_address">Shipping Address</string>
     <string name="order_id">Order ID</string>
     <string name="place_on">"Place on "</string>
-    <string name="qty">"QTY: "</string>
+    <string name="qty">"QTY"</string>
     <string name="your_order_has_been_delivery_successfully">your order has been delivery successfully!</string>
     <string name="pending_confirmation">Pending</string>
     <string name="waiting_to_be_shipped">Waiting To Be Shipped</string>
@@ -171,6 +172,9 @@
     <string name="order_status">Order status</string>
     <string name="please_select_address">Please select address</string>
     <string name="move_to_wishlist">Move To Wishlist</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_success">You have been logged in successfully</string>
+    <string name="how_can_help_you_n_let_us_know_how_we_can_help_you">How can help you \n Let us know how we can help you</string>
+    <string name="send_a_message">Send A Message</string>
+    <string name="welcome">Welcome %1$s</string>
+    <string name="register_success">Registered successfully</string>
 </resources>

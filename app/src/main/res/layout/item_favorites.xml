@@ -4,7 +4,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="false"
+        app:cardUseCompatPadding="true"
         android:layout_margin="@dimen/_10sdp"
         app:cardBackgroundColor="@color/backgroundGray"
         app:cardCornerRadius="@dimen/_10sdp">
@@ -70,7 +70,7 @@
                 app:layout_constraintTop_toBottomOf="@id/nameProductTextView" />
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
@@ -78,7 +78,6 @@
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="horizontal"
-                android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/priceTextView"
@@ -86,25 +85,26 @@
 
                 <Button
                     android:id="@+id/addToCartButton"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_weight="1.8"
                     android:background="@drawable/custom_bg_button_fav"
                     android:text="@string/add_to_cart"
+                    android:layout_alignParentStart="true"
                     android:textAllCaps="false"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12sdp" />
+                    android:layout_toStartOf="@id/deleteFavoriteImageView"
+                    android:textSize="@dimen/_9ssp" />
 
                 <ImageView
                     android:id="@+id/deleteFavoriteImageView"
-                    android:layout_width="0dp"
+                    android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
-                    android:layout_marginStart="@dimen/_50sdp"
-                    android:src="@drawable/ic_bin_red"
-                    android:layout_weight="0.2"/>
-
-            </LinearLayout>
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_bin_red" />
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -25,8 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:text="Welcome Ahmed"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -37,9 +36,9 @@
 
         <TextView
             android:id="@+id/emailTextView"
+            android:textAlignment="viewStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="eslam@gmail.com"
             android:textSize="@dimen/_8sdp"/>
 
         <View
@@ -284,9 +283,10 @@
                 android:background="@drawable/ic_ar"
                 android:textColor="@color/white"
                 android:textAlignment="center"
+                android:text="English"
+                android:padding="@dimen/_6sdp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:text="@string/ar"/>
+                android:layout_marginEnd="@dimen/_10sdp" />
             <ImageView
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"

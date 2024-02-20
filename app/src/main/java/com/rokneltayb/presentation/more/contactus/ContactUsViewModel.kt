@@ -10,6 +10,7 @@ import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.HomeUseCase
 import com.rokneltayb.domain.usecase.SettingsUseCase
+import com.rokneltayb.presentation.cart.CartViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ContactUsViewModel @Inject constructor(private val useCase: SettingsUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -75,8 +76,14 @@ class ContactUsViewModel @Inject constructor(private val useCase: SettingsUseCas
             }
         }
     }
+
+    fun removeState(){
+        _uiState.value = UiState.Idle
+    }
+
     sealed class UiState {
         data object Loading : UiState()
+        data object Idle : UiState()
         class Error(val errorData: ErrorResponse): UiState()
         class Success(val data: SettingsResponse) : UiState()
         class StoreContactSuccess(val data: ContactUsResponse) : UiState()

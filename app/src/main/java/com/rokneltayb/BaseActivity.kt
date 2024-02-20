@@ -5,24 +5,19 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
 import com.rokneltayb.domain.util.Constants
 import com.rokneltayb.domain.util.Constants.LANGUAGE_ARABIC
-import com.rokneltayb.domain.util.localization.LocaleHelper
-import com.rokneltayb.domain.util.localization.LocalizationUtils
 import com.rokneltayb.domain.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -38,7 +33,7 @@ class BaseActivity : AppCompatActivity() {
     var dialogDismissThread: Job? = null
     var binding: ActivityBaseBinding? = null
     private val mNavController by lazy { Navigation.findNavController(this, R.id.navHostFragment) }
-    private val sharedPref by lazy { SharedPreferencesImpl(this) }
+    val sharedPref by lazy { SharedPreferencesImpl(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +68,10 @@ class BaseActivity : AppCompatActivity() {
         }
 
         binding!!.ivFav.setOnClickListener {
-            findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment)
+            if (sharedPref.getRememberMe())
+                findNavController(R.id.navHostFragment).navigate(R.id.favoritesFragment)
+            else
+                toast(getString(R.string.you_should_login))
         }
 
         binding!!.ivSearch.setOnClickListener {
@@ -137,7 +135,7 @@ class BaseActivity : AppCompatActivity() {
     private val listener =
         NavController.OnDestinationChangedListener { _, destination, _ ->
             when (destination.label.toString()) {
-                "fragment_register","LoginFragment","ForgetPasswordFragment",
+                "SplashFragment","fragment_register","LoginFragment","ForgetPasswordFragment",
                 "ResetYourPasswordFragment","VerifyYourAccountFragment"->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.GONE
@@ -285,11 +283,13 @@ class BaseActivity : AppCompatActivity() {
         if (sharedPref.getLanguage().isEmpty() ||
             sharedPref.getLanguage() == LANGUAGE_ARABIC) {
             sharedPref.setLanguage(LANGUAGE_ARABIC)
+            binding!!.ivHome.setImageResource(R.drawable.logo_home_ar)
             AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
             binding!!.root.layoutDirection = View.LAYOUT_DIRECTION_RTL
         } else {
             AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("en"))
             SharedPreferencesImpl(this).setLanguage(Constants.LANGUAGE_ENGLISH)
+            binding!!.ivHome.setImageResource(R.drawable.logo_home_en)
             binding!!.root.layoutDirection = View.LAYOUT_DIRECTION_LTR
         }
         mNavController.addOnDestinationChangedListener(listener)

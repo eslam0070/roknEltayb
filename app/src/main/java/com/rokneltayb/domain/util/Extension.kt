@@ -56,7 +56,15 @@ fun logoutNoAuth(activity: Activity) {
     SharedPreferencesImpl(activity).clearAll()
     SharedPreferencesImpl(activity).setLanguage(lang)
     Navigation.findNavController(activity, R.id.navHostFragment).navigate(R.id.loginFragment)
+}
 
+fun logoutNoPremission(activity: Activity) {
+    activity.toast(activity.getString(R.string.you_should_login))
+
+    val lang = SharedPreferencesImpl(activity).getLanguage()
+    SharedPreferencesImpl(activity).clearAll()
+    SharedPreferencesImpl(activity).setLanguage(lang)
+    Navigation.findNavController(activity, R.id.navHostFragment).navigate(R.id.loginFragment)
 }
 
 

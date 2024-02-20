@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentDailyProductsBinding
 import com.rokneltayb.databinding.FragmentPopularProductsBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
@@ -35,6 +36,7 @@ class DailyProductsFragment : Fragment() {
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
     private val viewModel: ProductsViewModel by viewModels()
+    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,15 +88,16 @@ class DailyProductsFragment : Fragment() {
             is FavoritesViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                favoriteviewModel.removeState()
             }
 
             is FavoritesViewModel.UiState.StoreFavoriteSuccess -> {
-
+                favoriteviewModel.removeState()
                 hideProgress()
             }
 
             is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
-
+                favoriteviewModel.removeState()
                 hideProgress()
             }
 
@@ -111,12 +114,16 @@ class DailyProductsFragment : Fragment() {
             is CartViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                cartViewModel.removeState()
             }
 
             is CartViewModel.UiState.AddToCartSuccess -> {
                 toast(uiState.data.message.toString())
                 hideProgress()
+                cartViewModel.removeState()
             }
+
+            is CartViewModel.UiState.Idle -> hideProgress()
 
             else ->{}
         }
@@ -126,21 +133,20 @@ class DailyProductsFragment : Fragment() {
         popularProductsAdapter = PopularProductsAdapter({
             findNavController().navigate(DailyProductsFragmentDirections.actionDailyProductsFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),count.toString())
         },{ position,product ->
-            cartViewModel.deleteCart(product.id.toString(),product.shapes!![position]!!.id.toString())
+            cartViewModel.deleteCart(product.id.toString(),product.shapes!![0]!!.id.toString())
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
 
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
         },{ position,product,isFavorite->
-            if (product.isFavorite == 0){
-                favoriteviewModel.storeFavorite(product.id!!)
-            }
-            else{
-                favoriteviewModel.deleteFavorite(product.id!!)
-            }
+                if (product.isFavorite == 0)
+                    favoriteviewModel.storeFavorite(product.id!!)
+                else
+                    favoriteviewModel.deleteFavorite(product.id!!)
+
         })
 
 

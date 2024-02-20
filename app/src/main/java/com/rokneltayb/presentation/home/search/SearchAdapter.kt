@@ -21,7 +21,7 @@ import java.text.DecimalFormat
 
 class SearchAdapter(
     private val itemClick: (Int) -> Unit,
-    private val addToCartItemClick: (Int) -> Unit
+    private val addToCartItemClick: (Product) -> Unit
 ) :  ListAdapter<Product, SearchAdapter.ViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,7 +35,7 @@ class SearchAdapter(
     }
 
     class ViewHolder(private val binding: ItemSearchHomeBinding, private val itemClick: (Int) -> Unit,
-                     private val addToCartItemClick: (Int) -> Unit):RecyclerView.ViewHolder(binding.root){
+                     private val addToCartItemClick: (Product) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(product: Product) {
             binding.root.setOnClickListener {
@@ -43,7 +43,7 @@ class SearchAdapter(
             }
 
             binding.addToCartButton.setOnClickListener {
-                addToCartItemClick(product.id!!)
+                addToCartItemClick(product)
             }
 
 

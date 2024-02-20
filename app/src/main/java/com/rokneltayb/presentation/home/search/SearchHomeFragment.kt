@@ -40,9 +40,9 @@ class SearchHomeFragment : Fragment() {
 
         searchAdapter = SearchAdapter({
                                       findNavController().navigate(SearchHomeFragmentDirections.actionSearchHomeFragmentToProductDetailsFragment(it)) }
-            ,{
-            
-        })
+            ,{product ->
+                cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),"1")
+            })
 
         binding.searchRecyclerView.addBasicItemDecoration()
         binding.searchRecyclerView.adapter = searchAdapter
@@ -56,7 +56,7 @@ class SearchHomeFragment : Fragment() {
                 Log.d("TAG", "onCreateView: "+it.toString())
             }
         }
-        binding.sizeItemFoundTextView.text = "00 "+ getString(R.string.items_found)
+        binding.sizeItemFoundTextView.text = "0 "+ getString(R.string.items_found)
 
         return binding.root
     }
@@ -76,8 +76,15 @@ class SearchHomeFragment : Fragment() {
             is SearchHomeViewModel.UiState.Loading -> {}
 
             is SearchHomeViewModel.UiState.Success -> {
-                searchAdapter.submitList(uiState.data.data!!.products)
-                binding.sizeItemFoundTextView.text = "0"+uiState.data.data.products!!.size.toString()+" "+ getString(R.string.items_found)
+                if (uiState.data.data!!.products!!.isNotEmpty()){
+                    binding.sizeItemFoundTextView.visibility = View.VISIBLE
+                    binding.sizeItemFoundTextView.text = uiState.data.data.products!!.size.toString()+" "+ getString(R.string.items_found)
+                    searchAdapter.submitList(uiState.data.data.products)
+                }else
+                    binding.sizeItemFoundTextView.visibility = View.INVISIBLE
+
+
+
                 hideProgress()
             }
 
@@ -99,11 +106,13 @@ class SearchHomeFragment : Fragment() {
             is CartViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                cartViewModel.removeState()
             }
 
             is CartViewModel.UiState.AddToCartSuccess -> {
                 toast(uiState.data.message.toString())
                 hideProgress()
+                cartViewModel.removeState()
             }
 
             else ->{}

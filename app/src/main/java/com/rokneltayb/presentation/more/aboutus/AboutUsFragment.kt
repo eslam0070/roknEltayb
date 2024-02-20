@@ -48,13 +48,19 @@ class AboutUsFragment : Fragment() {
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ContactUsViewModel.UiState.PagesSuccess -> {
+                showProgress()
                 binding.aboutUsTextView.text = uiState.data.data!![0]!!.description
                 Glide.with(requireActivity()).load(uiState.data.data[0]!!.image).into(binding.imageView)
+                viewModel.removeState()
             }
 
+            is ContactUsViewModel.UiState.Idle ->{
+                hideProgress()
+            }
             else ->{}
 
         }

@@ -40,6 +40,9 @@ class LoginViewModel @Inject constructor(private val useCase: UserUseCase) : Vie
     }
 
 
+    fun removeState(){
+        _uiState.value = UiState.Idle
+    }
 
     sealed class UiState {
         data object Loading : UiState()

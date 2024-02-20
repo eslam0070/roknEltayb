@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-            android:text="How can help you \n Let us know how we can help you"
+            android:text="@string/how_can_help_you_n_let_us_know_how_we_can_help_you"
             android:textAlignment="center"
             android:textColor="@color/green" />
 
@@ -68,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:textAlignment="viewStart"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:text="50171701"
                 android:textColor="@color/black" />
@@ -279,7 +280,7 @@
             android:layout_marginTop="@dimen/_80sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/custom_bg_button"
-            android:text="Send A Message"
+            android:text="@string/send_a_message"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:layout_gravity="bottom"

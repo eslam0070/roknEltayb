@@ -41,8 +41,6 @@ class HomeViewModel @Inject constructor(private val useCase: HomeUseCase) : View
 
         }
 
-
-
         sealed class UiState {
             data object Loading : UiState()
             class Error(val errorData: ErrorResponse): UiState()

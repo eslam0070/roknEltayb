@@ -43,7 +43,6 @@ interface CartServices {
     @POST("client/apply-coupon")
     suspend fun applyCouponCart(@Field("coupon") coupon: String): Response<AddCouponResponse>
 
-    @FormUrlEncoded
     @POST("client/remove-coupon")
     suspend fun deleteCouponCart(): Response<AddCouponResponse>
 }

@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentPopularProductsBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
@@ -33,6 +34,7 @@ class PopularProductsFragment : Fragment() {
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
     private val viewModel: ProductsViewModel by viewModels()
+    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         observeUIState()
@@ -124,21 +126,20 @@ class PopularProductsFragment : Fragment() {
        popularProductsAdapter = PopularProductsAdapter({
             findNavController().navigate(PopularProductsFragmentDirections.actionPopularProductsFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),count.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),count.toString())
         },{ position,product ->
-            cartViewModel.deleteCart(product.id.toString(),product.shapes!![position]!!.id.toString())
+            cartViewModel.deleteCart(product.id.toString(),product.shapes!![0]!!.id.toString())
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
 
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![position]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
         },{ position,product,isFavorite->
-            if (product.isFavorite == 0){
-                favoriteviewModel.storeFavorite(product.id!!)
-            }
-            else{
-                favoriteviewModel.deleteFavorite(product.id!!)
-            }
+               if (product.isFavorite == 0)
+                   favoriteviewModel.storeFavorite(product.id!!)
+               else
+                   favoriteviewModel.deleteFavorite(product.id!!)
+
         })
 
 

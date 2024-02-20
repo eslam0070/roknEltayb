@@ -18,7 +18,9 @@ import com.bumptech.glide.Glide
 import com.rokneltayb.R
 import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.data.model.products.Product
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
+import com.rokneltayb.domain.util.toast
 import java.text.DecimalFormat
 
 class HomeProductsAdapter(
@@ -60,19 +62,24 @@ class HomeProductsAdapter(
             }
 
 
+
             binding.addFavoriteImageView.setOnClickListener {
-                if (isFavorite){
-                    binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
-                    binding.addFavoriteImageView.startAnimation(zoomOutAnim)
-                }
-                else
-                    binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
+                if (SharedPreferencesImpl(binding.root.context).getRememberMe()){
+                    if (isFavorite){
+                        binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
+                        binding.addFavoriteImageView.startAnimation(zoomOutAnim)
+                    }
+                    else
+                        binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
 
-                binding.addFavoriteImageView.startAnimation(zoomInAnim)
-                isFavorite = !isFavorite
+                    binding.addFavoriteImageView.startAnimation(zoomInAnim)
+                    isFavorite = !isFavorite
+
+                    favoriteItemClick(position,product,isFavorite)
+                }else
+                    binding.root.context.toast(binding.root.context.getString(R.string.you_should_login))
 
 
-                favoriteItemClick(position,product,isFavorite)
             }
 
             binding.addToCartImageView.setOnClickListener {

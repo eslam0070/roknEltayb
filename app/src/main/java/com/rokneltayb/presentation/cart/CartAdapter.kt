@@ -57,6 +57,7 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
             binding.nameCartTextView.text = cart.productTitle
 
 
+
             addItemSpiner(cart)
         }
 

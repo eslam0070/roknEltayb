@@ -1,5 +1,6 @@
 package com.rokneltayb.presentation.more
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -19,6 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
@@ -32,6 +34,7 @@ import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.localization.LocaleHelper
 import com.rokneltayb.domain.util.logoutNoAuth
+import com.rokneltayb.domain.util.logoutNoPremission
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.more.profile.ProfileViewModel
@@ -46,6 +49,7 @@ class MoreFragment : Fragment() {
 
     private val viewModel: ProfileViewModel by viewModels()
 
+    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
     private fun observeUIState() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
@@ -59,16 +63,29 @@ class MoreFragment : Fragment() {
             }
 
             is ProfileViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                if (uiState.errorData.status == 401)
+                    logoutNoAuth(requireActivity())
+                else
+                    toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ProfileViewModel.UiState.LogoutSuccess -> {
                 toast("You have successfully logged out")
                 logoutNoAuth(requireActivity())
                 hideProgress()
+                viewModel.removeState()
             }
 
+            is ProfileViewModel.UiState.Success ->{
+                binding.welcomeTextView.text = getString(R.string.welcome) + uiState.data.profileData!!.name
+                binding.emailTextView.text = uiState.data.profileData.email
+            }
+
+            is ProfileViewModel.UiState.Idle ->{
+                hideProgress()
+            }
             else ->{}
         }
     }
@@ -82,22 +99,34 @@ class MoreFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= 31) {
             requireActivity().window.decorView.layoutDirection = resources.configuration.layoutDirection
         }
-        if (SharedPreferencesImpl(requireContext()).getLanguage() == "en") {
-            binding.langTextView.text = "En"
+
+        viewModel.profile()
+        if (sharedPref.getLanguage() == "en") {
+            binding.langTextView.text = "عربي"
         } else {
-            binding.langTextView.text = "Ar"
+            binding.langTextView.text = "English"
         }
+
 
         binding.myOrdersLinearLayout.setOnClickListener {
             findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToOrderFragment())
         }
 
         binding.myWishlistLinearLayout.setOnClickListener {
-            findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToFavoritesFragment())
+            if (sharedPref.getRememberMe())
+                findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToFavoritesFragment())
+            else{
+                logoutNoPremission(requireActivity())
+            }
         }
 
         binding.myProfileLinearLayout.setOnClickListener {
-            findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToProfileFragment())
+            if (sharedPref.getRememberMe())
+                findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToProfileFragment())
+            else{
+                logoutNoPremission(requireActivity())
+            }
+
         }
 
         binding.aboutUsLinearLayout.setOnClickListener {
@@ -117,7 +146,11 @@ class MoreFragment : Fragment() {
         }
 
         binding.logoutLinearLayout.setOnClickListener {
-            logoutDialog()
+            if (sharedPref.getRememberMe())
+                logoutDialog()
+            else{
+                logoutNoPremission(requireActivity())
+            }
         }
         return binding.root
     }
@@ -172,5 +205,11 @@ class MoreFragment : Fragment() {
         dialog.window?.setLayout(width - 58, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
+    fun logoutNoAuth(activity: Activity) {
+        val lang = SharedPreferencesImpl(activity).getLanguage()
+        SharedPreferencesImpl(activity).clearAll()
+        SharedPreferencesImpl(activity).setLanguage(lang)
+        Navigation.findNavController(activity, R.id.navHostFragment).navigate(R.id.loginFragment)
+    }
 
 }

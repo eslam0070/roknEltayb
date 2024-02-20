@@ -12,13 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.model.cart.Data
 import com.rokneltayb.data.model.cart.coupon.Coupon
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentCartBinding
 import com.rokneltayb.databinding.FragmentProfileBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.logoutNoAuth
+import com.rokneltayb.domain.util.logoutNoPremission
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.cart.checkout.CheckOutAdapter
@@ -36,8 +39,8 @@ class CartFragment : Fragment() {
     private val binding by lazy { FragmentCartBinding.inflate(layoutInflater) }
     private val viewModel: CartViewModel by viewModels()
     private lateinit var cartAdapter: CartAdapter
-    private lateinit var couponAdapter: DiscountAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
+    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
 
     private fun observeUIState() {
         lifecycleScope.launch {
@@ -76,25 +79,22 @@ class CartFragment : Fragment() {
             }
 
             is CartViewModel.UiState.GetCartSuccess -> {
-                binding.itemCountTextView.text = "("+uiState.data.data!!.cart!!.size.toString()+ getString(R.string.items)+")"
-                binding.priceCartTextView.text = uiState.data.data.total.toString()
-                if (uiState.data.data.tax == 0)
-                    binding.shippingFeeTextView.text = getString(R.string.free)
-                else
-                    binding.shippingFeeTextView.text = uiState.data.data.tax.toString()
+                getItemCart(uiState.data.data)
 
-                binding.totalCartTextView.text = uiState.data.data.totalAfterTax.toString()
-                binding.totalTextView.text = uiState.data.data.totalAfterTax.toString()
-                cartAdapter.submitList(uiState.data.data.cart)
-                if (uiState.data.data.coupon != null){
-                    val list = mutableListOf<Coupon>()
-                    list.add(0,uiState.data.data.coupon)
-                    couponAdapter.submitList(list)
+                if (uiState.data.data!!.coupon != null){
+                    binding.applyCardView.visibility = View.VISIBLE
+                    binding.nameDiscountTextView.text = uiState.data.data.coupon!!.name
+                    binding.deleteDiscountImageView.setOnClickListener {
+                        binding.applyCardView.visibility = View.GONE
+                        viewModel.deleteCouponCart()
+                    }
                     binding.layoutDiscount.visibility = View.GONE
                 }else{
-                    binding.discountCodeRecyclerView.visibility = View.GONE
+                    binding.applyCardView.visibility = View.GONE
                     binding.layoutDiscount.visibility = View.VISIBLE
+
                 }
+
                 hideProgress()
             }
 
@@ -104,14 +104,32 @@ class CartFragment : Fragment() {
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is CartViewModel.UiState.AddOrDeleteCouponCartSuccess ->{
                 toast(uiState.data.message.toString())
                 viewModel.getCart()
+                viewModel.removeState()
             }
            else ->{}
         }
+    }
+
+    private fun getItemCart(data: Data?) {
+        binding.itemCountTextView.text = "("+data!!.cart!!.size.toString()+ getString(R.string.items)+")"
+        binding.priceCartTextView.text = data.total.toString()
+
+        if (data.tax == 0)
+            binding.shippingFeeTextView.text = getString(R.string.free)
+        else
+            binding.shippingFeeTextView.text = data.tax.toString()
+
+        binding.totalCartTextView.text = data.totalAfterTax.toString()
+        binding.totalTextView.text = data.totalAfterTax.toString()
+        cartAdapter.submitList(data.cart)
+
+
     }
 
 
@@ -124,25 +142,33 @@ class CartFragment : Fragment() {
 
 
         binding.cartRecyclerView.addBasicItemDecoration()
-        binding.discountCodeRecyclerView.addBasicItemDecoration()
 
         cartAdapter = CartAdapter(viewModel) { item, cart ->
             if (item == 1) {
                 viewModel.deleteCard(cart.productId.toString(), cart.shapeId.toString())
             } else {
-                favoriteviewModel.storeFavorite(cart.productId!!)
+                if (SharedPreferencesImpl(binding.root.context).getRememberMe()){
+                    favoriteviewModel.storeFavorite(cart.productId!!)
+                }else
+                    binding.root.context.toast(binding.root.context.getString(R.string.you_should_login))
             }
         }
-        couponAdapter = DiscountAdapter { viewModel.deleteCouponCart() }
         binding.cartRecyclerView.adapter = cartAdapter
-        binding.discountCodeRecyclerView.adapter = couponAdapter
         viewModel.getCart()
 
+        if (!sharedPref.getRememberMe()){
+            binding.discountCodeEditText.isEnabled = false
+            binding.applyButton.isClickable = false
+        }
         binding.applyButton.setOnClickListener {
             viewModel.applyCouponCart(binding.discountCodeEditText.text.toString())
         }
         binding.checkOutButton.setOnClickListener {
-            findNavController().navigate(CartFragmentDirections.actionCartFragmentToCheckOutFragment())
+            if (sharedPref.getRememberMe()){
+                findNavController().navigate(CartFragmentDirections.actionCartFragmentToCheckOutFragment())
+            }else
+                logoutNoPremission(requireActivity())
+
         }
 
         return binding.root

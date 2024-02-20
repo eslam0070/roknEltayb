@@ -103,20 +103,26 @@ class FavoritesFragment : Fragment() {
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is FavoritesViewModel.UiState.FavoriteSuccess -> {
                 favoritesAdapter.submitList(uiState.data.data)
+                viewModel.removeState()
                 hideProgress()
             }
             is FavoritesViewModel.UiState.StoreFavoriteSuccess -> {
                 hideProgress()
+                viewModel.removeState()
             }
 
             is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
                 viewModel.favorites()
                 hideProgress()
+                viewModel.removeState()
             }
+
+            FavoritesViewModel.UiState.Idle -> hideProgress()
         }
     }
 

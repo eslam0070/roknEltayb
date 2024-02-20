@@ -10,6 +10,7 @@ import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.FavoritesUseCase
 import com.rokneltayb.domain.usecase.HomeUseCase
+import com.rokneltayb.presentation.home.details.cart.CartViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(private val useCase: FavoritesUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -77,8 +78,14 @@ class FavoritesViewModel @Inject constructor(private val useCase: FavoritesUseCa
         }
     }
 
+    fun removeState() {
+        _uiState.value = UiState.Idle
+    }
+
+
     sealed class UiState {
         data object Loading : UiState()
+        data object Idle : UiState()
         class Error(val errorData: ErrorResponse): UiState()
         class FavoriteSuccess(val data: FavoritesResponse) : UiState()
         class StoreFavoriteSuccess(val data: AddFavoritesResponse) : UiState()
