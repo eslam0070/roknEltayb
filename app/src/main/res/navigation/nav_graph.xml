@@ -77,6 +77,9 @@
         <action
             android:id="@+id/action_homeFragment_to_categoriesFragment"
             app:destination="@id/categoriesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoriesHomeFragment"
+            app:destination="@id/categoriesHomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -153,7 +156,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.rokneltayb.presentation.favorite.FavoritesFragment"
+        android:name="com.rokneltayb.presentation.more.favorite.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
@@ -178,7 +181,11 @@
         android:id="@+id/contactUsFragment"
         android:name="com.rokneltayb.presentation.more.contactus.ContactUsFragment"
         android:label="fragment_contact_us"
-        tools:layout="@layout/fragment_contact_us" />
+        tools:layout="@layout/fragment_contact_us" >
+        <action
+            android:id="@+id/action_contactUsFragment_to_moreFragment"
+            app:destination="@id/moreFragment" />
+    </fragment>
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.rokneltayb.presentation.more.order.OrderFragment"
@@ -286,5 +293,13 @@
         <action
             android:id="@+id/action_splashFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoriesHomeFragment"
+        android:name="com.rokneltayb.presentation.home.categories.CategoriesHomeFragment"
+        android:label="CategoriesHomeFragment" >
+        <action
+            android:id="@+id/action_categoriesHomeFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
     </fragment>
 </navigation>

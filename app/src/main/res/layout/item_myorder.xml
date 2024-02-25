@@ -21,18 +21,18 @@
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 app:cardCornerRadius="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_8sdp">
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp">
 
                 <ImageView
                     android:id="@+id/imageCartImageView"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_60sdp"
                     android:src="@drawable/ic_address"/>
             </androidx.cardview.widget.CardView>
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:orientation="vertical"
-                android:layout_marginEnd="@dimen/_8sdp">
+                android:layout_marginEnd="@dimen/_2sdp">
 
                 <TextView
                     android:id="@+id/nameOrderTextView"
@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="3"
-                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -67,17 +67,19 @@
                         android:id="@+id/dateOrderTextView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.6"
+                        android:layout_weight="1.2"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:textAlignment="viewStart"
                         android:layout_marginEnd="@dimen/_5sdp"
+                        android:text="2024-1-18"
+                        android:textSize="@dimen/_12ssp"
                         android:textColor="@color/black"
                         android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/stateOrderTextView"
                         android:layout_width="0dp"
-                        android:layout_weight="1.4"
+                        android:layout_weight="1.8"
                         android:padding="@dimen/_4sdp"
                         android:background="@drawable/custom_bg_statue_canceled"
                         android:textAlignment="center"

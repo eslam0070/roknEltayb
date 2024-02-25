@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.rokneltayb.R
 import com.rokneltayb.data.model.favorite.FavoritesData
 import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.data.model.products.Product
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ItemFavoritesBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 import com.rokneltayb.databinding.ItemSearchHomeBinding
@@ -52,14 +54,7 @@ class SearchAdapter(
 
             binding.nameProductTextView.text = product.title
 
-            val value = product.price
-            val numPlaces = 5
-            var format = "0."
-            for (i in 0 until numPlaces) {
-                format += "#"
-            }
-            val fmt = DecimalFormat(format)
-            binding.priceTextView.text = fmt.format(value) + " KWD"
+            binding.priceTextView.text = product.price + binding.root.context.getString(R.string.kwd)
 
         }
 

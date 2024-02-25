@@ -81,8 +81,8 @@ interface UserServices {
     @POST("client/auth/profile/update")
     suspend fun updateProfile(
         @Field("name")name:String,
-        @Field("email")phone:String,
-        @Field("phone")email:String): Response<UpdateProfileResponse>
+        @Field("phone")phone:String,
+        @Field("email")email:String): Response<UpdateProfileResponse>
 
 
 }

@@ -28,6 +28,7 @@ import com.rokneltayb.R
 import com.rokneltayb.data.model.cart.CountModel
 import com.rokneltayb.data.model.products.details.Data
 import com.rokneltayb.data.model.products.details.Shape
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.AddComentDialogBinding
 import com.rokneltayb.databinding.CountineCartDialogBinding
 import com.rokneltayb.databinding.FragmentProductDetailsBinding
@@ -41,7 +42,7 @@ import com.rokneltayb.presentation.home.details.slideAdapter.SliderAdapter
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 import com.rokneltayb.domain.util.sharedPrefrences
-import com.rokneltayb.presentation.favorite.FavoritesViewModel
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
 import com.rokneltayb.presentation.home.details.rate.RateAdapter
 import com.rokneltayb.presentation.home.details.rate.StoreRateViewModel
@@ -254,22 +255,9 @@ class ProductDetailsFragment : Fragment() {
 
         binding.titleProductTextView.text = data.title
         nameProduct = data.title
-        val value = data.price
 
-        if (data.price.toString().length > 6){
-            val numPlaces = 5
-            var format = "0."
-            for (i in 0 until numPlaces) {
-                format += "#"
-            }
-            val fmt = DecimalFormat(format)
-            binding.priceTextView.text = fmt.format(value) + " KWD"
-            priceProduct = fmt.format(value)
-        }else{
-            priceProduct = value.toString()
-            binding.priceTextView.text = "$value KWD"
 
-        }
+        binding.priceTextView.text = data.price + requireActivity().getString(R.string.kwd)
 
 
 
@@ -281,7 +269,7 @@ class ProductDetailsFragment : Fragment() {
 
         if (data.is_discount == "active"){
             binding.discountTextView.visibility = View.VISIBLE
-            binding.discountTextView.text = data.discount_value
+            binding.discountTextView.text = data.discount_value + requireActivity().getString(R.string.kwd)
         }else
             binding.discountTextView.visibility = View.INVISIBLE
 

@@ -1,4 +1,4 @@
-package com.rokneltayb.presentation.favorite
+package com.rokneltayb.presentation.more.favorite
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

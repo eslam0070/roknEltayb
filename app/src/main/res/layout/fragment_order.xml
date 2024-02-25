@@ -19,6 +19,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/myOrderRecyclerView"
             android:layout_width="match_parent"
+            tools:listitem="@layout/item_myorder"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/_10ssp"
             app:spanCount="1"

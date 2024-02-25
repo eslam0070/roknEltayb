@@ -25,8 +25,8 @@ import com.rokneltayb.domain.util.logoutNoPremission
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.cart.checkout.CheckOutAdapter
-import com.rokneltayb.presentation.favorite.FavoritesAdapter
-import com.rokneltayb.presentation.favorite.FavoritesViewModel
+import com.rokneltayb.presentation.more.favorite.FavoritesAdapter
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
 import com.rokneltayb.presentation.more.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -80,8 +80,9 @@ class CartFragment : Fragment() {
 
             is CartViewModel.UiState.GetCartSuccess -> {
                 getItemCart(uiState.data.data)
+                cartAdapter.submitList(uiState.data.data!!.cart)
 
-                if (uiState.data.data!!.coupon != null){
+                if (uiState.data.data.coupon != null){
                     binding.applyCardView.visibility = View.VISIBLE
                     binding.nameDiscountTextView.text = uiState.data.data.coupon!!.name
                     binding.deleteDiscountImageView.setOnClickListener {
@@ -94,6 +95,7 @@ class CartFragment : Fragment() {
                     binding.layoutDiscount.visibility = View.VISIBLE
 
                 }
+                viewModel.removeState()
 
                 hideProgress()
             }
@@ -127,7 +129,6 @@ class CartFragment : Fragment() {
 
         binding.totalCartTextView.text = data.totalAfterTax.toString()
         binding.totalTextView.text = data.totalAfterTax.toString()
-        cartAdapter.submitList(data.cart)
 
 
     }
@@ -146,6 +147,8 @@ class CartFragment : Fragment() {
         cartAdapter = CartAdapter(viewModel) { item, cart ->
             if (item == 1) {
                 viewModel.deleteCard(cart.productId.toString(), cart.shapeId.toString())
+                viewModel.getCart()
+
             } else {
                 if (SharedPreferencesImpl(binding.root.context).getRememberMe()){
                     favoriteviewModel.storeFavorite(cart.productId!!)

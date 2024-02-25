@@ -29,7 +29,7 @@
     <string name="new_password">كلمة المرور الجديدة</string>
     <string name="reset_your_password">اعد ضبط كلمه السر</string>
     <string name="please_enter_a_new_password_at_least_8_letters_numbers">الرجاء إدخال كلمة مرور جديدة مكونة من 8 أحرف/أرقام على الأقل</string>
-    <string name="update_password">تطوير كلمة السر</string>
+    <string name="update_password">تغيير كلمة السر</string>
     <string name="please_write_phone_number">من فضلك اكتب رقم الهاتف!</string>
     <string name="otp_code_must_be_more_than_4_digits">يجب أن يتكون رمز OTP من أكثر من 4 أرقام</string>
     <string name="please_enter_otp_code">الرجاء إدخال رمز OTP</string>
@@ -96,6 +96,7 @@
     <string name="items_found">عناصر التي تم العثور عليها</string>
     <string name="mobile_number">رقم الهاتف المحمول<font color='#F81212'>*</font></string>
     <string name="address">عنوان<font color='#F81212'>*</font></string>
+    <string name="address2">عنوان</string>
     <string name="delete_you_account">حذف حسابي</string>
     <string name="update">تحديث</string>
     <string name="name_address">عنوان اسم</string>
@@ -163,7 +164,7 @@
     <string name="qty">الكمية</string>
     <string name="your_order_has_been_delivery_successfully">لقد تم تسليم طلبك بنجاح!</string>
     <string name="pending_confirmation">قيد الانتظار</string>
-    <string name="waiting_to_be_shipped">في انتظار أن يتم شحنها</string>
+    <string name="waiting_to_be_shipped">في انتظار شحنها</string>
     <string name="on_way">في الطريق</string>
     <string name="delivered">تم التوصيل</string>
     <string name="see_status_history">راجع سجل الحالة</string>
@@ -176,4 +177,6 @@
     <string name="send_a_message">ارسل رسالة</string>
     <string name="welcome">إهلا بك </string>
     <string name="register_success">تم النسجيل بنجاح</string>
+    <string name="kwd">" KWD"</string>
+    <string name="add_new_address">إضافه عنوان جديد</string>
 </resources>

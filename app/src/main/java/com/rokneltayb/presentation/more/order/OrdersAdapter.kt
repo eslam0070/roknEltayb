@@ -1,22 +1,16 @@
 package com.rokneltayb.presentation.more.order
 
-import android.R
 import android.graphics.Color
 import android.os.Build
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rokneltayb.data.model.cart.Cart
-import com.rokneltayb.data.model.cart.CountModel
+import com.rokneltayb.R
 import com.rokneltayb.data.model.orders.OrdersData
-import com.rokneltayb.databinding.ItemCartBinding
 import com.rokneltayb.databinding.ItemMyorderBinding
 
 
@@ -44,7 +38,7 @@ class OrdersAdapter(private val itemClick: (OrdersData) -> Unit) :  ListAdapter<
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(order: OrdersData) {
 
-            Glide.with(binding.root.context).load(order.image).into(binding.imageCartImageView)
+            Glide.with(binding.root.context).load(order.image).placeholder(R.drawable.img_placeholder).into(binding.imageCartImageView)
             binding.nameOrderTextView.text = binding.root.context.getString(com.rokneltayb.R.string.order_id2)+order.orderNum.toString()
             binding.dateOrderTextView.text = order.date
 

@@ -20,7 +20,7 @@ import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.categories.products.ProductsFragmentDirections
 import com.rokneltayb.presentation.categories.products.ProductsViewModel
-import com.rokneltayb.presentation.favorite.FavoritesViewModel
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

@@ -35,7 +35,6 @@ class SplashFragment : Fragment() {
     }
 
     private fun initScreen() {
-        requireActivity().window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         lifecycleScope.launchWhenCreated {
             val bounce: Animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.bounce)
             bounce.also { binding.logoBounds.animation = it }

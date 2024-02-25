@@ -1,10 +1,15 @@
 package com.rokneltayb.presentation.home.adapters
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.rokneltayb.R
 import com.rokneltayb.data.model.home.home.Slider
 import com.smarteist.autoimageslider.SliderViewAdapter
@@ -28,6 +33,7 @@ class AdvSliderAdapter(private var imgs: List<Slider?> = ArrayList()) :
 
         Glide.with(viewHolder.itemView.context)
             .load(i!!.image)
+            .placeholder(R.drawable.img_placeholder)
             .into(viewHolder.img)
     }
 

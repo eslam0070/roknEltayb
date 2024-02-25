@@ -29,7 +29,7 @@ data class Product(
     val isDiscount: String?,
     @SerializedName("price")
     @Expose
-    val price: Double?,
+    val price: String?,
     @SerializedName("rate")
     @Expose
     val rate: Int?,

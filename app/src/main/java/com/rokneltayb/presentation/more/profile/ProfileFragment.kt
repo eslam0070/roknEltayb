@@ -77,6 +77,7 @@ class ProfileFragment : Fragment() {
             is ProfileViewModel.UiState.DeleteSuccess -> {
                 toast(uiState.data.message!!)
                 hideProgress()
+                logout()
                 viewModel.removeState()
             }
             is ProfileViewModel.UiState.LogoutSuccess -> {
@@ -106,9 +107,16 @@ class ProfileFragment : Fragment() {
         binding.usernameEditText.setText(profileData!!.name)
         binding.emailAddressEditText.setText(profileData.email)
         binding.phoneEditText.setText(profileData.phone)
-        binding.addressTextView.text = profileData.addresses!![0]!!.block+" , "+ getString(R.string.street) +" " +profileData.addresses!![0]!!.street +" "+
-        profileData.addresses!![0]!!.avenue +" , "+ getString(R.string.building_number)+" "+ profileData.addresses!![0]!!.building_num +" , "
-        getString(R.string.floor) + " " + profileData.addresses[0]!!.floor_num +" , " + getString(R.string.apartment) +" "+ profileData.addresses!![0]!!.apartment
+        if (profileData.addresses!!.isNotEmpty()){
+            binding.addressTextView.text = profileData.addresses[0]!!.address
+            /*binding.addressTextView.text = profileData.addresses!![0]!!.block+" , "+ getString(R.string.street) +" " +profileData.addresses!![0]!!.street +" "+
+                    profileData.addresses!![0]!!.avenue +" , "+ getString(R.string.building_number)+" "+ profileData.addresses!![0]!!.building_num +" , "
+            getString(R.string.floor) + " " + profileData.addresses[0]!!.floor_num +" , " + getString(R.string.apartment) +" "+ profileData.addresses!![0]!!.apartment*/
+        }
+
+        else
+            binding.addressTextView.text = ""
+
 
     }
 
@@ -204,8 +212,12 @@ class ProfileFragment : Fragment() {
         dialog.setContentView(binding.root)
         dialog.window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_whtite_button, null))
 
+        binding.title.text = "هل تريد حذف حسابك ؟"
 
-        binding.yesButton.setOnClickListener {viewModel.deleteAccout() }
+        binding.yesButton.setOnClickListener {
+            viewModel.deleteAccout()
+            dialog.dismiss()
+        }
         binding.noButton.setOnClickListener { dialog.dismiss() }
 
         dialog.show()

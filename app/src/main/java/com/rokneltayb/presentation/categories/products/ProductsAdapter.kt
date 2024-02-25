@@ -153,21 +153,20 @@ class ProductsAdapter(
 
             binding.nameProductTextView.text = product.title
             if (product.discountValue != null && product.isDiscount == "active"){
-                binding.discountTextView.text = product.discountValue
+                if (SharedPreferencesImpl(binding.root.context).getLanguage() == "ar")
+                    binding.discountTextView.text = " د.ك"+product.discountValue
+                else
+                    binding.discountTextView.text = product.discountValue + " KWD"
                 binding.discountTextView.paintFlags = binding.discountTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
             else
                 binding.discountTextView.visibility = View.INVISIBLE
 
-            val value = product.price
-            val numPlaces = 5
-            var format = "0."
-            for (i in 0 until numPlaces) {
-                format += "#"
-            }
-            val fmt = DecimalFormat(format)
-            binding.priceTextView.text = fmt.format(value) + " KWD"
 
+            if (SharedPreferencesImpl(binding.root.context).getLanguage() == "ar")
+                binding.priceTextView.text = " د.ك"+product.price
+            else
+                binding.priceTextView.text = product.price + " KWD"
             binding.rateTextView.text = product.rate.toString()
 
 

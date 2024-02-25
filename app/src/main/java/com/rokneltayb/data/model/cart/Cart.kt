@@ -25,9 +25,8 @@ data class Cart(
     val productTitle: String?,
     @SerializedName("shape_id")
     @Expose
-    val shapeId: Int?
-    /*,
+    val shapeId: Int?,
     @SerializedName("price")
     @Expose
-    val price: Int?*/
+    val price: String?
 ) : Parcelable

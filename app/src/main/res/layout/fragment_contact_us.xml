@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:text="50171701"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -70,7 +69,6 @@
                 android:layout_gravity="center_vertical"
                 android:textAlignment="viewStart"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:text="50171701"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -92,7 +90,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_15sdp"
-                android:text="50171701"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black" />
         </LinearLayout>
@@ -132,6 +129,7 @@
             <EditText
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
+                android:textAlignment="viewStart"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
@@ -166,6 +164,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_10sdp"
+                android:inputType="phone"
+                android:textAlignment="viewStart"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@null"
@@ -200,6 +200,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:textAlignment="viewStart"
                 android:background="@null"
                 android:hint="@string/enter_your_email_address"
                 android:textColor="@color/black"
@@ -232,6 +233,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:textAlignment="viewStart"
                 android:background="@null"
                 android:hint="@string/enter_subject_of_message"
                 android:textColor="@color/black"
@@ -260,12 +262,13 @@
             <EditText
                 android:id="@+id/messageEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 android:background="@null"
                 android:hint="@string/enter_your_message_here"
+                android:textAlignment="viewStart"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="@dimen/_10sdp" />
@@ -277,7 +280,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_40ssp"
             android:layout_marginEnd="@dimen/_40ssp"
-            android:layout_marginTop="@dimen/_80sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:background="@drawable/custom_bg_button"
             android:text="@string/send_a_message"

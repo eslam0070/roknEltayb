@@ -97,6 +97,7 @@
     <string name="items_found">Items found</string>
     <string name="mobile_number">Mobile number<font color='#F81212'> *</font></string>
     <string name="address">Address<font color='#F81212'> *</font></string>
+    <string name="address2">Address</string>
     <string name="delete_you_account">Delete you account</string>
     <string name="update">Update</string>
     <string name="name_address">Name address</string>
@@ -177,4 +178,6 @@
     <string name="send_a_message">Send A Message</string>
     <string name="welcome">Welcome %1$s</string>
     <string name="register_success">Registered successfully</string>
+    <string name="kwd">" KWD"</string>
+    <string name="add_new_address">Add New Address</string>
 </resources>

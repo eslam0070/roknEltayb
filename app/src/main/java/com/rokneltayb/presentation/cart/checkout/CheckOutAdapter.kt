@@ -48,6 +48,7 @@ class CheckOutAdapter() :  ListAdapter<Cart, CheckOutAdapter.ViewHolder>(DiffCal
 
             Glide.with(binding.root.context).load(cart.productImage).into(binding.imageCartImageView)
             binding.nameCartTextView.text = cart.productTitle
+            binding.priceProductTextView.text = cart.price + binding.root.context.getString(com.rokneltayb.R.string.kwd)
             binding.countItemTextView.text = "x "+cart.count.toString()
         }
 

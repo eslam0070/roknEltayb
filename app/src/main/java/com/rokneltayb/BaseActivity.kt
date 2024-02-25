@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.databinding.DataBindingUtil
@@ -43,6 +44,7 @@ class BaseActivity : AppCompatActivity() {
             window.decorView.layoutDirection = resources.configuration.layoutDirection
         }
 
+        window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         binding = DataBindingUtil.setContentView(this@BaseActivity, R.layout.activity_base)
 
@@ -152,6 +154,7 @@ class BaseActivity : AppCompatActivity() {
                 }
                 "fragment_more" ->{
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
+                    binding!!.bottomNavigation.visibility = View.VISIBLE
                     binding!!.tvMainEmployeeName.text = getString(R.string.more)
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
@@ -186,7 +189,7 @@ class BaseActivity : AppCompatActivity() {
 
                 "fragment_new_address" -> {
                     binding!!.bottomNavigation.visibility = View.GONE
-                    binding!!.clMainToolbarContainer.visibility = View.GONE
+                    binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.tvMainEmployeeName.text = getString(R.string.new_address)
                     binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.GONE
@@ -196,7 +199,7 @@ class BaseActivity : AppCompatActivity() {
                 }"fragment_address" -> {
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
-                    binding!!.tvMainEmployeeName.text = getString(R.string.address)
+                    binding!!.tvMainEmployeeName.text = getString(R.string.address2)
                     binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
@@ -247,7 +250,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.VISIBLE
-                    binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
 

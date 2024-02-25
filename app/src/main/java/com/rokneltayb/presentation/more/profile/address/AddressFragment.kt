@@ -24,7 +24,7 @@ import com.rokneltayb.databinding.FragmentProfileBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.presentation.favorite.FavoritesViewModel
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.HomeFragmentDirections
 import com.rokneltayb.presentation.home.HomeViewModel
 import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter

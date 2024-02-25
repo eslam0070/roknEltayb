@@ -55,6 +55,7 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
 
             Glide.with(binding.root.context).load(cart.productImage).into(binding.imageCartImageView)
             binding.nameCartTextView.text = cart.productTitle
+            binding.priceCartTextView.text = cart.price + binding.root.context.getString(com.rokneltayb.R.string.kwd)
 
 
 
@@ -82,7 +83,6 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
             dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             binding.countSpinner.adapter = dataAdapter
 
-            val id: Int? = null
 
             binding.countSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {

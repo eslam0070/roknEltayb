@@ -149,27 +149,19 @@ class HomeDailyBestSellsProductsAdapter(
                 removeCartItemClick(position,product)
             }
 
-            Glide.with(binding.root.context).load(product.image).into(binding.imageProductImageView)
+            Glide.with(binding.root.context).load(product.image).placeholder(R.drawable.img_placeholder).into(binding.imageProductImageView)
 
 
             binding.nameProductTextView.text = product.title
             if (product.discountValue != null && product.isDiscount == "active"){
-                binding.discountTextView.text = product.discountValue
+                    binding.discountTextView.text = product.discountValue + binding.root.context.getString(R.string.kwd)
                 binding.discountTextView.paintFlags = binding.discountTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
             else
                 binding.discountTextView.visibility = View.INVISIBLE
 
 
-
-            val value = product.price
-            val numPlaces = 5
-            var format = "0."
-            for (i in 0 until numPlaces) {
-                format += "#"
-            }
-            val fmt = DecimalFormat(format)
-            binding.priceTextView.text = fmt.format(value) + " KWD"
+            binding.priceTextView.text = product.price + binding.root.context.getString(R.string.kwd)
 
             binding.rateTextView.text = product.rate.toString()
 

@@ -49,31 +49,15 @@
                     android:layout_height="@dimen/_40sdp"
                     android:textColor="@color/black_dark"/>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/priceCartTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-                    <TextView
-                        android:id="@+id/curricesTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="KWD"
-                        android:textColor="@color/green"
-                        android:textSize="@dimen/_12sdp" />
-
-                    <TextView
-                        android:id="@+id/priceCartTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="00.00"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_weight="1"
-                        android:textColor="@color/green"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/_12sdp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

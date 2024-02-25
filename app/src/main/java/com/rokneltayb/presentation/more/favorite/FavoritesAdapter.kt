@@ -1,4 +1,4 @@
-package com.rokneltayb.presentation.favorite
+package com.rokneltayb.presentation.more.favorite
 
 import android.content.Context
 import android.graphics.Paint
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.data.model.favorite.FavoritesData
 import com.rokneltayb.data.model.home.home.PopularProduct
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ItemFavoritesBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 import java.text.DecimalFormat
@@ -55,15 +56,7 @@ class FavoritesAdapter(
 
             binding.nameProductTextView.text = favorte.title
 
-            val value = favorte.price
-            val numPlaces = 5
-            var format = "0."
-            for (i in 0 until numPlaces) {
-                format += "#"
-            }
-            val fmt = DecimalFormat(format)
-
-            binding.priceTextView.text = favorte.price + " KWD"
+            binding.priceTextView.text = favorte.price + binding.root.context.getString(com.rokneltayb.R.string.kwd)
         }
 
     }

@@ -10,24 +10,18 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rokneltayb.R
-import com.rokneltayb.data.model.home.home.PopularProduct
 import com.rokneltayb.data.model.home.home.Slider
-import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentHomeBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
-import com.rokneltayb.domain.util.logoutNoPremission
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.presentation.categories.products.ProductsFragmentDirections
-import com.rokneltayb.presentation.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.adapters.AdvSliderAdapter
 import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
 import com.rokneltayb.presentation.home.adapters.HomeDailyBestSellsProductsAdapter
 import com.rokneltayb.presentation.home.adapters.HomeProductsAdapter
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
-import com.rokneltayb.presentation.more.MoreFragmentDirections
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +38,6 @@ class HomeFragment : Fragment() {
     private lateinit var homeDailyBestSellsProductsAdapter: HomeDailyBestSellsProductsAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
-    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
 
     private fun observeUIState() {
         lifecycleScope.launch {
@@ -71,6 +64,7 @@ class HomeFragment : Fragment() {
                 homeCategoriesAdapter.submitList(uiState.data.data.categories)
                 homeProductsAdapter.submitList(uiState.data.data.popularProducts)
                 homeDailyBestSellsProductsAdapter.submitList(uiState.data.data.dailyProducts)
+                binding.layoutLoading.visibility = View.VISIBLE
                 hideProgress()
             }
 
@@ -78,32 +72,27 @@ class HomeFragment : Fragment() {
                 toastError(uiState.errorData.message)
                 hideProgress()
             }
-
         }
     }
 
     private fun favoritesUI(uiState: FavoritesViewModel.UiState) {
         when (uiState) {
             is FavoritesViewModel.UiState.Loading -> {
-                showProgress()
             }
 
             is FavoritesViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
-                hideProgress()
                 favoriteviewModel.removeState()
             }
 
             is FavoritesViewModel.UiState.StoreFavoriteSuccess -> {
                 toast("تم اضافة المنتج الى المفضلة")
                 favoriteviewModel.removeState()
-                hideProgress()
             }
 
             is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
                 toast("تم حذف المنتج من المفضلة")
                 favoriteviewModel.removeState()
-                hideProgress()
             }
 
             else ->{}
@@ -113,23 +102,19 @@ class HomeFragment : Fragment() {
     private fun cartUI(uiState: CartViewModel.UiState) {
         when (uiState) {
             is CartViewModel.UiState.Loading -> {
-                showProgress()
             }
 
             is CartViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
-                hideProgress()
                 cartViewModel.removeState()
             }
 
             is CartViewModel.UiState.AddToCartSuccess -> {
                 toast(uiState.data.message.toString())
-                hideProgress()
                 cartViewModel.removeState()
             }
 
             is CartViewModel.UiState.Idle ->{
-                hideProgress()
             }
 
             else ->{}
@@ -137,7 +122,7 @@ class HomeFragment : Fragment() {
     }
     private fun setCategoriesRecyclerView() {
         homeCategoriesAdapter = HomeCategoriesAdapter {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoriesFragment()) }
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoriesHomeFragment()) }
         binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         binding.categoriesRecyclerView.adapter = homeCategoriesAdapter
     }

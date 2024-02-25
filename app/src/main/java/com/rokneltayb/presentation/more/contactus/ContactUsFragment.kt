@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.rokneltayb.R
 import com.rokneltayb.databinding.FragmentContactUsBinding
 import com.rokneltayb.databinding.FragmentMoreBinding
@@ -58,6 +59,8 @@ class ContactUsFragment : Fragment() {
 
             is ContactUsViewModel.UiState.StoreContactSuccess -> {
                 toast(uiState.data.message!!)
+                viewModel.removeState()
+                findNavController().navigate(ContactUsFragmentDirections.actionContactUsFragmentToMoreFragment())
                 hideProgress()
             }
 

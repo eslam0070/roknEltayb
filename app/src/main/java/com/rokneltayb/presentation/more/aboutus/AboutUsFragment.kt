@@ -2,6 +2,7 @@ package com.rokneltayb.presentation.more.aboutus
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.text.Html
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,8 @@ class AboutUsFragment : Fragment() {
 
             is ContactUsViewModel.UiState.PagesSuccess -> {
                 showProgress()
-                binding.aboutUsTextView.text = uiState.data.data!![0]!!.description
+                binding.aboutUsTextView.text =
+                    Html.fromHtml(uiState.data.data!![0]!!.description, Html.FROM_HTML_MODE_COMPACT)
                 Glide.with(requireActivity()).load(uiState.data.data[0]!!.image).into(binding.imageView)
                 viewModel.removeState()
             }
