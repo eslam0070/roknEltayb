@@ -6,6 +6,7 @@ import com.rokneltayb.data.model.address.AddressResponse
 import com.rokneltayb.data.model.address.add.AddAddressResponse
 import com.rokneltayb.data.model.address.city.CityResponse
 import com.rokneltayb.data.model.address.delete.DeleteAddressResponse
+import com.rokneltayb.data.model.address.details.AddressDetailsResponse
 import com.rokneltayb.data.model.favorite.FavoritesResponse
 import com.rokneltayb.data.model.favorite.add.AddFavoritesResponse
 import com.rokneltayb.data.model.favorite.delete.DeleteFavoritesResponse
@@ -21,11 +22,14 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AddressServices {
 
     @GET("client/addresses")
     suspend fun address(): Response<AddressResponse>
+    @GET("client/address-details")
+    suspend fun getAddressById(@Query("id")id:String): Response<AddressDetailsResponse>
     @GET("client/cities")
     suspend fun cities(): Response<CityResponse>
     @FormUrlEncoded
@@ -40,8 +44,25 @@ interface AddressServices {
                            @Field("floor_num")floorNum:String,
                            @Field("apartment")apartment:String,
                            @Field("address")address:String):Response<AddAddressResponse>
+
+    @FormUrlEncoded
+    @POST("client/update-address")
+    suspend fun updateAddress(@Field("id")id:String,
+                           @Field("name")name:String,
+                           @Field("phone")phone:String,
+                           @Field("city_id")cityId:String,
+                           @Field("block")block:String,
+                           @Field("street")street:String,
+                           @Field("avenue")avenue:String,
+                           @Field("building_num")buildingNum:String,
+                           @Field("floor_num")floorNum:String,
+                           @Field("apartment")apartment:String,
+                           @Field("address")address:String):Response<AddressDetailsResponse>
     @FormUrlEncoded
     @POST("client/delete-address")
     suspend fun deleteAddress(@Field("id")id:Int):Response<DeleteAddressResponse>
+
+
+
 
 }

@@ -4,6 +4,7 @@ import com.rokneltayb.data.model.address.AddressResponse
 import com.rokneltayb.data.model.address.add.AddAddressResponse
 import com.rokneltayb.data.model.address.city.CityResponse
 import com.rokneltayb.data.model.address.delete.DeleteAddressResponse
+import com.rokneltayb.data.model.address.details.AddressDetailsResponse
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -23,6 +24,8 @@ import com.rokneltayb.domain.entity.Result
 
 interface AddressRepository {
     suspend fun address(): Result<AddressResponse>
+    suspend fun getAddressById(id:String): Result<AddressDetailsResponse>
+
     suspend fun cities(): Result<CityResponse>
     suspend fun addAddress(name:String,
                            phone:String,
@@ -34,6 +37,16 @@ interface AddressRepository {
                            floorNum:String,
                            apartment:String,
                            address:String):Result<AddAddressResponse>
+    suspend fun updateAddress(id:String,name:String,
+                              phone:String,
+                              cityId:String,
+                              block:String,
+                              street:String,
+                              avenue:String,
+                              buildingNum:String,
+                              floorNum:String,
+                              apartment:String,
+                              address:String):Result<AddressDetailsResponse>
 
     suspend fun deleteAddress(id:Int):Result<DeleteAddressResponse>
 }

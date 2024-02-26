@@ -4,6 +4,7 @@ import com.rokneltayb.data.model.address.AddressResponse
 import com.rokneltayb.data.model.address.add.AddAddressResponse
 import com.rokneltayb.data.model.address.city.CityResponse
 import com.rokneltayb.data.model.address.delete.DeleteAddressResponse
+import com.rokneltayb.data.model.address.details.AddressDetailsResponse
 import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -29,6 +30,7 @@ import javax.inject.Inject
 
 class AddressUseCase @Inject constructor(private val repo: AddressRepository) {
     suspend fun address(): Result<AddressResponse> = repo.address()
+    suspend fun getAddressById(id:String): Result<AddressDetailsResponse> = repo.getAddressById(id)
 
     suspend fun cities(): Result<CityResponse> = repo.cities()
 
@@ -44,6 +46,19 @@ class AddressUseCase @Inject constructor(private val repo: AddressRepository) {
         apartment: String,
         address: String
     ): Result<AddAddressResponse> = repo.addAddress(name, phone, cityId, block, street, avenue, buildingNum, floorNum, apartment, address)
+    suspend fun updateAddress(
+        id:String,
+        name: String,
+        phone: String,
+        cityId: String,
+        block: String,
+        street: String,
+        avenue: String,
+        buildingNum: String,
+        floorNum: String,
+        apartment: String,
+        address: String
+    ): Result<AddressDetailsResponse> = repo.updateAddress(id,name, phone, cityId, block, street, avenue, buildingNum, floorNum, apartment, address)
 
     suspend fun deleteAddress(id: Int): Result<DeleteAddressResponse> = repo.deleteAddress(id)
 }

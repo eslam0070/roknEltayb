@@ -23,11 +23,10 @@ import com.rokneltayb.databinding.ItemAddressBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 
 class AddressAdapter(
-    private val itemClick: (AddressData) -> Unit,
-    private val longItemClick:(AddressData) -> Unit
+    private val itemClick: (AddressData) -> Unit
 ) :  ListAdapter<AddressData, AddressAdapter.ViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemAddressBinding.inflate(LayoutInflater.from(parent.context)), itemClick,longItemClick)
+        return ViewHolder(ItemAddressBinding.inflate(LayoutInflater.from(parent.context)), itemClick)
     }
 
 
@@ -38,20 +37,13 @@ class AddressAdapter(
         holder.bind(address)
     }
 
-    class ViewHolder(private val binding: ItemAddressBinding, private val itemClick: (AddressData) -> Unit,
-                     private val longItemClick:(AddressData) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemAddressBinding, private val itemClick: (AddressData) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
         fun bind(address: AddressData) {
-
+            binding.addressTextView.text = address.name
             binding.root.setOnClickListener {
                 itemClick(address)
             }
-
-            binding.root.setOnLongClickListener {
-                longItemClick(address)
-                return@setOnLongClickListener true
-            }
-
 
         }
 

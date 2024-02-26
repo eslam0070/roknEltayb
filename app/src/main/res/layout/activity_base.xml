@@ -124,7 +124,7 @@
             app:cbn_iconColor="@color/backgroundCurve2"
             app:cbn_height="76dp"
             app:cbn_icon_size="50dp"
-            app:cbn_curve_radius="20dp"
+            app:cbn_curve_radius="30dp"
             app:cbn_selected_icon_size="48dp"
             app:cbn_selectedIconColor="@color/white"
             app:cbn_titleColor="@color/backgroundCurve2"

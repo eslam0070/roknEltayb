@@ -23,6 +23,7 @@ import com.rokneltayb.databinding.FragmentAddressBinding
 import com.rokneltayb.databinding.FragmentProfileBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
+import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.HomeFragmentDirections
@@ -54,10 +55,8 @@ class AddressFragment : Fragment() {
                 hideProgress()
             }
 
-            is AddressViewModel.UiState.DeleteSuccess ->{
-                viewModel.address()
-                hideProgress()
-            }
+
+
             is AddressViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
@@ -75,44 +74,19 @@ class AddressFragment : Fragment() {
         observeUIState()
 
         viewModel.address()
+
         binding.addNewAddressTextView.setOnClickListener {
-                findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment())
+            findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment())
         }
 
-        addressAdapter = AddressAdapter(
-            {
-
-            }, {
-                deleteAddressDialog(it.id!!)
-            })
+        addressAdapter = AddressAdapter { findNavController().navigate(AddressFragmentDirections.actionAddressFragmentToNewAddressFragment(it.id.toString())) }
 
         binding.addressRecyclerView.adapter = addressAdapter
+
         return binding.root
     }
 
-    private fun deleteAddressDialog(id: Int) {
-        val dialog = Dialog(requireContext())
-        val binding: DeleteAddressDialogBinding = DataBindingUtil
-            .inflate(LayoutInflater.from(requireContext()), R.layout.delete_address_dialog, null, false)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(binding.root)
-        dialog.window!!.setBackgroundDrawable(ResourcesCompat.getDrawable(resources, R.drawable.rounded_whtite_button, null))
 
-
-        binding.yesButton.setOnClickListener {
-            viewModel.delete(id)
-            dialog.dismiss()
-        }
-        binding.noButton.setOnClickListener { dialog.dismiss() }
-
-        dialog.show()
-        val metrics: DisplayMetrics = requireActivity().resources.displayMetrics
-        val width: Int = metrics.widthPixels
-        dialog.window?.setLayout(
-            width - 58,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-    }
 
 
 }

@@ -6,6 +6,7 @@ import com.rokneltayb.data.model.address.AddressResponse
 import com.rokneltayb.data.model.address.add.AddAddressResponse
 import com.rokneltayb.data.model.address.city.CityResponse
 import com.rokneltayb.data.model.address.delete.DeleteAddressResponse
+import com.rokneltayb.data.model.address.details.AddressDetailsResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
@@ -33,6 +34,26 @@ class AddressViewModel @Inject constructor(private val useCase: AddressUseCase) 
 
                 is Result.Success -> {
                     _uiState.value = UiState.AddressSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+
+        }
+
+    }
+
+    fun getAddressById(id:String) {
+        viewModelScope.launch {
+            when (val result = useCase.getAddressById(id)) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.AddressDetailsSuccess(result.data!!)
                 }
 
                 is Result.Loading -> {
@@ -91,6 +112,34 @@ class AddressViewModel @Inject constructor(private val useCase: AddressUseCase) 
         }
     }
 
+    fun update(id:String, name: String,
+             phone: String,
+             cityId: String,
+             block: String,
+             street: String,
+             avenue: String,
+             buildingNum: String,
+             floorNum: String,
+             apartment: String,
+             address: String) {
+        viewModelScope.launch {
+            when (val result = useCase.updateAddress(id,name, phone, cityId, block, street, avenue, buildingNum, floorNum, apartment, address)) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.UpdateDetailsSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+
+        }
+    }
+
     fun delete(id:Int) {
         viewModelScope.launch {
             when (val result = useCase.deleteAddress(id)) {
@@ -109,6 +158,10 @@ class AddressViewModel @Inject constructor(private val useCase: AddressUseCase) 
 
         }
     }
+
+    fun removeState(){
+        _uiState.value = UiState.Idle
+    }
     sealed class UiState {
         data object Loading : UiState()
         data object Idle : UiState()
@@ -117,5 +170,7 @@ class AddressViewModel @Inject constructor(private val useCase: AddressUseCase) 
         class CitiesSuccess(val data: CityResponse) : UiState()
         class AddSuccess(val data: AddAddressResponse) : UiState()
         class DeleteSuccess(val data: DeleteAddressResponse) : UiState()
+        class AddressDetailsSuccess(val data: AddressDetailsResponse) : UiState()
+        class UpdateDetailsSuccess(val data: AddressDetailsResponse) : UiState()
     }
 }

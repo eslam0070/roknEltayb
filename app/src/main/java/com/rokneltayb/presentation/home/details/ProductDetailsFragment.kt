@@ -365,7 +365,6 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun setImageSliders(images: MutableList<Data.Images> = arrayListOf()) {
-        Log.d("TAG", "setImageSliders: "+images)
         binding.viewPagerImageSlider.adapter = SliderAdapter(images,binding.viewPagerImageSlider)
 
         binding.viewPagerImageSlider.clipToPadding = false

@@ -2,19 +2,31 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_margin="@dimen/_5sdp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_bg_profile">
 
-        <TextView
-            android:id="@+id/addressTextView"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="5dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:padding="@dimen/_10sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@null"
-            android:text="asdasd"
-            android:textSize="@dimen/_10sdp" />
-    </LinearLayout>
+            android:layout_margin="@dimen/_5sdp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_10sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:maxLines="1"
+                android:background="@null"
+                android:textColor="@color/black_dark"
+                android:textStyle="bold"
+                android:textAlignment="viewStart"
+                android:textSize="@dimen/_12sdp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </layout>

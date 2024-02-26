@@ -53,7 +53,7 @@ class BaseActivity : AppCompatActivity() {
             CurvedBottomNavigation.Model(R.id.homeFragment, getString(R.string.home),R.drawable.ic_home_gray),
             CurvedBottomNavigation.Model(R.id.categoriesFragment, getString(R.string.categories),R.drawable.ic_categories_gray),
             CurvedBottomNavigation.Model(R.id.cartFragment, getString(R.string.cart),R.drawable.ic_cart_gray),
-            CurvedBottomNavigation.Model(R.id.moreFragment, getString(R.string.more),R.drawable.more_gray2))
+            CurvedBottomNavigation.Model(R.id.moreFragment, getString(R.string.more),R.drawable.ic_more))
 
         binding!!.ivBack.setOnClickListener {
             findNavController(R.id.navHostFragment).navigateUp()

@@ -4,6 +4,7 @@ import com.rokneltayb.data.model.address.AddressResponse
 import com.rokneltayb.data.model.address.add.AddAddressResponse
 import com.rokneltayb.data.model.address.city.CityResponse
 import com.rokneltayb.data.model.address.delete.DeleteAddressResponse
+import com.rokneltayb.data.model.address.details.AddressDetailsResponse
 import com.rokneltayb.data.model.favorite.FavoritesResponse
 import com.rokneltayb.data.model.favorite.add.AddFavoritesResponse
 import com.rokneltayb.data.model.favorite.delete.DeleteFavoritesResponse
@@ -11,6 +12,7 @@ import javax.inject.Inject
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
 import com.rokneltayb.domain.entity.Result
+import retrofit2.Response
 
 class AddressRemoteDataSourceImpl @Inject constructor(
     private val networkServices: NetworkServices,
@@ -20,6 +22,15 @@ class AddressRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun address(): Result<AddressResponse> {
         val res = requestApiCall.requestApiCall { networkServices.address() }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun getAddressById(id: String): Result<AddressDetailsResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.getAddressById(id) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)
@@ -49,6 +60,27 @@ class AddressRemoteDataSourceImpl @Inject constructor(
         address: String
     ): Result<AddAddressResponse> {
         val res = requestApiCall.requestApiCall { networkServices.addAddress(name, phone, cityId, block, street, avenue, buildingNum, floorNum, apartment, address) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun updateAddress(
+        id: String,
+        name: String,
+        phone: String,
+        cityId: String,
+        block: String,
+        street: String,
+        avenue: String,
+        buildingNum: String,
+        floorNum: String,
+        apartment: String,
+        address: String
+    ): Result<AddressDetailsResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.updateAddress(id,name, phone, cityId, block, street, avenue, buildingNum, floorNum, apartment, address) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)
