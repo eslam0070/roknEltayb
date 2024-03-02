@@ -7,6 +7,7 @@ import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.UserUseCase
+import com.rokneltayb.presentation.login.forgetpassword.ForgetPasswordViewModel
 import com.rokneltayb.presentation.more.profile.ProfileViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,6 +61,8 @@ class ResetYourPasswordViewModel@Inject constructor(private val useCase: UserUse
 
         }
     }
+
+    fun removeState(){_uiState.value = UiState.Idle }
 
     sealed class UiState {
         data object Loading : UiState()

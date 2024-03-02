@@ -84,7 +84,7 @@ class CartFragment : Fragment() {
 
                 if (uiState.data.data.coupon != null){
                     binding.applyCardView.visibility = View.VISIBLE
-                    binding.nameDiscountTextView.text = uiState.data.data.coupon!!.name
+                    binding.nameDiscountTextView.text = uiState.data.data.coupon.name
                     binding.deleteDiscountImageView.setOnClickListener {
                         binding.applyCardView.visibility = View.GONE
                         viewModel.deleteCouponCart()
@@ -163,6 +163,7 @@ class CartFragment : Fragment() {
             binding.discountCodeEditText.isEnabled = false
             binding.applyButton.isClickable = false
         }
+
         binding.applyButton.setOnClickListener {
             viewModel.applyCouponCart(binding.discountCodeEditText.text.toString())
         }

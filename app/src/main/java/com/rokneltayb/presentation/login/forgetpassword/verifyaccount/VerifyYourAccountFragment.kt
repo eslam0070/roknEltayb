@@ -71,14 +71,12 @@ class VerifyYourAccountFragment : Fragment() {
         //Todo change the timer to 60000
         object : CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.resendcode.text =
-                    getString(R.string.did_not_get_the_code, (millisUntilFinished / 1000).toInt())
+                binding.resendcode.text = getString(R.string.did_not_get_the_code, (millisUntilFinished / 1000).toInt())
             }
 
             override fun onFinish() {
                 binding.resendcode.isEnabled = true
-                binding.resendcode.text =
-                    getString(R.string.resend_verification_code)
+                binding.resendcode.text = getString(R.string.resend_verification_code)
             }
         }.start()
     }
@@ -95,14 +93,15 @@ class VerifyYourAccountFragment : Fragment() {
             }
 
             is VerifyYourAccountViewModel.UiState.Success -> {
-                Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(VerifyYourAccountFragmentDirections.actionVerifyYourAccountFragmentToResetYourPasswordFragment())
                 hideProgress()
+                viewModel.removeState()
             }
 
             is VerifyYourAccountViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is VerifyYourAccountViewModel.UiState.Idle -> hideProgress()
@@ -122,11 +121,13 @@ class VerifyYourAccountFragment : Fragment() {
             is ForgetPasswordViewModel.UiState.Success -> {
                 Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
                 hideProgress()
+                resendviewModel.removeState()
             }
 
             is ForgetPasswordViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                resendviewModel.removeState()
             }
 
             is ForgetPasswordViewModel.UiState.Idle -> hideProgress()

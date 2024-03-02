@@ -7,6 +7,7 @@ import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.UserUseCase
+import com.rokneltayb.presentation.login.forgetpassword.ForgetPasswordViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,6 +41,7 @@ class VerifyYourAccountViewModel @Inject constructor(private val useCase: UserUs
         }
 
     }
+    fun removeState(){_uiState.value = UiState.Idle }
 
     sealed class UiState {
         data object Loading : UiState()

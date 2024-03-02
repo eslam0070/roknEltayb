@@ -40,6 +40,8 @@ class ForgetPasswordViewModel  @Inject constructor(private val useCase: UserUseC
 
     }
 
+    fun removeState(){_uiState.value = UiState.Idle }
+
     sealed class UiState {
         data object Loading : UiState()
         data object Idle : UiState()

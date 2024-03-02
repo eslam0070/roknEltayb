@@ -70,11 +70,13 @@ class ForgetPasswordFragment : Fragment() {
                 Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(ForgetPasswordFragmentDirections.actionForgetPasswordFragmentToVerifyYourAccountFragment(binding.phone.text.toString(),uiState.data.data!!.otp.toString()))
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ForgetPasswordViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ForgetPasswordViewModel.UiState.Idle -> hideProgress()

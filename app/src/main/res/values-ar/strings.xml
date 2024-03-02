@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">roknEltayb</string>
     <string name="welcome_to">مرحبًا بكم في ركن الطيب لتجارة التجزئة وتوصيل المستهلكات المنزلية والتجارية. نحن متحمسون لرؤيتك مرة أخرى!</string>
-    <string name="phone_number">رقم التليفون</string>
+    <string name="phone_number">رقم الهاتف</string>
     <string name="password">كلمة المرور</string>
     <string name="remember_me">تذكرنى</string>
     <string name="forgot_password">هل نسيت كلمة السر؟</string>
@@ -11,7 +11,7 @@
     <string name="don_t_have_an_account">ليس لديك حساب؟</string>
     <string name="email_address">عنوان البريد الإلكتروني<font color='#F81212'>*</font></string>
     <string name="username">اسم المستخدم<font color='#F81212'>*</font></string>
-    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="confirm_password">تأكيد كلمة المرور الجديدة</string>
     <string name="choose">اختر\n</string>
     <string name="block">حاجز</string>
     <string name="street">شارع</string>
@@ -22,7 +22,7 @@
     <string name="delivery_instruction">تعليمات التسليم</string>
     <string name="enter_your_phone_number">أدخل رقم هاتفك</string>
     <string name="please_enter_your_phone_number_to_receive_a_verification_code_to_reset_the_password">الرجاء إدخال رقم هاتفك لتلقي رمز التحقق لإعادة تعيين كلمة المرور</string>
-    <string name="send">يرسل</string>
+    <string name="send">إرسال</string>
     <string name="an_sms_with_a_4_digit_verification_code_has_just_been_sent_to">لقد تم للتو إرسال رسالة نصية قصيرة تحتوي على رمز التحقق المكون من 4 أرقام إلى</string>
     <string name="did_you_get_a_code">هل حصلت على رمز؟</string>
     <string name="resend_verification_code">إعادة إرسال رمز التحقق</string>

@@ -74,13 +74,16 @@ class ResetYourPasswordFragment : Fragment() {
             is ResetYourPasswordViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                viewModel.removeState()
             }
 
             is ResetYourPasswordViewModel.UiState.ChangePasswordSuccess -> {
                 findNavController().navigate(ResetYourPasswordFragmentDirections.actionResetYourPasswordFragmentToLoginFragment())
                 hideProgress()
+                viewModel.removeState()
             }
 
+            is ResetYourPasswordViewModel.UiState.Idle -> hideProgress()
             else -> {}
         }
     }
