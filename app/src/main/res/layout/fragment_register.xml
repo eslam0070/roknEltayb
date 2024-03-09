@@ -450,15 +450,20 @@
                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/signUpButton"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_50sdp"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-
+            android:layout_marginTop="@dimen/_50sdp"
+            android:background="@drawable/custom_bg_button"
             android:text="@string/sign_up"
-            android:background="@drawable/custom_bg_button"/>
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            app:spinning_bar_width="4dp"
+            app:spinning_bar_color="#EFECE6"
+            app:spinning_bar_padding="6dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

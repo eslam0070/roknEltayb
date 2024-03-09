@@ -101,10 +101,11 @@ class CartFragment : Fragment() {
             }
 
             is CartViewModel.UiState.Error -> {
-                if (uiState.errorData.status == 401)
-                    logoutNoAuth(requireActivity())
-                else
-                    toastError(uiState.errorData.message)
+                when (uiState.errorData.status) {
+                    401 -> logoutNoAuth(requireActivity())
+                    408 -> toastError(uiState.errorData.message)
+                    else -> toastError(uiState.errorData.message)
+                }
                 hideProgress()
                 viewModel.removeState()
             }
@@ -113,6 +114,13 @@ class CartFragment : Fragment() {
                 toast(uiState.data.message.toString())
                 viewModel.getCart()
                 viewModel.removeState()
+                hideProgress()
+            }
+
+            is CartViewModel.UiState.DeleteCartSuccess ->{
+                viewModel.getCart()
+                viewModel.removeState()
+                hideProgress()
             }
            else ->{}
         }
@@ -147,8 +155,6 @@ class CartFragment : Fragment() {
         cartAdapter = CartAdapter(viewModel) { item, cart ->
             if (item == 1) {
                 viewModel.deleteCard(cart.productId.toString(), cart.shapeId.toString())
-                viewModel.getCart()
-
             } else {
                 if (SharedPreferencesImpl(binding.root.context).getRememberMe()){
                     favoriteviewModel.storeFavorite(cart.productId!!)
@@ -159,10 +165,6 @@ class CartFragment : Fragment() {
         binding.cartRecyclerView.adapter = cartAdapter
         viewModel.getCart()
 
-        if (!sharedPref.getRememberMe()){
-            binding.discountCodeEditText.isEnabled = false
-            binding.applyButton.isClickable = false
-        }
 
         binding.applyButton.setOnClickListener {
             viewModel.applyCouponCart(binding.discountCodeEditText.text.toString())

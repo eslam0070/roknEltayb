@@ -47,7 +47,7 @@
     <string name="please_write_street">من فضلك اكتب الشارع</string>
     <string name="have_an_account">هل لديك حساب؟</string>
     <string name="login">تسجيل الدخول</string>
-    <string name="home">بيت</string>
+    <string name="home">الرئيسية</string>
     <string name="categories">فئات</string>
     <string name="cart">عربة التسوق</string>
     <string name="more">المزيد</string>
@@ -69,11 +69,11 @@
     <string name="popular_produts">المنتجات المميزة</string>
     <string name="sort_by">ترتيب حسب</string>
     <string name="popularity">شعبية</string>
-    <string name="price_high_to_low">السعر الاعلى الى الادنى</string>
-    <string name="price_low_to_high">السعر من الارخص للاعلى</string>
-    <string name="new_arrivals">القادمون الجدد</string>
+    <string name="price_high_to_low">السعر الاعلى الى الاقل</string>
+    <string name="price_low_to_high">السعر من الاقل للاعلى</string>
+    <string name="new_arrivals">الاحدث</string>
     <string name="what_are_you_looking_for">ما الذي تبحث عنه؟</string>
-    <string name="sort">نوع</string>
+    <string name="sort">الترتيب</string>
     <string name="product_details">تفاصيل المنتج</string>
     <string name="description">وصف</string>
     <string name="product_ratings_amp_reviews"><![CDATA[تقييمات ومراجعات المنتج]]></string>

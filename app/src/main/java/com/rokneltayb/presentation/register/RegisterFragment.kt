@@ -42,9 +42,11 @@ class RegisterFragment : Fragment() {
 
 
         binding.signUpButton.setOnClickListener {
-            if (checkValidation())
+            if (checkValidation()){
+                binding.signUpButton.startAnimation()
                 viewModel.signUp(binding.username.text.toString(),
                     binding.phone.text.toString(),binding.email.text.toString(),binding.etLoginPassword.text.toString(),binding.passwordConfirm.text.toString(),fcmToken)
+            }
         }
         return binding.root
     }
@@ -64,12 +66,14 @@ class RegisterFragment : Fragment() {
                 toast(getString(R.string.register_success))
                 findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
                 hideProgress()
+                binding.signUpButton.revertAnimation()
                 viewModel.removeState()
             }
 
             is RegisterViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
+                binding.signUpButton.revertAnimation()
                 viewModel.removeState()
             }
 
@@ -82,70 +86,37 @@ class RegisterFragment : Fragment() {
             binding.username.text.toString().isEmpty() -> {
                 toastError(getString(R.string.please_write_username))
                 valid = false
+                binding.signUpButton.revertAnimation()
             }
 
             binding.email.text.toString().isEmpty() -> {
                 toastError(getString(R.string.please_write_email_address))
                 valid = false
+                binding.signUpButton.revertAnimation()
             }
 
             !Validate.isEmailValid(binding.email.text.toString()) -> {
                 toastError(getString(R.string.invalid_email))
                 valid = false
+                binding.signUpButton.revertAnimation()
             }
             binding.etLoginPassword.text.toString().length < 8 -> {
                 toastError(getString(R.string.password_is_less_than_8_letters))
                 valid = false
+                binding.signUpButton.revertAnimation()
             }
 
             binding.passwordConfirm.text.toString().length < 8 -> {
                 toastError(getString(R.string.confirm_password_is_less_than_8_letters))
                 valid = false
+                binding.signUpButton.revertAnimation()
             }
 
             (binding.passwordConfirm.text.toString() != binding.etLoginPassword.text.toString()) -> {
                 toastError(getString(R.string.confirm_password_does_not_match))
                 valid = false
+                binding.signUpButton.revertAnimation()
             }
-
-       /*     areaId == 0 -> {
-                toast(getString(R.string.please_select_area))
-                valid = false
-            }
-
-            binding.block.text.toString().isEmpty() -> {
-                binding.block.error = getString(R.string.please_write_block)
-                valid = false
-            }
-            binding.street.text.toString().isEmpty() -> {
-                binding.street.error = getString(R.string.please_write_street)
-                valid = false
-            }
-
-            binding.avenue.text.toString().isEmpty() -> {
-                binding.avenue.error = getString(R.string.please_write_avenue)
-                valid = false
-            }
-
-            binding.buildingNumber.text.toString().isEmpty() -> {
-                binding.buildingNumber.error = getString(R.string.please_write_building_number)
-                valid = false
-            }
-
-            binding.floor.text.toString().isEmpty() -> {
-                binding.floor.error = getString(R.string.please_write_floor)
-                valid = false
-            }
-
-            binding.apartment.text.toString().isEmpty() -> {
-                binding.apartment.error = getString(R.string.please_write_apartment)
-                valid = false
-            }
-
-            binding.deliveryInstruction.text.toString().isEmpty() -> {
-                binding.deliveryInstruction.error = getString(R.string.please_write_delivery_instruction)
-                valid = false
-            }*/
         }
         return valid
 

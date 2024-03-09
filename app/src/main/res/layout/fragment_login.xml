@@ -157,14 +157,21 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/loginBtn"
+
+                    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                        android:id="@+id/btn_login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:background="@drawable/custom_bg_button"
-                        android:text="@string/log_in"
-                        android:textColor="@color/white" />
+                        android:text="@string/login"
+                        android:textAllCaps="false"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        app:spinning_bar_width="4dp"
+                        app:spinning_bar_color="#EFECE6"
+                        app:spinning_bar_padding="6dp" />
 
                     <Button
                         android:id="@+id/giestBtn"

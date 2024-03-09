@@ -153,23 +153,20 @@ class ProductsAdapter(
 
             binding.nameProductTextView.text = product.title
             if (product.discountValue != null && product.isDiscount == "active"){
-                if (SharedPreferencesImpl(binding.root.context).getLanguage() == "ar")
-                    binding.discountTextView.text = " د.ك"+product.discountValue
-                else
-                    binding.discountTextView.text = product.discountValue + " KWD"
+                binding.discountTextView.text = product.discountValue + " KWD"
+
                 binding.discountTextView.paintFlags = binding.discountTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
             else
                 binding.discountTextView.visibility = View.INVISIBLE
 
-
-            if (SharedPreferencesImpl(binding.root.context).getLanguage() == "ar")
-                binding.priceTextView.text = " د.ك"+product.price
-            else
-                binding.priceTextView.text = product.price + " KWD"
+            binding.priceTextView.text = product.price + " KWD"
             binding.rateTextView.text = product.rate.toString()
 
-
+            if (product.isFavorite == 0)
+                binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
+            else
+                binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
         }
 
     }

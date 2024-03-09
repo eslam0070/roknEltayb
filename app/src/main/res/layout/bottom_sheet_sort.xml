@@ -9,10 +9,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,29 +32,26 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="#ECEBEB"/>
 
-            <RadioGroup
-                android:id="@+id/radioGroup"
+            <RadioButton
+                android:id="@+id/higtRadioButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/price_high_to_low"/>
 
-                <RadioButton
-                    android:id="@+id/higtRadioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price_high_to_low"/>
+            <RadioButton
+                android:id="@+id/lowRadioButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/price_low_to_high"/>
 
-                <RadioButton
-                    android:id="@+id/lowRadioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/price_low_to_high"/>
-
-                <RadioButton
-                    android:id="@+id/newRadioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/new_arrivals"/>
-            </RadioGroup>
+            <RadioButton
+                android:id="@+id/newRadioButton"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:text="@string/new_arrivals"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

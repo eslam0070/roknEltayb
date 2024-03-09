@@ -2,13 +2,10 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/txtinside"
     android:layout_width="match_parent"
-    android:layout_height="38dp"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
+    android:layout_height="wrap_content"
     android:text="giza"
     android:textAlignment="center"
+    android:padding="@dimen/_10sdp"
     android:textColor="@color/forgetpassword"
-    android:textSize="@dimen/_14sdp"
-    android:gravity="start|center_vertical"
-    android:paddingStart="@dimen/_8sdp">
+    android:textSize="@dimen/_14sdp">
 </TextView>

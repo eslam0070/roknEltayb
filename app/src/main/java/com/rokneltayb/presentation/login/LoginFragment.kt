@@ -70,6 +70,7 @@ class LoginFragment : Fragment() {
                 }
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                 hideProgress()
+                binding.btnLogin.revertAnimation()
                 viewModel.removeState()
             }
 
@@ -84,6 +85,7 @@ class LoginFragment : Fragment() {
                 }
                 viewModel.removeState()
                 hideProgress()
+                binding.btnLogin.revertAnimation()
             }
 
             is LoginViewModel.UiState.Idle -> hideProgress()
@@ -98,14 +100,23 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
-        binding.etLoginUser.setText("5055050531")
-        binding.etLoginPassword.setText("123456")
+        binding.etLoginUser.setText("0114117588")
+        binding.etLoginPassword.setText("12345678")
 
         if (sharedPref.getRememberMe())
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
 
-        binding.loginBtn.setOnClickListener {
-            if (validInputs()){
+        binding.btnLogin.setOnClickListener {
+            if (binding.etLoginUser.text!!.isEmpty()) {
+                toastError(getString(R.string.please_write_phone_number))
+                binding.btnLogin.revertAnimation()
+            }else if (binding.etLoginPassword.text!!.isEmpty()) {
+                binding.passLayout.isPasswordVisibilityToggleEnabled = false
+                toastError("please wrote password")
+                binding.btnLogin.revertAnimation()
+            }else{
+                binding.btnLogin.startAnimation()
+
                 viewModel.login(fcmToken,binding.etLoginUser.text.toString(),binding.etLoginPassword.text.toString())
             }
         }
@@ -126,19 +137,6 @@ class LoginFragment : Fragment() {
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun afterTextChanged(editable: Editable) {}
         })
-    }
-
-    private fun validInputs(): Boolean {
-        return if (binding.etLoginUser.text!!.isEmpty()) {
-            toastError(getString(R.string.please_write_phone_number))
-            false
-        } else if (binding.etLoginPassword.text!!.isEmpty()) {
-            binding.passLayout.isPasswordVisibilityToggleEnabled = false
-            toastError("please wrote password")
-            false
-        }else {
-            true
-        }
     }
 
     override fun onStart() {

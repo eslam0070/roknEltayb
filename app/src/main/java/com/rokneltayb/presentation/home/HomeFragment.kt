@@ -86,12 +86,10 @@ class HomeFragment : Fragment() {
             }
 
             is FavoritesViewModel.UiState.StoreFavoriteSuccess -> {
-                toast("تم اضافة المنتج الى المفضلة")
                 favoriteviewModel.removeState()
             }
 
             is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
-                toast("تم حذف المنتج من المفضلة")
                 favoriteviewModel.removeState()
             }
 

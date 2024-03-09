@@ -79,37 +79,25 @@ class ProductsFragment : Fragment() {
             false
         )
 
-
-        binding.radioGroup.setOnClickListener {
-            if (it is RadioButton) {
-                when (it.id) {
-                    R.id.higtRadioButton -> {
-                        if (it.isChecked) {
-                            sort = "high_price"
-                            viewModel.products(args.id.toString(), sort, "", "")
-                            bottomSheetDialog.dismiss()
-                        }
-                    }
-
-                    R.id.lowRadioButton -> {
-                        if (it.isChecked) {
-                            sort = "low_price"
-                            viewModel.products(args.id.toString(), sort, "", "")
-                            bottomSheetDialog.dismiss()
-                        }
-                    }
-
-                    R.id.newRadioButton -> {
-                        if (it.isChecked) {
-                            sort = "new"
-                            viewModel.products(args.id.toString(), sort, "", "")
-                            bottomSheetDialog.dismiss()
-                        }
-                    }
-                }
-            }
-        }
         bottomSheetDialog.setContentView(binding.root)
+        binding.higtRadioButton.setOnClickListener{
+            sort = "high_price"
+            viewModel.products(args.id.toString(), sort, "", "")
+            bottomSheetDialog.dismiss()
+        }
+
+        binding.lowRadioButton.setOnClickListener {
+            sort = "low_price"
+            viewModel.products(args.id.toString(), sort, "", "")
+            bottomSheetDialog.dismiss()
+        }
+
+        binding.newRadioButton.setOnClickListener {
+            sort = "new"
+            viewModel.products(args.id.toString(), sort, "", "")
+            bottomSheetDialog.dismiss()
+        }
+
         bottomSheetDialog.show()
     }
 
@@ -237,10 +225,8 @@ class ProductsFragment : Fragment() {
 
         }, { position, product, isFavorite ->
                 if (product.isFavorite == 0) {
-                    viewModel.products(args.id.toString(), sort, "", "")
                     favoriteviewModel.storeFavorite(product.id!!)
                 } else {
-                    viewModel.products(args.id.toString(), sort, "", "")
                     favoriteviewModel.deleteFavorite(product.id!!)
                 }
 

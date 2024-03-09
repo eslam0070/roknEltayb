@@ -269,7 +269,11 @@ class ProductDetailsFragment : Fragment() {
 
         if (data.is_discount == "active"){
             binding.discountTextView.visibility = View.VISIBLE
-            binding.discountTextView.text = data.discount_value + requireActivity().getString(R.string.kwd)
+            if (data.discount_value != null)
+                binding.discountTextView.text = data.discount_value + requireActivity().getString(R.string.kwd)
+            else
+                binding.discountTextView.visibility = View.INVISIBLE
+
         }else
             binding.discountTextView.visibility = View.INVISIBLE
 

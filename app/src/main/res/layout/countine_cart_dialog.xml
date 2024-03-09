@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/_10ssp"
-                android:text="Cart Total"
+                android:text="@string/cart_total"
                 android:textSize="@dimen/_12sdp"
                 android:textAlignment="viewStart"/>
 
@@ -91,7 +91,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="100 KWD"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:textSize="@dimen/_12sdp"
