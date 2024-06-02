@@ -10,7 +10,10 @@ import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface CartServices {
 
@@ -37,7 +40,6 @@ interface CartServices {
     suspend fun deleteCart(
         @Field("product_id") productId: String,
         @Field("shape_id") shapeId: String): Response<DeleteCartResponse>
-
 
     @FormUrlEncoded
     @POST("client/apply-coupon")

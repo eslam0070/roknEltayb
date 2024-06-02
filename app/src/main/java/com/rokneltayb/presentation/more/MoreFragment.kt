@@ -206,9 +206,7 @@ class MoreFragment : Fragment() {
     }
 
     fun logoutNoAuth(activity: Activity) {
-        val lang = SharedPreferencesImpl(activity).getLanguage()
         SharedPreferencesImpl(activity).clearAll()
-        SharedPreferencesImpl(activity).setLanguage(lang)
         Navigation.findNavController(activity, R.id.navHostFragment).navigate(R.id.loginFragment)
     }
 

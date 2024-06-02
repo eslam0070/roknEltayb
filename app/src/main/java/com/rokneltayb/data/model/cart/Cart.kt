@@ -6,27 +6,12 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.Expose
 
-@Parcelize
 data class Cart(
-    @SerializedName("count")
-    @Expose
-    val count: Int?,
-    @SerializedName("id")
-    @Expose
-    val id: Int?,
-    @SerializedName("product_id")
-    @Expose
-    val productId: Int?,
-    @SerializedName("product_image")
-    @Expose
-    val productImage: String?,
-    @SerializedName("product_title")
-    @Expose
-    val productTitle: String?,
-    @SerializedName("shape_id")
-    @Expose
-    val shapeId: Int?,
-    @SerializedName("price")
-    @Expose
-    val price: String?
-) : Parcelable
+    val count: Int,
+    val id: Int,
+    val price: String,
+    val product_id: Int,
+    val product_image: String,
+    val product_title: String,
+    val shape_id: Int
+)

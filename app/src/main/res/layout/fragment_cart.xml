@@ -34,7 +34,10 @@
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="@color/white"/>
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:background="@color/color_editText"/>
             <LinearLayout
                 android:id="@+id/layoutDiscount"
                 android:layout_width="match_parent"
@@ -107,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginBottom="@dimen/_150sdp"
+                android:layout_marginBottom="@dimen/_80sdp"
                 android:background="@drawable/custom_bg_edittext_more_curve"
                 android:orientation="vertical">
 

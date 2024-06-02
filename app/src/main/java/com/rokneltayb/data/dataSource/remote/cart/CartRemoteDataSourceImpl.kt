@@ -5,10 +5,7 @@ import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
-import com.rokneltayb.data.model.categories.CategoriesResponse
-import com.rokneltayb.data.model.home.home.HomeResponse
 import javax.inject.Inject
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
 import com.rokneltayb.domain.entity.Result

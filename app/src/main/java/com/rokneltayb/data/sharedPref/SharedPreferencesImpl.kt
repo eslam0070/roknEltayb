@@ -25,7 +25,7 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
     private val userProfileInSharedPreferences = "USER_PROFILE_IN_SHARED_PREFERENCES"
 
 
-    private var prefs: SecureSharedPreferences? = SecureSharedPreferences(context,sharedPreferencesFileName)
+    private val prefs = context.getSharedPreferences(sharedPreferencesFileName, Context.MODE_PRIVATE)
     private val edit = prefs!!.edit()
 
     override fun getApiKeyToken(): String {

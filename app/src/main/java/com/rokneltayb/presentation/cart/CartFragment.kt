@@ -1,6 +1,5 @@
 package com.rokneltayb.presentation.cart
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,11 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
-import com.rokneltayb.data.model.cart.Data
-import com.rokneltayb.data.model.cart.coupon.Coupon
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentCartBinding
-import com.rokneltayb.databinding.FragmentProfileBinding
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
@@ -24,11 +20,7 @@ import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.logoutNoPremission
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.presentation.cart.checkout.CheckOutAdapter
-import com.rokneltayb.presentation.more.favorite.FavoritesAdapter
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
-import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
-import com.rokneltayb.presentation.more.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -114,6 +106,7 @@ class CartFragment : Fragment() {
                 toast(uiState.data.message.toString())
                 viewModel.getCart()
                 viewModel.removeState()
+
                 hideProgress()
             }
 
@@ -126,7 +119,7 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun getItemCart(data: Data?) {
+    private fun getItemCart(data: com.rokneltayb.data.model.cart.Data) {
         binding.itemCountTextView.text = "("+data!!.cart!!.size.toString()+ getString(R.string.items)+")"
         binding.priceCartTextView.text = data.total.toString()
 
@@ -135,8 +128,8 @@ class CartFragment : Fragment() {
         else
             binding.shippingFeeTextView.text = data.tax.toString()
 
-        binding.totalCartTextView.text = data.totalAfterTax.toString()
-        binding.totalTextView.text = data.totalAfterTax.toString()
+        binding.totalCartTextView.text = data.total_after_tax.toString()
+        binding.totalTextView.text = data.total_after_tax.toString()
 
 
     }
@@ -154,10 +147,10 @@ class CartFragment : Fragment() {
 
         cartAdapter = CartAdapter(viewModel) { item, cart ->
             if (item == 1) {
-                viewModel.deleteCard(cart.productId.toString(), cart.shapeId.toString())
+                viewModel.deleteCard(cart.product_id.toString(), cart.shape_id.toString())
             } else {
                 if (SharedPreferencesImpl(binding.root.context).getRememberMe()){
-                    favoriteviewModel.storeFavorite(cart.productId!!)
+                    favoriteviewModel.storeFavorite(cart.product_id!!)
                 }else
                     binding.root.context.toast(binding.root.context.getString(R.string.you_should_login))
             }

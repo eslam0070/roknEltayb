@@ -67,6 +67,9 @@ class LoginFragment : Fragment() {
                     sharedPref.setUserId(uiState.data.data!!.clientData!!.id!!)
                     sharedPref.setRememberMe(true)
                     sharedPref.setApiKeyToken(uiState.data.data.token.toString())
+                }else{
+                    sharedPref.setUserId(uiState.data.data!!.clientData!!.id!!)
+                    sharedPref.setApiKeyToken(uiState.data.data.token.toString())
                 }
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                 hideProgress()
@@ -100,7 +103,7 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
         }
 
-        binding.etLoginUser.setText("0114117588")
+        binding.etLoginUser.setText("505505051")
         binding.etLoginPassword.setText("12345678")
 
         if (sharedPref.getRememberMe())

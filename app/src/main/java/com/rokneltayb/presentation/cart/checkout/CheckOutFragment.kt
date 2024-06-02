@@ -114,8 +114,8 @@ class CheckOutFragment : Fragment() {
         else
             binding.shippingFeeTextView.text = data.tax.toString()
 
-        binding.totalCartTextView.text = data.totalAfterTax.toString()
-        binding.totalTextView.text = data.totalAfterTax.toString()
+        binding.totalCartTextView.text = data.total_after_tax.toString()
+        binding.totalTextView.text = data.total_after_tax.toString()
     }
 
     private fun addressUI(uiState: AddressViewModel.UiState) {

@@ -1,11 +1,11 @@
 package com.rokneltayb.di
 
+import android.app.Application
+import android.content.Context
 import com.rokneltayb.data.network.NetworkServices
-import com.rokneltayb.data.network.api.AuthInterceptor
-import com.rokneltayb.data.sharedPref.SharedPreferences
+import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.domain.entity.ErrorTypeHandler
 import com.rokneltayb.domain.entity.ErrorTypeHandlerImpl
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,15 +22,44 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     private const val baseUrl = "https://roknaltayeb.com/api/"
+
     @Singleton
     @Provides
-    fun provideApiService(httpClient:OkHttpClient): NetworkServices {
-        return Retrofit.Builder()
-            .client(httpClient)
+    fun provideContext(application: Application): Context = application.applicationContext
+
+    @Singleton
+    @Provides
+    fun provideApiService(sharedPreferences: SharedPreferencesImpl): NetworkServices {
+        val httpClient = OkHttpClient.Builder()
+            .addInterceptor{ chain ->
+                chain.proceed(chain.request().newBuilder().also {
+                    it.addHeader("Content-Type","application/json")
+
+                    if (sharedPreferences.getApiKeyToken().isNotEmpty())
+                        it.addHeader(
+                            "Authorization", "Bearer " + sharedPreferences.getApiKeyToken()
+                        )
+
+                    if (sharedPreferences.getRefToken().isNotEmpty())
+                        it.addHeader(
+                            "lang", sharedPreferences.getLanguage())
+                }.build())
+            }.also { client ->
+
+                val logging = HttpLoggingInterceptor()
+                logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+                client.addInterceptor(logging)
+                client.connectTimeout(30, TimeUnit.SECONDS)
+                client.readTimeout(30, TimeUnit.SECONDS)
+                client.writeTimeout(30, TimeUnit.SECONDS)
+            }.build()
+
+        val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(NetworkServices::class.java)
+            .client(httpClient).build()
+
+        return retrofit.create(NetworkServices::class.java)
     }
 
     @Provides
@@ -38,27 +67,5 @@ object NetworkModule {
         return errorTypeHandlerImpl
     }
 
-    @Singleton
-    @Provides
-    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        return OkHttpClient.Builder()
-            .readTimeout(40, TimeUnit.SECONDS)
-            .connectTimeout(40, TimeUnit.SECONDS)
-            .writeTimeout(40, TimeUnit.SECONDS)
-            .addInterceptor(authInterceptor)
-            .addInterceptor(interceptor)
-            .build()
-    }
-    @Singleton
-    @Provides
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder().build()
-    }
-    @Provides
-    fun provideAuthInterceptor(sharedPreferences: SharedPreferences): AuthInterceptor {
-        return AuthInterceptor(sharedPreferences)
-    }
 
 }

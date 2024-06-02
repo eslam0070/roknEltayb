@@ -322,7 +322,7 @@ class ProductDetailsFragment : Fragment() {
 
         val dataAdapter: ArrayAdapter<CountModel> = ArrayAdapter<CountModel>(
             binding.root.context,
-            android.R.layout.simple_spinner_item, list
+            R.layout.shape_spinner_textview_align, list
         )
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.countSpinner.adapter = dataAdapter
@@ -349,7 +349,6 @@ class ProductDetailsFragment : Fragment() {
 
     private fun setShapepinner(shapes: List<Shape>) {
         val shapesList = mutableListOf<Shape>()
-        shapesList.add(0, Shape(id =1, title = "Size/Weight" ))
         shapesList.addAll(shapes)
         shapesAdapter = ArrayAdapter(requireContext(), R.layout.shape_spinner_textview_align, shapesList)
         binding.shapeProductSpinner.adapter = shapesAdapter

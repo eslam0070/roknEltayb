@@ -5,31 +5,13 @@ import com.google.gson.annotations.SerializedName
 import com.google.gson.annotations.Expose
 
 data class Coupon(
-    @SerializedName("created_at")
-    @Expose
-    val createdAt: String?,
-    @SerializedName("expire_date")
-    @Expose
-    val expireDate: String?,
-    @SerializedName("id")
-    @Expose
-    val id: Int?,
-    @SerializedName("is_active")
-    @Expose
-    val isActive: String?,
-    @SerializedName("name")
-    @Expose
-    val name: String?,
-    @SerializedName("percent")
-    @Expose
-    val percent: Int?,
-    @SerializedName("updated_at")
-    @Expose
-    val updatedAt: String?,
-    @SerializedName("use_count")
-    @Expose
-    val useCount: Int?,
-    @SerializedName("used_count")
-    @Expose
-    val usedCount: Int?
+    val created_at: String,
+    val expire_date: String,
+    val id: Int,
+    val is_active: String,
+    val name: String,
+    val percent: Int,
+    val updated_at: String,
+    val use_count: Int,
+    val used_count: Int
 )

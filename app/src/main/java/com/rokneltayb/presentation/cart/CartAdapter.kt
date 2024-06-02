@@ -53,8 +53,8 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
                 itemClick(2,cart)
             }
 
-            Glide.with(binding.root.context).load(cart.productImage).into(binding.imageCartImageView)
-            binding.nameCartTextView.text = cart.productTitle
+            Glide.with(binding.root.context).load(cart.product_image).into(binding.imageCartImageView)
+            binding.nameCartTextView.text = cart.product_title
             binding.priceCartTextView.text = cart.price + binding.root.context.getString(com.rokneltayb.R.string.kwd)
 
 
@@ -78,7 +78,7 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
 
             val dataAdapter: ArrayAdapter<CountModel> = ArrayAdapter<CountModel>(
                 binding.root.context,
-                R.layout.simple_spinner_item, list
+                com.rokneltayb.R.layout.shape_spinner_textview_align2, list
             )
             dataAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
             binding.countSpinner.adapter = dataAdapter
@@ -87,7 +87,7 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
             binding.countSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (cart.count != dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number.toInt())
-                        viewmodel.updateCart(cart.productId.toString(),cart.shapeId.toString(), dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number)
+                        viewmodel.updateCart(cart.product_id.toString(),cart.shape_id.toString(), dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number)
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
 

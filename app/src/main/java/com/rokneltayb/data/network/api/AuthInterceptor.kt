@@ -13,12 +13,13 @@ class AuthInterceptor @Inject constructor(private val sharedPreferences: SharedP
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
 
         var request = chain.request()
-        request = request
-            .newBuilder()
-            .header("Authorization", "Bearer${sharedPreferences.getApiKeyToken()}")
-            .header("lang", sharedPreferences.getLanguage())
-            .header("Accept", "application/json")
-            .build()
+        if (sharedPreferences.getApiKeyToken().isNotEmpty()){
+            request = request
+                .newBuilder()
+                .header("Authorization", "Bearer ${sharedPreferences.getApiKeyToken()}")
+                .header("lang", sharedPreferences.getLanguage())
+                .build()
+        }
         return chain.proceed(request)
     }
 
