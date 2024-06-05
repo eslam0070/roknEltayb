@@ -33,8 +33,6 @@ object NetworkModule {
         val httpClient = OkHttpClient.Builder()
             .addInterceptor{ chain ->
                 chain.proceed(chain.request().newBuilder().also {
-                    it.addHeader("Content-Type","application/json")
-
                     if (sharedPreferences.getApiKeyToken().isNotEmpty())
                         it.addHeader(
                             "Authorization", "Bearer " + sharedPreferences.getApiKeyToken()

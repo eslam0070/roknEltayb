@@ -1,6 +1,8 @@
 package com.rokneltayb.data.network
 
 
+import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
 import com.rokneltayb.data.model.login.changepassword.ChangePasswordResponse
@@ -11,12 +13,15 @@ import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 import java.util.SortedMap
 
@@ -37,5 +42,12 @@ interface HomeServices {
 
     @GET("client/product-details")
     suspend fun productDetails(@Query("product_id")productId:Int): Response<ProductDetailsResponse>
+
+    @GET("client/cart")
+    suspend fun getCart2():Response<CartResponse>
+
+    @Multipart
+    @POST("client/apply-coupon")
+    suspend fun applyCouponCart2(@Part("coupon") coupon: RequestBody): Response<AddCouponResponse>
 
 }

@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CheckOutViewModel @Inject constructor(private val useCase: CartUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<CartViewModel.UiState>(CartViewModel.UiState.Idle)
+    private val _uiState = MutableStateFlow<CartViewModel.UiState>(CartViewModel.UiState.Loading)
     val uiState: StateFlow<CartViewModel.UiState>
         get() = _uiState
 

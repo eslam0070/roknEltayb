@@ -116,7 +116,7 @@ class SharedPreferencesImpl @Inject constructor(@ApplicationContext context: Con
 
 
     override fun clearAll() {
-        edit.clear()
+        edit.clear().apply()
     }
 
 }

@@ -1,5 +1,7 @@
 package com.rokneltayb.data.dataSource.remote.home
 
+import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.categories.CategoriesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
 import javax.inject.Inject
@@ -14,6 +16,7 @@ import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
 import com.rokneltayb.domain.entity.Result
+import okhttp3.RequestBody
 import retrofit2.Response
 
 class HomeRemoteDataSourceImpl @Inject constructor(
@@ -72,6 +75,24 @@ class HomeRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun productDetails(productId: Int): Result<ProductDetailsResponse> {
         val res = requestApiCall.requestApiCall { networkServices.productDetails(productId) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun getCart2(): Result<CartResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.getCart2() }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun applyCouponCart2(coupon: RequestBody): Result<AddCouponResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.applyCouponCart2(coupon) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

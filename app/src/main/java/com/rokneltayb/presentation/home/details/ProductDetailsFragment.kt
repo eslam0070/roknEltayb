@@ -111,13 +111,11 @@ class ProductDetailsFragment : Fragment() {
     private fun rateUI(uiState: StoreRateViewModel.UiState) {
         when (uiState) {
             is StoreRateViewModel.UiState.Loading -> {
-                showProgress()
             }
 
             is StoreRateViewModel.UiState.Success -> {
                 viewModel.productDetails(args.productId)
                 toast(uiState.data.message.toString())
-                hideProgress()
             }
 
             is StoreRateViewModel.UiState.Error -> {
@@ -125,7 +123,6 @@ class ProductDetailsFragment : Fragment() {
                     logoutNoAuth(requireActivity())
                 else
                     toastError(uiState.errorData.message)
-                hideProgress()
             }
 
         }
@@ -157,7 +154,6 @@ class ProductDetailsFragment : Fragment() {
     private fun favoritesUI(uiState: FavoritesViewModel.UiState) {
         when (uiState) {
             is FavoritesViewModel.UiState.Loading -> {
-                showProgress()
             }
 
             is FavoritesViewModel.UiState.Error -> {
@@ -165,17 +161,14 @@ class ProductDetailsFragment : Fragment() {
                     logoutNoAuth(requireActivity())
                 else
                     toastError(uiState.errorData.message)
-                hideProgress()
             }
 
             is FavoritesViewModel.UiState.StoreFavoriteSuccess -> {
                 viewModel.productDetails(args.productId)
-                hideProgress()
             }
 
             is FavoritesViewModel.UiState.DeleteFavoriteSuccess -> {
                 viewModel.productDetails(args.productId)
-                hideProgress()
             }
 
             else ->{}

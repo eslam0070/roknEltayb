@@ -23,6 +23,7 @@ import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody.Companion.toRequestBody
 
 @AndroidEntryPoint
 class CartFragment : Fragment() {
@@ -38,6 +39,7 @@ class CartFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
         }
+
         lifecycleScope.launch {
             favoriteviewModel.uiState.flowWithLifecycle(lifecycle).collect(::favoritesUI)
         }
@@ -70,9 +72,18 @@ class CartFragment : Fragment() {
                 showProgress()
             }
 
+            is CartViewModel.UiState.Error -> {
+                when (uiState.errorData.status) {
+                    401 -> logoutNoAuth(requireActivity())
+                    408 -> toastError(uiState.errorData.message)
+                    else -> toastError(uiState.errorData.message)
+                }
+                hideProgress()
+            }
+
             is CartViewModel.UiState.GetCartSuccess -> {
                 getItemCart(uiState.data.data)
-                cartAdapter.submitList(uiState.data.data!!.cart)
+                cartAdapter.submitList(uiState.data.data.cart)
 
                 if (uiState.data.data.coupon != null){
                     binding.applyCardView.visibility = View.VISIBLE
@@ -85,42 +96,38 @@ class CartFragment : Fragment() {
                 }else{
                     binding.applyCardView.visibility = View.GONE
                     binding.layoutDiscount.visibility = View.VISIBLE
-
                 }
-                viewModel.removeState()
-
-                hideProgress()
-            }
-
-            is CartViewModel.UiState.Error -> {
-                when (uiState.errorData.status) {
-                    401 -> logoutNoAuth(requireActivity())
-                    408 -> toastError(uiState.errorData.message)
-                    else -> toastError(uiState.errorData.message)
-                }
-                hideProgress()
-                viewModel.removeState()
-            }
-
-            is CartViewModel.UiState.AddOrDeleteCouponCartSuccess ->{
-                toast(uiState.data.message.toString())
-                viewModel.getCart()
-                viewModel.removeState()
 
                 hideProgress()
             }
 
             is CartViewModel.UiState.DeleteCartSuccess ->{
                 viewModel.getCart()
-                viewModel.removeState()
                 hideProgress()
             }
+
+            is CartViewModel.UiState.AddCouponCartSuccess ->{
+                toast(uiState.data.message.toString())
+                viewModel.getCart()
+
+                hideProgress()
+            }
+
+            is CartViewModel.UiState.DeleteCouponCartSuccess ->{
+                viewModel.getCart()
+                binding.applyCardView.visibility = View.GONE
+                binding.layoutDiscount.visibility = View.VISIBLE
+                binding.discountCodeEditText.setText("")
+                hideProgress()
+            }
+
            else ->{}
         }
     }
 
+
     private fun getItemCart(data: com.rokneltayb.data.model.cart.Data) {
-        binding.itemCountTextView.text = "("+data!!.cart!!.size.toString()+ getString(R.string.items)+")"
+        binding.itemCountTextView.text = "("+ data.cart.size.toString()+ getString(R.string.items)+")"
         binding.priceCartTextView.text = data.total.toString()
 
         if (data.tax == 0)
@@ -159,9 +166,16 @@ class CartFragment : Fragment() {
         viewModel.getCart()
 
 
+        if (SharedPreferencesImpl(requireContext()).getApiKeyToken().isNotEmpty())
+            binding.layoutDiscount.visibility = View.VISIBLE
+        else
+            binding.layoutDiscount.visibility = View.GONE
+
+
         binding.applyButton.setOnClickListener {
             viewModel.applyCouponCart(binding.discountCodeEditText.text.toString())
         }
+
         binding.checkOutButton.setOnClickListener {
             if (sharedPref.getRememberMe()){
                 findNavController().navigate(CartFragmentDirections.actionCartFragmentToCheckOutFragment())

@@ -63,8 +63,10 @@ class MoreFragment : Fragment() {
             }
 
             is ProfileViewModel.UiState.Error -> {
-                if (uiState.errorData.status == 401)
-                    logoutNoAuth(requireActivity())
+                if (uiState.errorData.status == 401){
+                    SharedPreferencesImpl(requireActivity()).clearAll()
+                    findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToLoginFragment())
+                }
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
@@ -72,8 +74,9 @@ class MoreFragment : Fragment() {
             }
 
             is ProfileViewModel.UiState.LogoutSuccess -> {
-                toast("You have successfully logged out")
-                logoutNoAuth(requireActivity())
+                toast(R.string.you_have_successfully_logged_out)
+                SharedPreferencesImpl(requireActivity()).clearAll()
+                findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToLoginFragment())
                 hideProgress()
                 viewModel.removeState()
             }
@@ -207,7 +210,7 @@ class MoreFragment : Fragment() {
 
     fun logoutNoAuth(activity: Activity) {
         SharedPreferencesImpl(activity).clearAll()
-        Navigation.findNavController(activity, R.id.navHostFragment).navigate(R.id.loginFragment)
+        findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToLoginFragment())
     }
 
 }

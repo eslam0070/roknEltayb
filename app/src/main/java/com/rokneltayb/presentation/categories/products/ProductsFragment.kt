@@ -149,16 +149,13 @@ class ProductsFragment : Fragment() {
                 else
                     toastError(uiState.errorData.message)
                 hideProgress()
-                cartViewModel.removeState()
             }
 
             is CartViewModel.UiState.AddCartSuccess -> {
-                cartViewModel.removeState()
                 hideProgress()
             }
 
             is CartViewModel.UiState.DeleteCartSuccess -> {
-                cartViewModel.removeState()
                 hideProgress()
             }
 

@@ -39,6 +39,7 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@color/color_editText"/>
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layoutDiscount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_margin="@dimen/_5sdp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardBackgroundColor="@color/backgroundGray"
                 app:cardCornerRadius="@dimen/_10sdp">
 
@@ -90,8 +91,9 @@
                         android:layout_width="0dp"
                         android:layout_weight="1.5"
                         android:padding="@dimen/_10sdp"
-                        android:textAlignment="center"
-                        android:text=""
+                        android:textAlignment="viewStart"
+                        android:text="asdasd"
+                        android:textStyle="bold"
                         android:layout_gravity="center_vertical"
                         android:layout_height="wrap_content"/>
 
@@ -110,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10ssp"
-                android:layout_marginBottom="@dimen/_80sdp"
+                android:layout_marginBottom="@dimen/_60sdp"
                 android:background="@drawable/custom_bg_edittext_more_curve"
                 android:orientation="vertical">
 

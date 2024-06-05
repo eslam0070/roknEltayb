@@ -17,7 +17,6 @@ import retrofit2.http.Query
 
 interface CartServices {
 
-
     @GET("client/cart")
     suspend fun getCart():Response<CartResponse>
 
@@ -41,6 +40,7 @@ interface CartServices {
         @Field("product_id") productId: String,
         @Field("shape_id") shapeId: String): Response<DeleteCartResponse>
 
+    @Headers("Accept: application/x-www-form-urlencoded")
     @FormUrlEncoded
     @POST("client/apply-coupon")
     suspend fun applyCouponCart(@Field("coupon") coupon: String): Response<AddCouponResponse>

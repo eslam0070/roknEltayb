@@ -12,16 +12,18 @@ import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.CartUseCase
 import com.rokneltayb.domain.usecase.UserUseCase
+import com.rokneltayb.presentation.cart.CartViewModel2.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(private val useCase: CartUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -98,6 +100,7 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         }
     }
 
+
     fun applyCouponCart(coupon: String) {
         viewModelScope.launch {
             when (val result = useCase.applyCouponCart(coupon)) {
@@ -106,7 +109,7 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
                 }
 
                 is Result.Success -> {
-                    _uiState.value = UiState.AddOrDeleteCouponCartSuccess(result.data!!)
+                    _uiState.value = UiState.AddCouponCartSuccess(result.data!!)
                 }
 
                 is Result.Loading -> {
@@ -115,6 +118,7 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
             }
         }
     }
+
 
     fun deleteCouponCart() {
         viewModelScope.launch {
@@ -124,7 +128,7 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
                 }
 
                 is Result.Success -> {
-                    _uiState.value = UiState.AddOrDeleteCouponCartSuccess(result.data!!)
+                    _uiState.value = UiState.DeleteCouponCartSuccess(result.data!!)
                 }
 
                 is Result.Loading -> {
@@ -134,17 +138,14 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         }
     }
 
-    fun removeState(){
-        _uiState.value = UiState.Idle
-    }
     sealed class UiState {
         data object Loading : UiState()
-        data object Idle : UiState()
         class Error(val errorData: ErrorResponse): UiState()
         class GetCartSuccess(val data: CartResponse) : UiState()
         class AddCartSuccess(val data: AddCartResponse) : UiState()
         class UpdateCartSuccess(val data: UpdateCartResponse) : UiState()
         class DeleteCartSuccess(val data: DeleteCartResponse) : UiState()
-        class AddOrDeleteCouponCartSuccess(val data: AddCouponResponse) : UiState()
+        class AddCouponCartSuccess(val data: AddCouponResponse) : UiState()
+        class DeleteCouponCartSuccess(val data: AddCouponResponse) : UiState()
     }
 }
