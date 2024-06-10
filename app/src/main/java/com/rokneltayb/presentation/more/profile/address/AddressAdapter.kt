@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide
 import com.rokneltayb.R
 import com.rokneltayb.data.model.address.AddressData
 import com.rokneltayb.data.model.home.home.PopularProduct
-import com.rokneltayb.data.model.products.Product
 import com.rokneltayb.databinding.ItemAddressBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 

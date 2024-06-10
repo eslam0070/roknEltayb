@@ -149,7 +149,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivHome.visibility = View.VISIBLE
                     binding!!.tvMainEmployeeName.text = ""
                     binding!!.ivFav.visibility = View.VISIBLE
-                    binding!!.ivSearch.visibility = View.VISIBLE
+                    binding!!.ivSearch.visibility = View.GONE
 
                 }
                 "fragment_more" ->{

@@ -20,12 +20,11 @@ import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.orders.OrdersResponse
 import com.rokneltayb.data.model.orders.add.AddOrderResponse
 import com.rokneltayb.data.model.orders.details.OrderDetailsResponse
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 
 interface OrdersRepository {
     suspend fun getOrders(): Result<OrdersResponse>
     suspend fun getOrderDetails(orderId:Int): Result<OrderDetailsResponse>
-    suspend fun addOrder(addressId:Int):Result<AddOrderResponse>
+    suspend fun addOrder(addressId:Int,deliveryTimeId:Int):Result<AddOrderResponse>
 }

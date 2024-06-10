@@ -120,8 +120,9 @@ class HomeFragment : Fragment() {
     }
     private fun setCategoriesRecyclerView() {
         homeCategoriesAdapter = HomeCategoriesAdapter {
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToCategoriesHomeFragment()) }
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProductsFragment(it.id!!,it.title!!)) }
         binding.categoriesRecyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+
         binding.categoriesRecyclerView.adapter = homeCategoriesAdapter
     }
 

@@ -4,8 +4,11 @@ import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.delivery.DeliveryimesResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import com.rokneltayb.domain.entity.Result
+import retrofit2.Response
+import retrofit2.http.GET
 
 interface CartRemoteDataSource {
 
@@ -15,4 +18,5 @@ interface CartRemoteDataSource {
     suspend fun deleteCart(productId: String, shapeId: String): Result<DeleteCartResponse>
     suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse>
     suspend fun deleteCouponCart(): Result<AddCouponResponse>
+    suspend fun deliveryTimes(): Result<DeliveryimesResponse>
 }

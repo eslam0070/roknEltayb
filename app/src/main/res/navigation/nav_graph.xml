@@ -75,11 +75,11 @@
             android:id="@+id/action_homeFragment_to_dailyProductsFragment"
             app:destination="@id/dailyProductsFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_categoriesFragment"
-            app:destination="@id/categoriesFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_categoriesHomeFragment"
             app:destination="@id/categoriesHomeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cartFragment"
@@ -271,6 +271,9 @@
         <action
             android:id="@+id/action_checkOutFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_checkOutFragment_to_newAddressFragment"
+            app:destination="@id/newAddressFragment" />
     </fragment>
     <fragment
         android:id="@+id/orderDetailsFragment"

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,17 +12,22 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.model.products.DataXX
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.BottomSheetSortBinding
 import com.rokneltayb.databinding.FragmentProductsBinding
+import com.rokneltayb.domain.util.EndlessRecyclerViewScrollListener
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.logoutNoAuth
-import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
 import com.rokneltayb.presentation.cart.CartViewModel
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
@@ -39,10 +43,12 @@ class ProductsFragment : Fragment() {
     private val cartViewModel: CartViewModel by viewModels()
     private val favoriteviewModel: FavoritesViewModel by viewModels()
 
-    private lateinit var productsAdapter: ProductsAdapter
     private val args: ProductsFragmentArgs by navArgs()
     private var sort = ""
-    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
+    private var search = ""
+    var page: Int = 1
+    var productsAdapter: ProductsAdapter? = null
+    var productsList = mutableListOf<DataXX>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,15 +57,16 @@ class ProductsFragment : Fragment() {
         observeUIState()
 
         (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = args.name
-        viewModel.products(args.id.toString(), "", "", "")
         binding.searchEditText.doAfterTextChanged {
             if (it!!.length > 3) {
-                viewModel.products(args.id.toString(), sort, it.toString(), "")
-            } else
-                viewModel.products(args.id.toString(), "", "", "")
+                search = it.toString()
+                viewModel.products(page,args.id.toString(), sort, search, "")
+            } else{
+                search = ""
+                viewModel.products(page,args.id.toString(), sort, "", "")
+            }
         }
 
-        binding.productsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
         setCategoriesRecyclerView()
 
         binding.sortButton.setOnClickListener {
@@ -82,19 +89,19 @@ class ProductsFragment : Fragment() {
         bottomSheetDialog.setContentView(binding.root)
         binding.higtRadioButton.setOnClickListener{
             sort = "high_price"
-            viewModel.products(args.id.toString(), sort, "", "")
+            viewModel.products(page,args.id.toString(), sort, search, "")
             bottomSheetDialog.dismiss()
         }
 
         binding.lowRadioButton.setOnClickListener {
             sort = "low_price"
-            viewModel.products(args.id.toString(), sort, "", "")
+            viewModel.products(page,args.id.toString(), sort, search, "")
             bottomSheetDialog.dismiss()
         }
 
         binding.newRadioButton.setOnClickListener {
             sort = "new"
-            viewModel.products(args.id.toString(), sort, "", "")
+            viewModel.products(page,args.id.toString(), sort, search, "")
             bottomSheetDialog.dismiss()
         }
 
@@ -123,7 +130,7 @@ class ProductsFragment : Fragment() {
             }
 
             is ProductsViewModel.UiState.Success -> {
-                productsAdapter.submitList(uiState.data.data!!.products)
+                productsAdapter!!.addList(uiState.data.data.products.data)
                 hideProgress()
             }
 
@@ -134,6 +141,7 @@ class ProductsFragment : Fragment() {
                     toastError(uiState.errorData.message)
                 hideProgress()
             }
+
         }
     }
 
@@ -190,38 +198,42 @@ class ProductsFragment : Fragment() {
             else -> {}
         }
     }
+    lateinit var scrollListener: EndlessRecyclerViewScrollListener
 
     private fun setCategoriesRecyclerView() {
+        val staggeredGridLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.productsRecyclerView.layoutManager = staggeredGridLayoutManager
+
         productsAdapter = ProductsAdapter({
             findNavController().navigate(
                 ProductsFragmentDirections.actionProductsFragmentToProductDetailsFragment(
-                    it.id!!
+                    it.id
                 )
             )
         }, { position, product, count ->
             cartViewModel.addCard(
                 product.id.toString(),
-                product.shapes!![0]!!.id.toString(),
+                product.shapes[position].id.toString(),
                 count.toString()
             )
         }, { position, product ->
-            cartViewModel.deleteCard(product.id.toString(), product.shapes!![0]!!.id.toString())
+            cartViewModel.deleteCard(product.id.toString(), product.shapes[position].id.toString())
         }, { total, position, product ->
             cartViewModel.addCard(
                 product.id.toString(),
-                product.shapes!![0]!!.id.toString(),
+                product.shapes[position].id.toString(),
                 total.toString()
             )
 
         }, { total, position, product ->
             cartViewModel.addCard(
                 product.id.toString(),
-                product.shapes!![0]!!.id.toString(),
+                product.shapes!![position]!!.id.toString(),
                 total.toString()
             )
 
         }, { position, product, isFavorite ->
-                if (product.isFavorite == 0) {
+                if (product.is_favorite == 0) {
                     favoriteviewModel.storeFavorite(product.id!!)
                 } else {
                     favoriteviewModel.deleteFavorite(product.id!!)
@@ -229,7 +241,21 @@ class ProductsFragment : Fragment() {
 
         })
         binding.productsRecyclerView.adapter = productsAdapter
+
+        scrollListener = object : EndlessRecyclerViewScrollListener(staggeredGridLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                var clickCount = page
+                clickCount++
+                viewModel.products(clickCount,args.id.toString(), "", "", "")
+            }
+        }
+
+        binding.productsRecyclerView.addOnScrollListener(scrollListener)
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.products(page,args.id.toString(), "", "", "")
+    }
 }

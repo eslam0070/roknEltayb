@@ -1,7 +1,9 @@
 package com.rokneltayb.presentation.categories.products
 
+import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rokneltayb.data.model.products.DataXX
 import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
@@ -19,9 +21,9 @@ class ProductsViewModel @Inject constructor(private val useCase: HomeUseCase) : 
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    fun products(categoryId: String, sort:String, search:String, type:String) {
+    fun products(page:Int,categoryId: String, sort:String, search:String, type:String) {
         viewModelScope.launch {
-            when (val result = useCase.products(categoryId, sort, search,type)) {
+            when (val result = useCase.products(page,categoryId, sort, search,type)) {
                 is Result.Error -> {
                     _uiState.value = UiState.Error(result.errorType!!)
                 }

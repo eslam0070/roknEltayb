@@ -42,12 +42,13 @@ class HomeRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun products(
+        page:Int,
         categoryId: String,
         sort: String,
         search: String,
         type:String
     ): Result<ProductsResponse> {
-        val res = requestApiCall.requestApiCall { networkServices.products(categoryId, sort, search,type) }
+        val res = requestApiCall.requestApiCall { networkServices.products(page,categoryId, sort, search,type) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

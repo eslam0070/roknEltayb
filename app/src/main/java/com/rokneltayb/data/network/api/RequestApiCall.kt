@@ -20,7 +20,8 @@ class RequestApiCall @Inject constructor(
         return try {
             val response = requestApi.invoke()
             parseApiResponse(response)
-        } catch (exception: Exception) {
+        }
+        catch (exception: Exception) {
                 val errorResponse: ErrorResponse? = gson.fromJson(requestApi.invoke().errorBody()!!.charStream(), type)
             Result.Error(errorResponse)
         }

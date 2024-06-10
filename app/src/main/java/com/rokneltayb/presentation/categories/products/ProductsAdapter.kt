@@ -15,23 +15,28 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.R
-import com.rokneltayb.data.model.products.Product
+import com.rokneltayb.data.model.login.login.Data
+import com.rokneltayb.data.model.products.DataX
+import com.rokneltayb.data.model.products.DataXX
+import com.rokneltayb.data.model.products.Products
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ItemProductsBinding
 import com.rokneltayb.domain.util.toast
 import java.text.DecimalFormat
+import java.util.ArrayList
 
 class ProductsAdapter(
-    private val itemClick: (Product) -> Unit,
-    private val cartItemClick: (Int, Product,Int) -> Unit,
-    private val removeCartItemClick: (Int, Product) -> Unit,
-    private val plusCartItemClick: (Int,Int, Product) -> Unit,
-    private val munisItemClick: (Int,Int, Product) -> Unit,
-    private val favoriteItemClick: (Int, Product,Boolean) -> Unit
-) :  ListAdapter<Product, ProductsAdapter.ViewHolder>(DiffCallback) {
+    private val itemClick: (DataXX) -> Unit,
+    private val cartItemClick: (Int, DataXX,Int) -> Unit,
+    private val removeCartItemClick: (Int, DataXX) -> Unit,
+    private val plusCartItemClick: (Int,Int, DataXX) -> Unit,
+    private val munisItemClick: (Int,Int, DataXX) -> Unit,
+    private val favoriteItemClick: (Int, DataXX,Boolean) -> Unit
+) :  RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     var count:Int? = 1
     val isFavorite = false
+    var productsModel: MutableList<DataXX> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,cartItemClick,removeCartItemClick,plusCartItemClick,munisItemClick,favoriteItemClick)
@@ -39,18 +44,18 @@ class ProductsAdapter(
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = getItem(position)
+        val product = productsModel[position]
         holder.bind(position,product,count,isFavorite)
     }
 
-    class ViewHolder(private val binding: ItemProductsBinding, private val itemClick: (Product) -> Unit,
-                     private val cartItemClick: (Int,Product,Int) -> Unit,
-                     private val removeCartItemClick: (Int, Product) -> Unit,
-                     private val plusCartItemClick: (Int,Int, Product) -> Unit,
-                     private val munisItemClick: (Int,Int, Product) -> Unit,
-                     private val favoriteItemClick: (Int,Product,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(private val binding: ItemProductsBinding, private val itemClick: (DataXX) -> Unit,
+                     private val cartItemClick: (Int,DataXX,Int) -> Unit,
+                     private val removeCartItemClick: (Int, DataXX) -> Unit,
+                     private val plusCartItemClick: (Int,Int, DataXX) -> Unit,
+                     private val munisItemClick: (Int,Int, DataXX) -> Unit,
+                     private val favoriteItemClick: (Int,DataXX,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
-        fun bind(position: Int, product: Product, count: Int?, isFavorite2: Boolean) {
+        fun bind(position: Int, product: DataXX, count: Int?, isFavorite2: Boolean) {
             val zoomInAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_in)
             val zoomOutAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_out)
             var isFavorite = isFavorite2
@@ -152,8 +157,8 @@ class ProductsAdapter(
 
 
             binding.nameProductTextView.text = product.title
-            if (product.discountValue != null && product.isDiscount == "active"){
-                binding.discountTextView.text = product.discountValue + " KWD"
+            if (product.discount_value != null && product.is_discount == "active"){
+                binding.discountTextView.text = product.discount_value.toString() + " KWD"
 
                 binding.discountTextView.paintFlags = binding.discountTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
@@ -163,19 +168,39 @@ class ProductsAdapter(
             binding.priceTextView.text = product.price + " KWD"
             binding.rateTextView.text = product.rate.toString()
 
-            if (product.isFavorite == 0)
+            if (product.is_favorite == 0)
                 binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
             else
                 binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
         }
 
     }
-    companion object DiffCallback : DiffUtil.ItemCallback<Product>() {
-        override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
+
+    override fun getItemCount(): Int {
+        return productsModel.size
+
+    }
+
+    fun addList(list: List<DataXX>?) {
+        productsModel.addAll(list!!)
+        notifyDataSetChanged()
+    }
+
+    fun reset() {
+        productsModel.clear()
+        notifyDataSetChanged()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    companion object DiffCallback : DiffUtil.ItemCallback<DataXX>() {
+        override fun areItemsTheSame(oldItem: DataXX, newItem: DataXX): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
+        override fun areContentsTheSame(oldItem: DataXX, newItem: DataXX): Boolean {
             return oldItem.id == newItem.id
         }
     }

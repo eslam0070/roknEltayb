@@ -9,15 +9,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
+import com.rokneltayb.data.model.products.DataXX
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentPopularProductsBinding
+import com.rokneltayb.domain.util.EndlessRecyclerViewScrollListener
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
+import com.rokneltayb.presentation.categories.products.ProductsAdapter
 import com.rokneltayb.presentation.categories.products.ProductsFragmentDirections
 import com.rokneltayb.presentation.categories.products.ProductsViewModel
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
@@ -34,8 +39,7 @@ class PopularProductsFragment : Fragment() {
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
     private val viewModel: ProductsViewModel by viewModels()
-    private val sharedPref by lazy { SharedPreferencesImpl(requireContext()) }
-
+    var page: Int = 1
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         observeUIState()
         (requireActivity() as BaseActivity).binding!!.tvMainEmployeeName.text = getString(R.string.popular_produts)
@@ -65,7 +69,7 @@ class PopularProductsFragment : Fragment() {
             }
 
             is ProductsViewModel.UiState.Success -> {
-                popularProductsAdapter.submitList(uiState.data.data!!.products)
+                popularProductsAdapter!!.addList(uiState.data.data.products.data)
                 hideProgress()
             }
 
@@ -120,8 +124,14 @@ class PopularProductsFragment : Fragment() {
             else ->{}
         }
     }
-   private fun setProductsRecyclerView() {
-       binding.popularProductsRecyclerView.addBasicItemDecoration(R.dimen.item_decoration_medium_margin)
+
+    lateinit var scrollListener: EndlessRecyclerViewScrollListener
+
+
+    private fun setProductsRecyclerView() {
+       val staggeredGridLayoutManager =
+           StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+       binding.popularProductsRecyclerView.layoutManager = staggeredGridLayoutManager
 
        popularProductsAdapter = PopularProductsAdapter({
             findNavController().navigate(PopularProductsFragmentDirections.actionPopularProductsFragmentToProductDetailsFragment(it.id!!))
@@ -135,19 +145,30 @@ class PopularProductsFragment : Fragment() {
         },{total,position,product ->
             cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
         },{ position,product,isFavorite->
-               if (product.isFavorite == 0)
+               if (product.is_favorite == 0)
                    favoriteviewModel.storeFavorite(product.id!!)
                else
                    favoriteviewModel.deleteFavorite(product.id!!)
 
         })
 
+       binding.popularProductsRecyclerView.adapter = popularProductsAdapter
 
-        binding.popularProductsRecyclerView.adapter = popularProductsAdapter
+
+       scrollListener = object : EndlessRecyclerViewScrollListener(staggeredGridLayoutManager) {
+           override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+               var clickCount = page
+               clickCount++
+               viewModel.products(clickCount,"", "", "", "popular")
+           }
+       }
+
+       binding.popularProductsRecyclerView.addOnScrollListener(scrollListener)
+
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.products("","","","popular")
+        viewModel.products(page,"","","","popular")
     }
 }

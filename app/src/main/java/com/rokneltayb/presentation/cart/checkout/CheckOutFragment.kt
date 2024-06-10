@@ -18,6 +18,7 @@ import com.rokneltayb.R
 import com.rokneltayb.data.model.address.AddressData
 import com.rokneltayb.data.model.address.city.City
 import com.rokneltayb.data.model.cart.Data
+import com.rokneltayb.data.model.cart.delivery.DeliveryTime
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentCartBinding
 import com.rokneltayb.databinding.FragmentCheckOutBinding
@@ -44,8 +45,11 @@ class CheckOutFragment : Fragment() {
     private val orderViewModel: OrderViewModel by viewModels()
     private val checkOutAdapter: CheckOutAdapter by lazy { CheckOutAdapter() }
     private var addressId = 0
+    private var deliveryTimeId = 0
     private val addressList = mutableListOf<AddressData>()
+    private val timeList = mutableListOf<DeliveryTime>()
     var addressAdapter: ArrayAdapter<AddressData>? = null
+    var deliveryTimeAdapter: ArrayAdapter<DeliveryTime>? = null
 
     private fun observeUIState() {
         lifecycleScope.launch {
@@ -102,9 +106,17 @@ class CheckOutFragment : Fragment() {
                 hideProgress()
             }
 
+            is CartViewModel.UiState.GetDeliveryTimeSuccess ->{
+                timeList.clear()
+                timeList.add(0, DeliveryTime(id = 0, title = getString(R.string.select_your_delivery_time)))
+                timeList.addAll(uiState.data.data.DeliveryTime)
+                setItemDeliveryTime()
+            }
             else -> {}
         }
     }
+
+
 
     private fun setData(data: Data) {
         binding.itemCountTextView.text = "("+data!!.cart!!.size.toString()+ getString(R.string.items)+")"
@@ -114,8 +126,12 @@ class CheckOutFragment : Fragment() {
         else
             binding.shippingFeeTextView.text = data.tax.toString()
 
-        binding.totalCartTextView.text = data.total_after_tax.toString()
-        binding.totalTextView.text = data.total_after_tax.toString()
+        binding.totalCartTextView.text = data.total_after_tax
+        binding.totalTextView.text = data.total_after_tax
+
+        binding.addNewAddressTextView.setOnClickListener {
+            findNavController().navigate(CheckOutFragmentDirections.actionCheckOutFragmentToNewAddressFragment())
+        }
     }
 
     private fun addressUI(uiState: AddressViewModel.UiState) {
@@ -156,6 +172,7 @@ class CheckOutFragment : Fragment() {
 
         addressViewModel.address()
         viewModel.getCart()
+        viewModel.deliveryTimes()
 
         binding.ordersRecyclerView.layoutAnimation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation)
         binding.ordersRecyclerView.adapter = checkOutAdapter
@@ -164,8 +181,10 @@ class CheckOutFragment : Fragment() {
         binding.checkOutButton.setOnClickListener {
                 if (addressId == 0)
                     toastError(getString(R.string.please_select_address))
+                else if (deliveryTimeId == 0)
+                    toastError(getString(R.string.please_select_delivery_time))
                 else
-                    orderViewModel.addOrder(addressId)
+                    orderViewModel.addOrder(addressId,deliveryTimeId)
         }
 
         return binding.root
@@ -187,4 +206,18 @@ class CheckOutFragment : Fragment() {
             }
     }
 
+    private fun setItemDeliveryTime() {
+        deliveryTimeAdapter = ArrayAdapter<DeliveryTime>(requireActivity(), R.layout.spinner_list, timeList)
+        binding.timeSpinner.adapter = addressAdapter!!
+        binding.timeSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    deliveryTimeId = deliveryTimeAdapter!!.getItem(binding.timeSpinner.selectedItemPosition)!!.id
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+            }
+    }
 }

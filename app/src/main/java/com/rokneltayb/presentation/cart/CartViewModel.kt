@@ -6,18 +6,15 @@ import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.delivery.DeliveryimesResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
-import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.domain.entity.ErrorResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.usecase.CartUseCase
-import com.rokneltayb.domain.usecase.UserUseCase
-import com.rokneltayb.presentation.cart.CartViewModel2.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -138,6 +135,24 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         }
     }
 
+    fun deliveryTimes() {
+        viewModelScope.launch {
+            when (val result = useCase.deliveryTimes()) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.GetDeliveryTimeSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+
     sealed class UiState {
         data object Loading : UiState()
         class Error(val errorData: ErrorResponse): UiState()
@@ -147,5 +162,6 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         class DeleteCartSuccess(val data: DeleteCartResponse) : UiState()
         class AddCouponCartSuccess(val data: AddCouponResponse) : UiState()
         class DeleteCouponCartSuccess(val data: AddCouponResponse) : UiState()
+        class GetDeliveryTimeSuccess(val data: DeliveryimesResponse) : UiState()
     }
 }

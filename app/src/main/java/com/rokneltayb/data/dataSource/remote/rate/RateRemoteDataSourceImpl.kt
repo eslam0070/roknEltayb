@@ -3,7 +3,6 @@ package com.rokneltayb.data.dataSource.remote.rate
 import com.rokneltayb.data.model.categories.CategoriesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
 import javax.inject.Inject
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.model.products.details.ProductDetailsResponse
 import com.rokneltayb.data.model.rate.AddRateResponse
 import com.rokneltayb.data.network.NetworkServices

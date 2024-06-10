@@ -5,6 +5,7 @@ import com.rokneltayb.data.model.cart.CartResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
+import com.rokneltayb.data.model.cart.delivery.DeliveryimesResponse
 import com.rokneltayb.data.model.cart.update.UpdateCartResponse
 import retrofit2.Response
 import retrofit2.http.Field
@@ -47,4 +48,9 @@ interface CartServices {
 
     @POST("client/remove-coupon")
     suspend fun deleteCouponCart(): Response<AddCouponResponse>
+
+    @GET("client/delivery-times")
+    suspend fun deliveryTimes(): Response<DeliveryimesResponse>
+
+
 }

@@ -27,7 +27,6 @@ import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.orders.OrdersResponse
 import com.rokneltayb.data.model.orders.add.AddOrderResponse
 import com.rokneltayb.data.model.orders.details.OrderDetailsResponse
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.repository.AddressRepository
@@ -42,7 +41,7 @@ class OrdersRepositoryImpl @Inject constructor(private val remoteSource: OrdersR
     OrdersRepository {
     override suspend fun getOrders(): Result<OrdersResponse> = remoteSource.getOrders()
     override suspend fun getOrderDetails(orderId:Int): Result<OrderDetailsResponse> = remoteSource.getOrderDetails(orderId)
-    override suspend fun addOrder(addressId:Int):Result<AddOrderResponse> = remoteSource.addOrder(addressId)
+    override suspend fun addOrder(addressId:Int,deliveryTimeId:Int):Result<AddOrderResponse> = remoteSource.addOrder(addressId,deliveryTimeId)
 
 
 }

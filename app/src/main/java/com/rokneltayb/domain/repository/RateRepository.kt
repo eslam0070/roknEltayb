@@ -10,7 +10,6 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.model.rate.AddRateResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result

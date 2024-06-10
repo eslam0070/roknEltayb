@@ -13,5 +13,8 @@ data class LoginResponse(
     val `data`: Data?,
     @SerializedName("message")
     @Expose
-    val message: String?
+    val message: String?,
+    @SerializedName("status")
+    @Expose
+    val status:Int?
 ) : Parcelable

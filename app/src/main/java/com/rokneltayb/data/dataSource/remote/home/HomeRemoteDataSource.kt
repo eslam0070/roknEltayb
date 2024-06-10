@@ -16,7 +16,7 @@ interface HomeRemoteDataSource {
 
     suspend fun home(): Result<HomeResponse>
     suspend fun categories(): Result<CategoriesResponse>
-    suspend fun products(categoryId:String,sort:String,search:String,type:String): Result<ProductsResponse>
+    suspend fun products(page:Int,categoryId:String,sort:String,search:String,type:String): Result<ProductsResponse>
     suspend fun searchOnProducts(search:String): Result<ProductsResponse>
     suspend fun prorudtsWithOutSearch(): Result<ProductsResponse>
     suspend fun productDetails(productId:Int): Result<ProductDetailsResponse>

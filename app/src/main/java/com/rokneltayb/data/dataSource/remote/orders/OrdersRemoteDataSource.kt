@@ -12,6 +12,6 @@ import com.rokneltayb.domain.entity.Result
 interface OrdersRemoteDataSource {
     suspend fun getOrders(): Result<OrdersResponse>
     suspend fun getOrderDetails(orderId:Int): Result<OrderDetailsResponse>
-    suspend fun addOrder(addressId:Int):Result<AddOrderResponse>
+    suspend fun addOrder(addressId:Int,deliveryTimeId:Int):Result<AddOrderResponse>
 
 }

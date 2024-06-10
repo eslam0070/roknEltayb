@@ -34,5 +34,8 @@ data class ClientData(
     val phone: String? = null,
     @SerializedName("updated_at")
     @Expose
-    val updatedAt: String? = null
+    val updatedAt: String? = null,
+    @SerializedName("coupon_id")
+    @Expose
+    val coupon_id:Int? = null
 ) : Parcelable

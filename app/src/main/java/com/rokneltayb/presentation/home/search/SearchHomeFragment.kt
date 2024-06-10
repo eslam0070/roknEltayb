@@ -76,10 +76,10 @@ class SearchHomeFragment : Fragment() {
             is SearchHomeViewModel.UiState.Loading -> {}
 
             is SearchHomeViewModel.UiState.Success -> {
-                if (uiState.data.data!!.products!!.isNotEmpty()){
+                if (uiState.data.data!!.products!!.data.isNotEmpty()){
                     binding.sizeItemFoundTextView.visibility = View.VISIBLE
-                    binding.sizeItemFoundTextView.text = uiState.data.data.products!!.size.toString()+" "+ getString(R.string.items_found)
-                    searchAdapter.submitList(uiState.data.data.products)
+                    binding.sizeItemFoundTextView.text = uiState.data.data.products!!.data.size.toString()+" "+ getString(R.string.items_found)
+                    searchAdapter.submitList(uiState.data.data.products.data)
                 }else
                     binding.sizeItemFoundTextView.visibility = View.INVISIBLE
 

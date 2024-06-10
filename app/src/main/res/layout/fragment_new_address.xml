@@ -40,6 +40,8 @@
                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,15 +54,13 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addressName"
+                android:id="@+id/phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_bg_edittext"
                 android:gravity="start"
-                android:hint="@string/name_address"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="98"
+                android:hint="@string/phone_number"
+                android:inputType="number"
                 android:padding="13dp"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
@@ -82,13 +82,15 @@
             app:hintEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phone"
+                android:id="@+id/addressName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_bg_edittext"
                 android:gravity="start"
-                android:hint="@string/phone_number"
-                android:inputType="number"
+                android:hint="@string/name_address"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="98"
                 android:padding="13dp"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"

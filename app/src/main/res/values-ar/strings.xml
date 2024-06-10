@@ -13,7 +13,7 @@
     <string name="username">اسم المستخدم<font color='#F81212'>*</font></string>
     <string name="confirm_password">تأكيد كلمة المرور الجديدة</string>
     <string name="choose">اختر\n</string>
-    <string name="block">حاجز</string>
+    <string name="block">البلوك</string>
     <string name="street">شارع</string>
     <string name="avenue">شارع</string>
     <string name="building_number">رقم المبنى</string>
@@ -48,7 +48,7 @@
     <string name="have_an_account">هل لديك حساب؟</string>
     <string name="login">تسجيل الدخول</string>
     <string name="home">الرئيسية</string>
-    <string name="categories">فئات</string>
+    <string name="categories">الأقسام</string>
     <string name="cart">عربة التسوق</string>
     <string name="more">المزيد</string>
     <string name="did_not_get_the_code">لم تحصل على الرمز؟ إعادة الإرسال خلال  ثانية</string>
@@ -64,7 +64,7 @@
     <string name="password_is_too_short">كلمة المرور قصيرة جدًا</string>
     <string name="confirm_password_is_less_than_8_letters">تأكيد كلمة المرور أقل من 8 أحرف</string>
     <string name="password_is_less_than_8_letters">كلمة المرور أقل من 8 أحرف</string>
-    <string name="shop_by_categories">تسوق حسب الفئات</string>
+    <string name="shop_by_categories">تسوق حسب الأقسام</string>
     <string name="daily_best_sells">أفضل المبيعات اليومية</string>
     <string name="popular_produts">المنتجات المميزة</string>
     <string name="sort_by">ترتيب حسب</string>
@@ -151,6 +151,8 @@
     <string name="place_order">تنفيذ الطلب</string>
     <string name="cash_on_delivery">الدفع عند الاستلام</string>
     <string name="select_your_location">حدد موقعك</string>
+    <string name="select_your_delivery_time">حدد وقت التوصيل</string>
+
     <string name="on">على</string>
     <string name="payment">دفع</string>
     <string name="track_you_order">تتبع طلبك</string>
@@ -172,6 +174,7 @@
     <string name="order_id2">رقم الطلب:</string>
     <string name="order_status">حالة الطلب</string>
     <string name="please_select_address">الرجاء تحديد العنوان</string>
+    <string name="please_select_delivery_time">الرجاء تحديد وقت الوصول</string>
     <string name="move_to_wishlist">الانتقال إلى المفضلة</string>
     <string name="login_success">تم تسجيل الدخول بنجاح</string>
     <string name="how_can_help_you_n_let_us_know_how_we_can_help_you">أخبرنا كيف يمكننا مساعدتك</string>

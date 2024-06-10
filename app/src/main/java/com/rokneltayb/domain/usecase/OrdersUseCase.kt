@@ -20,7 +20,6 @@ import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
 import com.rokneltayb.data.model.orders.OrdersResponse
 import com.rokneltayb.data.model.orders.add.AddOrderResponse
 import com.rokneltayb.data.model.orders.details.OrderDetailsResponse
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.repository.AddressRepository
@@ -34,5 +33,5 @@ import javax.inject.Inject
 class OrdersUseCase @Inject constructor(private val repo: OrdersRepository) {
     suspend fun getOrders(): Result<OrdersResponse> = repo.getOrders()
     suspend fun getOrderDetails(orderId:Int): Result<OrderDetailsResponse> = repo.getOrderDetails(orderId)
-    suspend fun addOrder(addressId:Int):Result<AddOrderResponse> = repo.addOrder(addressId)
+    suspend fun addOrder(addressId:Int,deliveryTimeId:Int):Result<AddOrderResponse> = repo.addOrder(addressId,deliveryTimeId)
 }

@@ -27,11 +27,12 @@ class HomeRepositoryImpl @Inject constructor(private val remoteSource: HomeRemot
     override suspend fun categories(): Result<CategoriesResponse> = remoteSource.categories()
 
     override suspend fun products(
+        page:Int,
         categoryId: String,
         sort: String,
         search: String,
         type:String
-    ): Result<ProductsResponse> = remoteSource.products(categoryId, sort, search,type)
+    ): Result<ProductsResponse> = remoteSource.products(page,categoryId, sort, search,type)
 
     override suspend fun prorudtsWithOutSearch(): Result<ProductsResponse> = remoteSource.prorudtsWithOutSearch()
 

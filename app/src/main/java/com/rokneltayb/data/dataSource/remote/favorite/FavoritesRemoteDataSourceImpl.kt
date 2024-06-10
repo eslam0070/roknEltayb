@@ -9,7 +9,6 @@ import com.rokneltayb.data.model.favorite.add.AddFavoritesResponse
 import com.rokneltayb.data.model.favorite.delete.DeleteFavoritesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
 import javax.inject.Inject
-import com.rokneltayb.data.model.products.ProductsResponse
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
 import com.rokneltayb.domain.entity.Result

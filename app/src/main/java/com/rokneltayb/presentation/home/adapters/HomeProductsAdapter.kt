@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.R
 import com.rokneltayb.data.model.home.home.PopularProduct
-import com.rokneltayb.data.model.products.Product
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 import com.rokneltayb.domain.util.toast

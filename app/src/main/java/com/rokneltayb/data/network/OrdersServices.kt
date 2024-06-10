@@ -6,6 +6,7 @@ import com.rokneltayb.data.model.address.AddressResponse
 import com.rokneltayb.data.model.address.add.AddAddressResponse
 import com.rokneltayb.data.model.address.city.CityResponse
 import com.rokneltayb.data.model.address.delete.DeleteAddressResponse
+import com.rokneltayb.data.model.cart.delivery.DeliveryTime
 import com.rokneltayb.data.model.favorite.FavoritesResponse
 import com.rokneltayb.data.model.favorite.add.AddFavoritesResponse
 import com.rokneltayb.data.model.favorite.delete.DeleteFavoritesResponse
@@ -34,6 +35,6 @@ interface OrdersServices {
     suspend fun getOrderDetails(@Query("order_id")orderId:Int): Response<OrderDetailsResponse>
     @FormUrlEncoded
     @POST("client/store-order")
-    suspend fun addOrder(@Field("address_id")addressId:Int):Response<AddOrderResponse>
+    suspend fun addOrder(@Field("address_id")addressId:Int,@Field("delivery_time_id")deliveryTimeId: Int):Response<AddOrderResponse>
 
 }
