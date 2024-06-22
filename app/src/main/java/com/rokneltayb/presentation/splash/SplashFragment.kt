@@ -17,6 +17,7 @@ import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentHomeBinding
 import com.rokneltayb.databinding.FragmentSplashBinding
 import com.rokneltayb.domain.util.Constants
+import com.rokneltayb.domain.util.localization.LocalizationUtils
 import kotlinx.coroutines.delay
 
 
@@ -53,6 +54,7 @@ class SplashFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
         if (sharedPref.getLanguage().isEmpty() ||
             sharedPref.getLanguage() == Constants.LANGUAGE_ARABIC
         ) {

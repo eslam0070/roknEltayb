@@ -30,7 +30,7 @@ object LocalizationUtils {
             Locale.setDefault(locale)
             val configuration = context.resources.configuration
             configuration.locale = locale
-            configuration.fontScale = 1.toFloat() //0.85 small size, 1 normal size, 1,15 big etc
+            configuration.fontScale = 1.15.toFloat() //0.85 small size, 1 normal size, 1,15 big etc
             val metrics = DisplayMetrics()
             (context as Activity).windowManager.defaultDisplay.getMetrics(metrics)
             metrics.scaledDensity = configuration.fontScale * metrics.density

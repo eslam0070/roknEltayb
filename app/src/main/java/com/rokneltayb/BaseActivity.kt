@@ -19,6 +19,7 @@ import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
 import com.rokneltayb.domain.util.Constants
 import com.rokneltayb.domain.util.Constants.LANGUAGE_ARABIC
+import com.rokneltayb.domain.util.localization.LocalizationUtils
 import com.rokneltayb.domain.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
