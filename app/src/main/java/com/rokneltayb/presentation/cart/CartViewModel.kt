@@ -3,6 +3,7 @@ package com.rokneltayb.presentation.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.DateResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -153,6 +154,24 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         }
     }
 
+    fun deliveryDates() {
+        viewModelScope.launch {
+            when (val result = useCase.deliveryDates()) {
+                is Result.Error -> {
+                    _uiState.value = UiState.Error(result.errorType!!)
+                }
+
+                is Result.Success -> {
+                    _uiState.value = UiState.GetDeliveryDateSuccess(result.data!!)
+                }
+
+                is Result.Loading -> {
+                    _uiState.value = UiState.Loading
+                }
+            }
+        }
+    }
+
     sealed class UiState {
         data object Loading : UiState()
         class Error(val errorData: ErrorResponse): UiState()
@@ -163,5 +182,6 @@ class CartViewModel @Inject constructor(private val useCase: CartUseCase) : View
         class AddCouponCartSuccess(val data: AddCouponResponse) : UiState()
         class DeleteCouponCartSuccess(val data: AddCouponResponse) : UiState()
         class GetDeliveryTimeSuccess(val data: DeliveryimesResponse) : UiState()
+        class GetDeliveryDateSuccess(val data: DateResponse) : UiState()
     }
 }

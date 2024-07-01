@@ -163,7 +163,10 @@ class HomeDailyBestSellsProductsAdapter(
 
             binding.priceTextView.text = product.price + binding.root.context.getString(R.string.kwd)
 
-            binding.rateTextView.text = product.rate.toString()
+            if (product.rate!!.length > 3){
+                binding.rateTextView.text = product.rate.toString().substring(0,2)
+            }else
+                binding.rateTextView.text = product.rate.toString()
 
 
             if (product.isFavorite == 0)

@@ -35,6 +35,5 @@ interface OrdersServices {
     suspend fun getOrderDetails(@Query("order_id")orderId:Int): Response<OrderDetailsResponse>
     @FormUrlEncoded
     @POST("client/store-order")
-    suspend fun addOrder(@Field("address_id")addressId:Int,@Field("delivery_time_id")deliveryTimeId: Int):Response<AddOrderResponse>
-
+    suspend fun addOrder(@Field("address_id")addressId:Int,@Field("delivery_date")delivery_date: String,@Field("delivery_time_id")deliveryTimeId: Int):Response<AddOrderResponse>
 }

@@ -1,6 +1,7 @@
 package com.rokneltayb.domain.usecase
 
 import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.DateResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -28,5 +29,6 @@ class CartUseCase @Inject constructor(private val repo: CartRepository) {
     suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse> = repo.applyCouponCart(coupon)
     suspend fun deleteCouponCart(): Result<AddCouponResponse> = repo.deleteCouponCart()
     suspend fun deliveryTimes(): Result<DeliveryimesResponse> = repo.deliveryTimes()
+    suspend fun deliveryDates(): Result<DateResponse> = repo.deliveryDates()
 
 }

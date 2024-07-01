@@ -152,6 +152,7 @@
     <string name="cash_on_delivery">الدفع عند الاستلام</string>
     <string name="select_your_location">حدد موقعك</string>
     <string name="select_your_delivery_time">حدد وقت التوصيل</string>
+    <string name="select_your_delivery_date">حدد تاريخ التوصيل</string>
 
     <string name="on">على</string>
     <string name="payment">دفع</string>
@@ -175,6 +176,7 @@
     <string name="order_status">حالة الطلب</string>
     <string name="please_select_address">الرجاء تحديد العنوان</string>
     <string name="please_select_delivery_time">الرجاء تحديد وقت الوصول</string>
+    <string name="please_select_delivery_date">الرجاء تحديد تاريخ الوصول</string>
     <string name="move_to_wishlist">الانتقال إلى المفضلة</string>
     <string name="login_success">تم تسجيل الدخول بنجاح</string>
     <string name="how_can_help_you_n_let_us_know_how_we_can_help_you">أخبرنا كيف يمكننا مساعدتك</string>

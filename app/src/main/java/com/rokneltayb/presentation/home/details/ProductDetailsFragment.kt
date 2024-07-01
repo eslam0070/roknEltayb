@@ -270,8 +270,10 @@ class ProductDetailsFragment : Fragment() {
         }else
             binding.discountTextView.visibility = View.INVISIBLE
 
-        binding.rateTextView.text = data.rate.toString()
-
+        if (data.rate!!.length > 3){
+            binding.rateTextView.text = data.rate.toString().substring(0,2)
+        }else
+            binding.rateTextView.text = data.rate.toString()
         binding.descriptionProductTextView.text =
             Html.fromHtml(data.description, Html.FROM_HTML_MODE_COMPACT)
 

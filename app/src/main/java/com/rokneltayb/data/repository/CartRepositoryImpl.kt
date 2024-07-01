@@ -3,6 +3,7 @@ package com.rokneltayb.data.repository
 
 import com.rokneltayb.data.dataSource.remote.cart.CartRemoteDataSource
 import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.DateResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -21,5 +22,6 @@ class CartRepositoryImpl @Inject constructor(private val remoteSource: CartRemot
     override suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse> = remoteSource.applyCouponCart(coupon)
     override suspend fun deleteCouponCart(): Result<AddCouponResponse> = remoteSource.deleteCouponCart()
     override suspend fun deliveryTimes(): Result<DeliveryimesResponse> = remoteSource.deliveryTimes()
+    override suspend fun deliveryDates(): Result<DateResponse> = remoteSource.deliveryDates()
 
 }

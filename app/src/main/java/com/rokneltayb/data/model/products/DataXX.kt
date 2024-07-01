@@ -9,7 +9,7 @@ data class DataXX(
     val is_discount: String,
     val is_favorite: Int,
     val price: String,
-    val rate: Int,
+    val rate: String,
     val rates: List<Rate>,
     val shapes: List<ShapeX>,
     val title: String

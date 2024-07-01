@@ -170,8 +170,10 @@ class PopularProductsAdapter(
 
 
 
-            binding.rateTextView.text = product.rate.toString()
-
+            if (product.rate!!.length > 3){
+                binding.rateTextView.text = product.rate.toString().substring(0,2)
+            }else
+                binding.rateTextView.text = product.rate.toString()
             if (product.is_favorite == 0)
                 binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
             else

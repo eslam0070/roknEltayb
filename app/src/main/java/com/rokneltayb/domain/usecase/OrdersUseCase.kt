@@ -33,5 +33,5 @@ import javax.inject.Inject
 class OrdersUseCase @Inject constructor(private val repo: OrdersRepository) {
     suspend fun getOrders(): Result<OrdersResponse> = repo.getOrders()
     suspend fun getOrderDetails(orderId:Int): Result<OrderDetailsResponse> = repo.getOrderDetails(orderId)
-    suspend fun addOrder(addressId:Int,deliveryTimeId:Int):Result<AddOrderResponse> = repo.addOrder(addressId,deliveryTimeId)
+    suspend fun addOrder(addressId:Int,delivery_date:String,deliveryTimeId:Int):Result<AddOrderResponse> = repo.addOrder(addressId,delivery_date,deliveryTimeId)
 }

@@ -1,6 +1,7 @@
 package com.rokneltayb.data.dataSource.remote.cart
 
 import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.DateResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -90,5 +91,12 @@ class CartRemoteDataSourceImpl @Inject constructor(
             Result.Error(res.errorType)
     }
 
+    override suspend fun deliveryDates(): Result<DateResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.deliveryDates() }
 
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
 }

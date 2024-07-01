@@ -1,6 +1,7 @@
 package com.rokneltayb.domain.repository
 
 import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.DateResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -26,5 +27,6 @@ interface CartRepository {
     suspend fun applyCouponCart(coupon: String): Result<AddCouponResponse>
     suspend fun deleteCouponCart(): Result<AddCouponResponse>
     suspend fun deliveryTimes(): Result<DeliveryimesResponse>
+    suspend fun deliveryDates(): Result<DateResponse>
 
 }

@@ -41,7 +41,7 @@ class OrdersRepositoryImpl @Inject constructor(private val remoteSource: OrdersR
     OrdersRepository {
     override suspend fun getOrders(): Result<OrdersResponse> = remoteSource.getOrders()
     override suspend fun getOrderDetails(orderId:Int): Result<OrderDetailsResponse> = remoteSource.getOrderDetails(orderId)
-    override suspend fun addOrder(addressId:Int,deliveryTimeId:Int):Result<AddOrderResponse> = remoteSource.addOrder(addressId,deliveryTimeId)
+    override suspend fun addOrder(addressId:Int,delivery_date:String,deliveryTimeId:Int):Result<AddOrderResponse> = remoteSource.addOrder(addressId,delivery_date,deliveryTimeId)
 
 
 }

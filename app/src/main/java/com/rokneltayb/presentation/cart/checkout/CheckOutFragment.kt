@@ -46,10 +46,13 @@ class CheckOutFragment : Fragment() {
     private val checkOutAdapter: CheckOutAdapter by lazy { CheckOutAdapter() }
     private var addressId = 0
     private var deliveryTimeId = 0
+    private var deliveryDate = ""
     private val addressList = mutableListOf<AddressData>()
     private val timeList = mutableListOf<DeliveryTime>()
+    private val dateList = mutableListOf<String>()
     var addressAdapter: ArrayAdapter<AddressData>? = null
     var deliveryTimeAdapter: ArrayAdapter<DeliveryTime>? = null
+    var deliveryDateAdapter: ArrayAdapter<String>? = null
 
     private fun observeUIState() {
         lifecycleScope.launch {
@@ -112,6 +115,13 @@ class CheckOutFragment : Fragment() {
                 timeList.addAll(uiState.data.data.DeliveryTime)
                 setItemDeliveryTime()
             }
+
+            is CartViewModel.UiState.GetDeliveryDateSuccess ->{
+                dateList.clear()
+                dateList.add(0,  getString(R.string.select_your_delivery_date))
+                dateList.addAll(uiState.data.data)
+                setItemDeliveryDate()
+            }
             else -> {}
         }
     }
@@ -173,6 +183,7 @@ class CheckOutFragment : Fragment() {
         addressViewModel.address()
         viewModel.getCart()
         viewModel.deliveryTimes()
+        viewModel.deliveryDates()
 
         binding.ordersRecyclerView.layoutAnimation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.layout_animation)
         binding.ordersRecyclerView.adapter = checkOutAdapter
@@ -183,8 +194,10 @@ class CheckOutFragment : Fragment() {
                     toastError(getString(R.string.please_select_address))
                 else if (deliveryTimeId == 0)
                     toastError(getString(R.string.please_select_delivery_time))
+                else if (deliveryDate == "")
+                    toastError(getString(R.string.please_select_delivery_date))
                 else
-                    orderViewModel.addOrder(addressId,deliveryTimeId)
+                    orderViewModel.addOrder(addressId,deliveryDate,deliveryTimeId)
         }
 
         return binding.root
@@ -208,11 +221,26 @@ class CheckOutFragment : Fragment() {
 
     private fun setItemDeliveryTime() {
         deliveryTimeAdapter = ArrayAdapter<DeliveryTime>(requireActivity(), R.layout.spinner_list, timeList)
-        binding.timeSpinner.adapter = addressAdapter!!
+        binding.timeSpinner.adapter = deliveryTimeAdapter!!
         binding.timeSpinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     deliveryTimeId = deliveryTimeAdapter!!.getItem(binding.timeSpinner.selectedItemPosition)!!.id
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+            }
+    }
+
+    private fun setItemDeliveryDate() {
+        deliveryDateAdapter = ArrayAdapter<String>(requireActivity(), R.layout.spinner_list, dateList)
+        binding.dateSpinner.adapter = deliveryDateAdapter!!
+        binding.dateSpinner.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    deliveryDate = deliveryDateAdapter!!.getItem(binding.dateSpinner.selectedItemPosition)!!.toString()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {

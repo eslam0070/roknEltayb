@@ -31,7 +31,7 @@ data class PopularProduct(
     val price: String?,
     @SerializedName("rate")
     @Expose
-    val rate: Int?,
+    val rate: String?,
     @SerializedName("shapes")
     @Expose
     val shapes: List<Shape?>?,

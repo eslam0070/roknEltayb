@@ -34,5 +34,11 @@ data class OrderDetailsData(
     val totalPrice: Double?,
     @SerializedName("type")
     @Expose
-    val type: String?
+    val type: String?,
+    @SerializedName("delivery_time")
+    @Expose
+    val delivery_time:String?,
+    @SerializedName("delivery_date")
+    @Expose
+    val delivery_date: String?
 )

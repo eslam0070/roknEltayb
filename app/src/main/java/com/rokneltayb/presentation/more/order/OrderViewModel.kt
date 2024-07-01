@@ -63,9 +63,9 @@ class OrderViewModel  @Inject constructor(private val useCase: OrdersUseCase) : 
         }
     }
 
-    fun addOrder(addressId:Int,deliveryTimeId:Int) {
+    fun addOrder(addressId:Int,delivery_date:String,deliveryTimeId:Int) {
         viewModelScope.launch {
-            when (val result = useCase.addOrder(addressId,deliveryTimeId)) {
+            when (val result = useCase.addOrder(addressId,delivery_date,deliveryTimeId)) {
                 is Result.Error -> {
                     _uiState.value = UiState.Error(result.errorType!!)
                 }

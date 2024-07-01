@@ -119,6 +119,14 @@ class OrderDetailsFragment : Fragment() {
         binding.addressShippingTextView.text = orderDetailsData.address!!.block +""+" , "+ getString(R.string.street) +" " +orderDetailsData.address.street +" "+
                 orderDetailsData.address.avenue +" , "+ getString(R.string.building_number)+" "+ orderDetailsData.address.buildingNum +" , "
         getString(R.string.floor) + " " + orderDetailsData.address.floorNum +" , " + getString(R.string.apartment) +" "+ orderDetailsData.address.apartment +" , "+ orderDetailsData.address.address
+
+        if (orderDetailsData.delivery_date!!.isNotEmpty() || orderDetailsData.delivery_time!!.isNotEmpty())
+            binding.dateShippingTextView.text = orderDetailsData.delivery_date + " , " + orderDetailsData.delivery_time
+        else
+            binding.dateShippingTextView.text = ""
+
+
+
     }
 
 }

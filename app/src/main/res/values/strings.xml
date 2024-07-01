@@ -153,6 +153,7 @@
     <string name="cash_on_delivery">Cash on Delivery</string>
     <string name="select_your_location">Select your location</string>
     <string name="select_your_delivery_time">Select your delivery time</string>
+    <string name="select_your_delivery_date">Select your delivery date</string>
     <string name="on">On</string>
     <string name="payment">Payment</string>
     <string name="track_you_order">Track you order</string>
@@ -175,6 +176,7 @@
     <string name="order_status">Order status</string>
     <string name="please_select_address">Please select address</string>
     <string name="please_select_delivery_time">Please select delivery time</string>
+    <string name="please_select_delivery_date">Please select delivery date</string>
     <string name="move_to_wishlist">Move To Wishlist</string>
     <string name="login_success">You have been logged in successfully</string>
     <string name="how_can_help_you_n_let_us_know_how_we_can_help_you">How can help you \n Let us know how we can help you</string>

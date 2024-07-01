@@ -34,8 +34,8 @@ class OrdersRemoteDataSourceImpl @Inject constructor(
             Result.Error(res.errorType)
     }
 
-    override suspend fun addOrder(addressId: Int,deliveryTimeId:Int): Result<AddOrderResponse> {
-        val res = requestApiCall.requestApiCall { networkServices.addOrder(addressId,deliveryTimeId) }
+    override suspend fun addOrder(addressId: Int,delivery_date:String,deliveryTimeId:Int): Result<AddOrderResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.addOrder(addressId,delivery_date,deliveryTimeId) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

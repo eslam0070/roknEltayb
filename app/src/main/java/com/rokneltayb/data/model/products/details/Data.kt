@@ -8,7 +8,7 @@ data class Data(
     val images: List<Images>,
     val is_discount: String,
     val price: String,
-    val rate: Int,
+    val rate: String,
     val shapes: List<Shape>,
     val title: String,
     val is_favorite:Int,

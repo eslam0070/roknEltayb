@@ -2,6 +2,7 @@ package com.rokneltayb.data.network
 
 
 import com.rokneltayb.data.model.cart.CartResponse
+import com.rokneltayb.data.model.cart.DateResponse
 import com.rokneltayb.data.model.cart.add.AddCartResponse
 import com.rokneltayb.data.model.cart.coupon.AddCouponResponse
 import com.rokneltayb.data.model.cart.delete.DeleteCartResponse
@@ -51,6 +52,9 @@ interface CartServices {
 
     @GET("client/delivery-times")
     suspend fun deliveryTimes(): Response<DeliveryimesResponse>
+
+    @GET("client/delivery-dates")
+    suspend fun deliveryDates(): Response<DateResponse>
 
 
 }
