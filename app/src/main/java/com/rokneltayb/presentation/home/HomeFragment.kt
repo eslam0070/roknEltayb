@@ -108,7 +108,6 @@ class HomeFragment : Fragment() {
             }
 
             is CartViewModel.UiState.AddToCartSuccess -> {
-                toast(uiState.data.message.toString())
                 cartViewModel.removeState()
             }
 

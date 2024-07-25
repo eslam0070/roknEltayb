@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">roknEltayb</string>
-    <string name="welcome_to">مرحبًا بكم في ركن الطيب لتجارة التجزئة وتوصيل المستهلكات المنزلية والتجارية. نحن متحمسون لرؤيتك مرة أخرى!</string>
+    <string name="welcome_to">مرحبًا بكم في ركن الطيب للأدوات و الأوانـي المـنـزلـيـة</string>
     <string name="phone_number">رقم الهاتف</string>
     <string name="password">كلمة المرور</string>
     <string name="remember_me">تذكرنى</string>
@@ -48,7 +48,7 @@
     <string name="have_an_account">هل لديك حساب؟</string>
     <string name="login">تسجيل الدخول</string>
     <string name="home">الرئيسية</string>
-    <string name="categories">الأقسام</string>
+    <string name="categories">الفئات</string>
     <string name="cart">عربة التسوق</string>
     <string name="more">المزيد</string>
     <string name="did_not_get_the_code">لم تحصل على الرمز؟ إعادة الإرسال خلال  ثانية</string>
@@ -64,9 +64,9 @@
     <string name="password_is_too_short">كلمة المرور قصيرة جدًا</string>
     <string name="confirm_password_is_less_than_8_letters">تأكيد كلمة المرور أقل من 8 أحرف</string>
     <string name="password_is_less_than_8_letters">كلمة المرور أقل من 8 أحرف</string>
-    <string name="shop_by_categories">تسوق حسب الأقسام</string>
+    <string name="shop_by_categories">تسوق حسب الفئات</string>
     <string name="daily_best_sells">أفضل المبيعات اليومية</string>
-    <string name="popular_produts">المنتجات المميزة</string>
+    <string name="popular_produts">المنتجات الشهيرة</string>
     <string name="sort_by">ترتيب حسب</string>
     <string name="popularity">شعبية</string>
     <string name="price_high_to_low">السعر الاعلى الى الاقل</string>
@@ -141,7 +141,7 @@
     <string name="apply">تأكيد</string>
     <string name="subtotal">الإجمالي الفرعي</string>
     <string name="shipping_fee">رسوم الشحن</string>
-    <string name="cart_total">إجمالي العربة</string>
+    <string name="cart_total">إلاجمالي</string>
     <string name="checkout">الدفع</string>
     <string name="count">عدد</string>
     <string name="items">العناصر</string>
@@ -186,4 +186,5 @@
     <string name="kwd">" KWD"</string>
     <string name="add_new_address">إضافه عنوان جديد</string>
     <string name="delete">حذف</string>
+    <string name="unavailable">غير متوفر</string>
 </resources>

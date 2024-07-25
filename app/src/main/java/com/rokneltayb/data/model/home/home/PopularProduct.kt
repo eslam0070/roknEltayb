@@ -40,5 +40,8 @@ data class PopularProduct(
     val title: String?,
     @Expose
     @SerializedName("is_favorite")
-    val isFavorite:Int?
+    val isFavorite:Int?,
+    @Expose
+    @SerializedName("in_stock")
+    var inStock:Int = 0
 ) : Parcelable

@@ -1,6 +1,5 @@
 package com.rokneltayb.presentation.home.daily
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,18 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
-import com.rokneltayb.data.model.products.DataXX
-import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.FragmentDailyProductsBinding
-import com.rokneltayb.databinding.FragmentPopularProductsBinding
 import com.rokneltayb.domain.util.EndlessRecyclerViewScrollListener
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
-import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.presentation.categories.products.ProductsAdapter
-import com.rokneltayb.presentation.categories.products.ProductsFragmentDirections
 import com.rokneltayb.presentation.categories.products.ProductsViewModel
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
@@ -37,7 +30,7 @@ import kotlinx.coroutines.launch
 class DailyProductsFragment : Fragment() {
 
     private val binding by lazy { FragmentDailyProductsBinding.inflate(layoutInflater) }
-    private lateinit var popularProductsAdapter: PopularProductsAdapter
+    private lateinit var dailyProductsAdapter: DailyProductsAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
     private val viewModel: ProductsViewModel by viewModels()
@@ -74,7 +67,7 @@ class DailyProductsFragment : Fragment() {
             }
 
             is ProductsViewModel.UiState.Success -> {
-                popularProductsAdapter.addList(uiState.data.data.products.data)
+                dailyProductsAdapter.addList(uiState.data.data.products.data)
                 hideProgress()
             }
 
@@ -142,27 +135,26 @@ class DailyProductsFragment : Fragment() {
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         binding.dailyProductsRecyclerView.layoutManager = staggeredGridLayoutManager
 
-        popularProductsAdapter = PopularProductsAdapter({
+        dailyProductsAdapter = DailyProductsAdapter({
             findNavController().navigate(DailyProductsFragmentDirections.actionDailyProductsFragmentToProductDetailsFragment(it.id!!))
         },{position,product,count->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),count.toString())
+            cartViewModel.run { storeCart(product.id.toString(), product.shapes!![0].id.toString(),count.toString()) }
         },{ position,product ->
-            cartViewModel.deleteCart(product.id.toString(),product.shapes!![0]!!.id.toString())
+            cartViewModel.deleteCart(product.id.toString(), product.shapes[0].id.toString())
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
+            cartViewModel.run { storeCart(product.id.toString(), product.shapes!![0].id.toString(),total.toString()) }
 
         },{total,position,product ->
-            cartViewModel.storeCart(product.id.toString(), product.shapes!![0]!!.id.toString(),total.toString())
+            cartViewModel.storeCart(product.id.toString(), product.shapes[0].id.toString(),total.toString())
         },{ position,product,isFavorite->
                 if (product.is_favorite == 0)
-                    favoriteviewModel.storeFavorite(product.id!!)
+                    favoriteviewModel.storeFavorite(product.id)
                 else
-                    favoriteviewModel.deleteFavorite(product.id!!)
-
+                    favoriteviewModel.deleteFavorite(product.id)
         })
 
 
-        binding.dailyProductsRecyclerView.adapter = popularProductsAdapter
+        binding.dailyProductsRecyclerView.adapter = dailyProductsAdapter
 
 
         scrollListener = object : EndlessRecyclerViewScrollListener(staggeredGridLayoutManager) {

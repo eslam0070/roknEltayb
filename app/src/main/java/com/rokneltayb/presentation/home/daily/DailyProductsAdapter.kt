@@ -1,6 +1,5 @@
-package com.rokneltayb.presentation.home.adapters
+package com.rokneltayb.presentation.home.daily
 
-import android.content.Context
 import android.graphics.Paint
 import android.os.Build
 import android.text.Editable
@@ -17,49 +16,58 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rokneltayb.R
-import com.rokneltayb.data.model.home.home.PopularProduct
+import com.rokneltayb.data.model.products.DataXX
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
-import com.rokneltayb.databinding.ItemHomePupularProductsBinding
+import com.rokneltayb.databinding.ItemProductsBinding
 import com.rokneltayb.domain.util.toast
+import com.rokneltayb.presentation.categories.products.ProductsAdapter
 import java.text.DecimalFormat
+import java.util.ArrayList
 
-class HomeProductsAdapter(
-    private val itemClick: (PopularProduct) -> Unit,
-    private val cartItemClick: (Int, PopularProduct, Int) -> Unit,
-    private val removeCartItemClick: (Int, PopularProduct) -> Unit,
-    private val plusCartItemClick: (Int, Int, PopularProduct) -> Unit,
-    private val munisItemClick: (Int, Int, PopularProduct) -> Unit,
-    private val favoriteItemClick: (Int,PopularProduct,Boolean) -> Unit
-) :  ListAdapter<PopularProduct, HomeProductsAdapter.ViewHolder>(DiffCallback) {
+class DailyProductsAdapter(
+    private val itemClick: (DataXX) -> Unit,
+    private val cartItemClick: (Int, DataXX,Int) -> Unit,
+    private val removeCartItemClick: (Int, DataXX) -> Unit,
+    private val plusCartItemClick: (Int,Int, DataXX) -> Unit,
+    private val munisItemClick: (Int,Int, DataXX) -> Unit,
+    private val favoriteItemClick: (Int, DataXX,Boolean) -> Unit
+) :  RecyclerView.Adapter<DailyProductsAdapter.ViewHolder>()  {
+
     var count:Int? = 1
     val isFavorite = false
+    var productsModel: MutableList<DataXX> = ArrayList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemHomePupularProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,cartItemClick,removeCartItemClick,plusCartItemClick,munisItemClick,favoriteItemClick)
+        return ViewHolder(ItemProductsBinding.inflate(LayoutInflater.from(parent.context)), itemClick,cartItemClick,removeCartItemClick,plusCartItemClick,munisItemClick,favoriteItemClick)
     }
 
 
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val product = getItem(position)
+        val product = productsModel[position]
         holder.bind(position,product,count,isFavorite)
     }
 
-    class ViewHolder(private val binding: ItemHomePupularProductsBinding, private val itemClick: (PopularProduct) -> Unit
-                     ,private val cartItemClick: (Int, PopularProduct, Int) -> Unit,
-                     private val removeCartItemClick: (Int, PopularProduct) -> Unit,
-                     private val plusCartItemClick: (Int, Int, PopularProduct) -> Unit,
-                     private val munisItemClick: (Int, Int, PopularProduct) -> Unit,
-                     private val favoriteItemClick: (Int,PopularProduct,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
+
+
+    class ViewHolder(private val binding: ItemProductsBinding, private val itemClick: (DataXX) -> Unit,
+                     private val cartItemClick: (Int,DataXX,Int) -> Unit,
+                     private val removeCartItemClick: (Int, DataXX) -> Unit,
+                     private val plusCartItemClick: (Int,Int, DataXX) -> Unit,
+                     private val munisItemClick: (Int,Int, DataXX) -> Unit,
+                     private val favoriteItemClick: (Int,DataXX,Boolean) -> Unit):RecyclerView.ViewHolder(binding.root){
         @RequiresApi(Build.VERSION_CODES.P)
-        fun bind(position: Int,product: PopularProduct, count: Int?, isFavorite2: Boolean) {
+        fun bind(position: Int, product: DataXX, count: Int?, isFavorite2: Boolean) {
             val zoomInAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_in)
             val zoomOutAnim: Animation = AnimationUtils.loadAnimation(binding.root.context, R.anim.zoom_out)
             var isFavorite = isFavorite2
             var total = 1
+
             binding.root.setOnClickListener {
                 itemClick(product)
             }
+
 
 
 
@@ -80,10 +88,7 @@ class HomeProductsAdapter(
                     binding.root.context.toast(binding.root.context.getString(R.string.you_should_login))
             }
 
-            if (product.inStock == 0){
-                Toast.makeText(binding.root.context, "غير متوفر", Toast.LENGTH_SHORT).show()
-                binding.unavailableTextView.visibility = View.VISIBLE
-            }else{
+            if (product.inStock != 0){
                 binding.unavailableTextView.visibility = View.GONE
                 binding.addToCartImageView.setOnClickListener {
                     binding.addToCartImageView.visibility = View.GONE
@@ -93,6 +98,8 @@ class HomeProductsAdapter(
                     binding.removeImageView.visibility = View.VISIBLE
                     cartItemClick(position,product,1)
                 }
+            }else{
+                binding.unavailableTextView.visibility = View.VISIBLE
             }
 
 
@@ -120,6 +127,8 @@ class HomeProductsAdapter(
                 override fun afterTextChanged(s: Editable?) {}
             })
 
+
+
             binding.miunsImageView.setOnClickListener {
                 if (total > 1) {
                     binding.removeImageView.visibility = View.GONE
@@ -138,6 +147,8 @@ class HomeProductsAdapter(
                 munisItemClick(total,position,product)
             }
 
+
+
             binding.removeImageView.setOnClickListener {
                 binding.addToCartImageView.visibility = View.VISIBLE
                 binding.removeImageView.visibility = View.GONE
@@ -147,12 +158,12 @@ class HomeProductsAdapter(
                 removeCartItemClick(position,product)
             }
 
-            Glide.with(binding.root.context).load(product.image).placeholder(R.drawable.img_placeholder).into(binding.imageProductImageView)
+            Glide.with(binding.root.context).load(product.image).into(binding.imageProductImageView)
 
 
             binding.nameProductTextView.text = product.title
-            if (product.discountValue != null && product.isDiscount == "active"){
-                    binding.discountTextView.text = product.discountValue + binding.root.context.getString(R.string.kwd)
+            if (product.discount_value != null && product.is_discount == "active"){
+                binding.discountTextView.text = product.discount_value.toString() + binding.root.context.getString(R.string.kwd)
                 binding.discountTextView.paintFlags = binding.discountTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             }
             else
@@ -161,25 +172,34 @@ class HomeProductsAdapter(
 
             binding.priceTextView.text = product.price + binding.root.context.getString(R.string.kwd)
 
+
+
             binding.rateTextView.text = product.rate.toString().substring(0,1)
 
-
-
-            if (product.isFavorite == 0)
+            if (product.is_favorite == 0)
                 binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
             else
                 binding.addFavoriteImageView.setImageResource(R.drawable.addfavourite)
-
         }
 
     }
-    companion object DiffCallback : DiffUtil.ItemCallback<PopularProduct>() {
-        override fun areItemsTheSame(oldItem: PopularProduct, newItem: PopularProduct): Boolean {
-            return oldItem === newItem
-        }
 
-        override fun areContentsTheSame(oldItem: PopularProduct, newItem: PopularProduct): Boolean {
-            return oldItem.id == newItem.id
-        }
+    override fun getItemCount(): Int {
+        return productsModel.size
+
+    }
+
+    fun addList(list: List<DataXX>?) {
+        productsModel.addAll(list!!)
+        notifyDataSetChanged()
+    }
+
+    fun reset() {
+        productsModel.clear()
+        notifyDataSetChanged()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 }

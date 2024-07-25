@@ -1,5 +1,7 @@
 package com.rokneltayb.data.model.products
 
+import com.google.gson.annotations.SerializedName
+
 data class DataXX(
     val description: String,
     val discount_value: Any,
@@ -12,5 +14,7 @@ data class DataXX(
     val rate: String,
     val rates: List<Rate>,
     val shapes: List<ShapeX>,
-    val title: String
+    val title: String,
+    @SerializedName("in_stock")
+    val inStock:Int
 )

@@ -1,5 +1,8 @@
 package com.rokneltayb.data.model.products.details
 
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
 data class Data(
     val description: String,
     val discount_value: String,
@@ -12,7 +15,9 @@ data class Data(
     val shapes: List<Shape>,
     val title: String,
     val is_favorite:Int,
-    val rates:List<Rates>
+    val rates:List<Rates>,
+    @SerializedName("in_stock")
+    val inStock:Int
 ) {
     data class Images (
         val id: Int,

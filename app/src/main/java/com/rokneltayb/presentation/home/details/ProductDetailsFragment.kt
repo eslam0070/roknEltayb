@@ -1,16 +1,17 @@
 package com.rokneltayb.presentation.home.details
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
+import android.text.InputFilter
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -21,34 +22,32 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
+import com.airbnb.lottie.utils.Utils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
-import com.rokneltayb.data.model.cart.CountModel
 import com.rokneltayb.data.model.products.details.Data
 import com.rokneltayb.data.model.products.details.Shape
-import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.AddComentDialogBinding
 import com.rokneltayb.databinding.CountineCartDialogBinding
 import com.rokneltayb.databinding.FragmentProductDetailsBinding
+import com.rokneltayb.domain.util.InputFilterMinMax
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
 import com.rokneltayb.domain.util.logoutNoAuth
+import com.rokneltayb.domain.util.sharedPrefrences
 import com.rokneltayb.domain.util.toast
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.presentation.home.details.slideAdapter.SliderAdapter
-import kotlinx.coroutines.launch
-import kotlin.math.abs
-import com.rokneltayb.domain.util.sharedPrefrences
-import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
 import com.rokneltayb.presentation.home.details.rate.RateAdapter
 import com.rokneltayb.presentation.home.details.rate.StoreRateViewModel
+import com.rokneltayb.presentation.home.details.slideAdapter.SliderAdapter
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.DecimalFormat
-import java.util.Locale
+import kotlinx.coroutines.launch
+import kotlin.math.abs
+
 
 @AndroidEntryPoint
 class ProductDetailsFragment : Fragment() {
@@ -64,8 +63,7 @@ class ProductDetailsFragment : Fragment() {
     private lateinit var rateAdapter: RateAdapter
     private var nameProduct:String? = null
     private var priceProduct:String? = null
-    private var count:String? = null
-    val list: ArrayList<CountModel> = ArrayList()
+    private var count = 1
 
 
     private fun observeUIState() {
@@ -94,6 +92,8 @@ class ProductDetailsFragment : Fragment() {
             }
 
             is ProductDetailsViewModel.UiState.Success -> {
+                Log.d("TAG", "setProductDetailsData: "+uiState.data.data.inStock)
+
                 setProductDetailsData(uiState.data.data)
                 hideProgress()
             }
@@ -143,7 +143,6 @@ class ProductDetailsFragment : Fragment() {
 
             is CartViewModel.UiState.AddToCartSuccess -> {
                 showCountineCart()
-                toast(uiState.data.message.toString())
                 hideProgress()
             }
 
@@ -217,9 +216,7 @@ class ProductDetailsFragment : Fragment() {
             addCommentDialog()
         }
 
-        binding.addToCartButton.setOnClickListener {
-            cartViewModel.storeCart(args.productId.toString(),shapeId.toString(),count!!)
-        }
+
         return binding.root
     }
 
@@ -270,10 +267,8 @@ class ProductDetailsFragment : Fragment() {
         }else
             binding.discountTextView.visibility = View.INVISIBLE
 
-        if (data.rate!!.length > 3){
-            binding.rateTextView.text = data.rate.toString().substring(0,2)
-        }else
-            binding.rateTextView.text = data.rate.toString()
+        binding.rateTextView.text = data.rate.substring(0,1)
+
         binding.descriptionProductTextView.text =
             Html.fromHtml(data.description, Html.FROM_HTML_MODE_COMPACT)
 
@@ -288,8 +283,7 @@ class ProductDetailsFragment : Fragment() {
 
 
         setShapepinner(data.shapes)
-        setCountSpinner()
-
+        setCount(data.inStock)
         binding.addFavoriteImageView.setOnClickListener {
             if (data.is_favorite == 0)
                 favoriteviewModel.storeFavorite(data.id)
@@ -298,37 +292,42 @@ class ProductDetailsFragment : Fragment() {
         }
 
 
+        if (data.inStock != 0){
+            binding.unavailableTextView.visibility = View.GONE
+            binding.addToCartButton.setOnClickListener {
+                cartViewModel.storeCart(args.productId.toString(),shapeId.toString(), count.toString())
+            }
+        }
+        else{
+            binding.unavailableTextView.visibility = View.VISIBLE
+            binding.addToCartButton.setOnClickListener { toast("غير متوفر المنتج") }
+
+        }
+
 
         setRatingsRecyclerView(data.rates)
 
     }
 
-    private fun setCountSpinner() {
-        list.add(CountModel(1,"1"))
-        list.add(CountModel(2,"2"))
-        list.add(CountModel(3,"3"))
-        list.add(CountModel(4,"4"))
-        list.add(CountModel(5,"5"))
-        list.add(CountModel(9,"6"))
-        list.add(CountModel(7,"7"))
-        list.add(CountModel(8,"8"))
-        list.add(CountModel(9,"9"))
-        list.add(CountModel(10,"10"))
+    private fun setCount(inStock: Int) {
 
-        val dataAdapter: ArrayAdapter<CountModel> = ArrayAdapter<CountModel>(
-            binding.root.context,
-            R.layout.shape_spinner_textview_align, list
-        )
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.countSpinner.adapter = dataAdapter
+        binding.plusTextView.setOnClickListener {
+            if (count == inStock)
+                toast("لقد وصلت الى الحد الاقصي للكميه المتاحة")
+            else{
+                count++
+                binding.countTextView.text = count.toString()
+            }
+        }
 
-        binding.countSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                count = dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number
+        binding.munisTextView.setOnClickListener {
+            count--
+            if (count <= 0){
+                count = 1
+                binding.countTextView.text = "1"
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
+            else
+                binding.countTextView.text = count.toString()
         }
     }
 

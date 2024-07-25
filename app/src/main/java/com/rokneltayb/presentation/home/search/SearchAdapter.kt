@@ -19,6 +19,7 @@ import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ItemFavoritesBinding
 import com.rokneltayb.databinding.ItemHomePupularProductsBinding
 import com.rokneltayb.databinding.ItemSearchHomeBinding
+import com.rokneltayb.domain.util.toast
 import java.text.DecimalFormat
 
 class SearchAdapter(
@@ -47,6 +48,12 @@ class SearchAdapter(
             binding.addToCartButton.setOnClickListener {
                 addToCartItemClick(product)
             }
+
+            if (product.inStock == 0)
+                binding.unavailableTextView.visibility = View.VISIBLE
+            else
+                binding.unavailableTextView.visibility = View.GONE
+
 
 
             Glide.with(binding.root.context).load(product.image).into(binding.imageFavoriteImageView)

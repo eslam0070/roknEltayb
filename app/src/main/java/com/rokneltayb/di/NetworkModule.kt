@@ -2,6 +2,7 @@ package com.rokneltayb.di
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.domain.entity.ErrorTypeHandler
@@ -33,14 +34,14 @@ object NetworkModule {
         val httpClient = OkHttpClient.Builder()
             .addInterceptor{ chain ->
                 chain.proceed(chain.request().newBuilder().also {
-                    if (sharedPreferences.getApiKeyToken().isNotEmpty())
-                        it.addHeader(
-                            "Authorization", "Bearer " + sharedPreferences.getApiKeyToken()
-                        )
+                    it.addHeader("lang", sharedPreferences.getLanguage())
 
-                    if (sharedPreferences.getRefToken().isNotEmpty())
-                        it.addHeader(
-                            "lang", sharedPreferences.getLanguage())
+                    if (sharedPreferences.getApiKeyToken().isNotEmpty())
+                        it.addHeader("Authorization", "Bearer " + sharedPreferences.getApiKeyToken())
+
+
+
+                    Log.d("TAG", "provideApiService: "+sharedPreferences.getLanguage())
                 }.build())
             }.also { client ->
 

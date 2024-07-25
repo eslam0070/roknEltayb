@@ -142,7 +142,7 @@
     <string name="apply">Apply</string>
     <string name="subtotal">Subtotal</string>
     <string name="shipping_fee">Shipping Fee</string>
-    <string name="cart_total">Cart Total</string>
+    <string name="cart_total">Total</string>
     <string name="checkout">Checkout</string>
     <string name="count">Count</string>
     <string name="items">" Items"</string>
@@ -186,4 +186,5 @@
     <string name="kwd">" KWD"</string>
     <string name="add_new_address">Add New Address</string>
     <string name="delete">Delete</string>
+    <string name="unavailable">unavailable</string>
 </resources>

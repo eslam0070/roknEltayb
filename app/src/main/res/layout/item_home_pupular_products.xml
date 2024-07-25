@@ -2,20 +2,20 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
         <androidx.cardview.widget.CardView
-            android:layout_width="@dimen/_120sdp"
+            android:layout_width="@dimen/_140sdp"
             android:layout_height="wrap_content"
             app:cardUseCompatPadding="true"
             app:cardBackgroundColor="@color/backgroundGray"
             app:cardCornerRadius="@dimen/_10sdp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="@dimen/_110sdp"
+                android:layout_width="@dimen/_130sdp"
                 android:layout_height="wrap_content">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/imageCardView"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_width="@dimen/_120sdp"
+                    android:layout_height="@dimen/_120sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     app:cardCornerRadius="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
                         app:cardElevation="@dimen/_10sdp"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:layout_marginEnd="@dimen/_8sdp"
-                        android:layout_marginTop="@dimen/_70sdp"
+                        android:layout_marginTop="@dimen/_90sdp"
                         android:layout_height="@dimen/_20sdp">
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -156,6 +156,22 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
+                    android:id="@+id/unavailableTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unavailable"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:padding="@dimen/_2sdp"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:background="@drawable/custom_bg_board_unavilable"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageCardView"/>
+                <TextView
                     android:id="@+id/nameProductTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -164,12 +180,12 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:maxLines="1"
                     android:textAlignment="center"
-                    android:textSize="@dimen/_9ssp"
+                    android:textSize="@dimen/_10ssp"
                     android:textColor="#333333"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/imageCardView" />
+                    app:layout_constraintTop_toBottomOf="@id/unavailableTextView" />
 
                 <TextView
                     android:id="@+id/discountTextView"

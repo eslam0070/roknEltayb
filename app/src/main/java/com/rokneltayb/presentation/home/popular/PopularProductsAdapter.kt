@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -66,6 +67,23 @@ class PopularProductsAdapter(
             binding.root.setOnClickListener {
                 itemClick(product)
             }
+
+            if (product.inStock == 0){
+                Toast.makeText(binding.root.context, "غير متوفر", Toast.LENGTH_SHORT).show()
+                binding.unavailableTextView.visibility = View.VISIBLE
+            }else{
+                binding.unavailableTextView.visibility = View.GONE
+                binding.addToCartImageView.setOnClickListener {
+                    binding.addToCartImageView.visibility = View.GONE
+                    binding.plusImageView.visibility = View.VISIBLE
+                    binding.countTextView.visibility = View.VISIBLE
+                    binding.miunsImageView.visibility = View.VISIBLE
+                    binding.removeImageView.visibility = View.VISIBLE
+                    cartItemClick(position,product,1)
+                }
+            }
+
+
             binding.addFavoriteImageView.setOnClickListener {
                 if (SharedPreferencesImpl(binding.root.context).getRememberMe()){
                     if (isFavorite){
@@ -83,46 +101,30 @@ class PopularProductsAdapter(
                     binding.root.context.toast(binding.root.context.getString(R.string.you_should_login))
             }
 
-            binding.addToCartImageView.setOnClickListener {
-                binding.addToCartImageView.visibility = View.GONE
-                binding.plusImageView.visibility = View.VISIBLE
-                binding.countTextView.visibility = View.VISIBLE
-                binding.miunsImageView.visibility = View.VISIBLE
-                binding.removeImageView.visibility = View.VISIBLE
-                cartItemClick(position,product,1)
-            }
-
-            binding.countTextView.addTextChangedListener(object :TextWatcher{
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    total = 1
-                    total = binding.countTextView.text.toString().toInt()
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-
-                }
-
-            })
             binding.plusImageView.setOnClickListener {
-                total = binding.countTextView.text.toString().toInt()
-                total++
-                if (total > 1)
+                if (total == product.inStock)
+                    Toast.makeText(binding.root.context, "لقد وصلت الى الحد الاقصي للكميه المتاحة", Toast.LENGTH_SHORT).show()
+                else{
+                    total++
+                    binding.countTextView.text = total.toString()
                     binding.removeImageView.visibility = View.GONE
-                else
-                    binding.removeImageView.visibility = View.VISIBLE
-                binding.countTextView.text = total.toString()
-
-                plusCartItemClick(total,position,product)
+                    binding.miunsImageView.visibility = View.VISIBLE
+                    plusCartItemClick(total,position,product)
+                }
             }
+
+            binding.countTextView.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (total == product.inStock){
+                        Toast.makeText(binding.root.context, "لقد وصلت الى الحد الاقصي للكميه المتاحة", Toast.LENGTH_SHORT).show()
+                    }
+                    else
+                        total = binding.countTextView.text.toString().toInt()
+                }
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
 
 
             binding.miunsImageView.setOnClickListener {
@@ -170,10 +172,8 @@ class PopularProductsAdapter(
 
 
 
-            if (product.rate!!.length > 3){
-                binding.rateTextView.text = product.rate.toString().substring(0,2)
-            }else
-                binding.rateTextView.text = product.rate.toString()
+            binding.rateTextView.text = product.rate.toString().substring(0,1)
+
             if (product.is_favorite == 0)
                 binding.addFavoriteImageView.setImageResource(R.drawable.deletefavourite)
             else
