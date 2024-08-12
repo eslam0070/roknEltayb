@@ -1,9 +1,12 @@
 package com.rokneltayb.presentation.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -21,11 +24,13 @@ import com.rokneltayb.presentation.home.adapters.HomeCategoriesAdapter
 import com.rokneltayb.presentation.home.adapters.HomeDailyBestSellsProductsAdapter
 import com.rokneltayb.presentation.home.adapters.HomeProductsAdapter
 import com.rokneltayb.presentation.home.details.cart.CartViewModel
+import com.rokneltayb.presentation.more.contactus.ContactUsViewModel
 import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -38,6 +43,7 @@ class HomeFragment : Fragment() {
     private lateinit var homeDailyBestSellsProductsAdapter: HomeDailyBestSellsProductsAdapter
     private val favoriteviewModel: FavoritesViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
+    private val settingsViewModel: ContactUsViewModel by viewModels()
 
     private fun observeUIState() {
         lifecycleScope.launch {
@@ -50,6 +56,35 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             cartViewModel.uiState.flowWithLifecycle(lifecycle).collect(::cartUI)
+        }
+
+        lifecycleScope.launch {
+            settingsViewModel.uiState.flowWithLifecycle(lifecycle).collect(::settingsUI)
+        }
+    }
+
+    private fun settingsUI(uiState: ContactUsViewModel.UiState) {
+        when (uiState) {
+            is ContactUsViewModel.UiState.Loading -> {
+            }
+
+            is ContactUsViewModel.UiState.Success -> {
+                binding.watsAppButton.setOnClickListener {
+                    try {
+                        val i = Intent(Intent.ACTION_VIEW)
+                        i.data = Uri.parse("whatsapp://send?phone=" + uiState.data.data?.customerPhone)
+                        requireActivity().startActivity(i)
+                    } catch (e: Exception) {
+                        Toast.makeText(requireActivity(), "Whatsapp not installed!", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
+            is ContactUsViewModel.UiState.Error -> {
+
+            }
+
+            else->{}
         }
     }
 
@@ -176,6 +211,7 @@ class HomeFragment : Fragment() {
     ): View {
         observeUIState()
 
+        settingsViewModel.settings()
         setCategoriesRecyclerView()
         setDailySellsProductsRecyclerView()
         setProductsRecyclerView()

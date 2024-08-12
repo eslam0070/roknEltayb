@@ -9,7 +9,7 @@ import com.google.gson.annotations.Expose
 data class Cart(
     val count: Int,
     val id: Int,
-    val price: String,
+    val price: Double,
     val product_id: Int,
     val product_image: String,
     val product_title: String,

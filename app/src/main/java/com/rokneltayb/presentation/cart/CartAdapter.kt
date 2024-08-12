@@ -2,6 +2,9 @@ package com.rokneltayb.presentation.cart
 
 import android.R
 import android.os.Build
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.rokneltayb.data.model.cart.Cart
 import com.rokneltayb.data.model.cart.CountModel
 import com.rokneltayb.databinding.ItemCartBinding
+import kotlin.time.times
 
 
 class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) -> Unit) :  ListAdapter<Cart, CartAdapter.ViewHolder>(DiffCallback) {
@@ -55,7 +59,9 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
 
             Glide.with(binding.root.context).load(cart.product_image).into(binding.imageCartImageView)
             binding.nameCartTextView.text = cart.product_title
-            binding.priceCartTextView.text = cart.price + binding.root.context.getString(com.rokneltayb.R.string.kwd)
+            val count = cart.price * cart.count
+
+            binding.priceCartTextView.text = count.toString() + binding.root.context.getString(com.rokneltayb.R.string.kwd)
 
 
 
@@ -63,6 +69,7 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
         }
 
         private fun addItemSpiner(cart: Cart) {
+            var selectNumver:Int? = null
 
             list.add(CountModel(1,"1"))
             list.add(CountModel(2,"2"))
@@ -86,16 +93,31 @@ class CartAdapter(val viewmodel:CartViewModel,private val itemClick: (Int,Cart) 
 
             binding.countSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    if (cart.count != dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number.toInt())
+                    if (cart.count != dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number.toInt()){
                         viewmodel.updateCart(cart.product_id.toString(),cart.shape_id.toString(), dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number)
+                        val count = dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number.toInt() * cart.price
+
+                        if (count.toString().length > 4){
+                            binding.priceCartTextView.text = count.toString().substring(0,3) + binding.root.context.getString(com.rokneltayb.R.string.kwd)
+                        }else
+                            binding.priceCartTextView.text = count.toString() + binding.root.context.getString(com.rokneltayb.R.string.kwd)
+
+
+                        Log.d("TAG", "onaaItemSelected: "+count.toString())
+                        Log.d("TAG", "onaaItemSelected: select "+dataAdapter.getItem(binding.countSpinner.selectedItemPosition)!!.number.toInt())
+
+
+                    }
+
                 }
                 override fun onNothingSelected(parent: AdapterView<*>?) {
 
                 }
             }
 
-            binding.countSpinner.setSelection(getCountSpinner(cart.count!!))
-
+            binding.countSpinner.setSelection(getCountSpinner(cart.count))
+            Log.d("TAG", "onItemSelected: se"+selectNumver)
+            Log.d("TAG", "onItemSelected: price"+cart.price)
         }
 
         private fun getCountSpinner(count:Int): Int {

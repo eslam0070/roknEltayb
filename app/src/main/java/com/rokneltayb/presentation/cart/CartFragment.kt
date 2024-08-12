@@ -1,6 +1,7 @@
 package com.rokneltayb.presentation.cart
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -121,6 +122,10 @@ class CartFragment : Fragment() {
                 hideProgress()
             }
 
+            is CartViewModel.UiState.UpdateCartSuccess ->{
+
+
+            }
            else ->{}
         }
     }
@@ -128,15 +133,15 @@ class CartFragment : Fragment() {
 
     private fun getItemCart(data: com.rokneltayb.data.model.cart.Data) {
         binding.itemCountTextView.text = "("+ data.cart.size.toString()+ getString(R.string.items)+")"
-        binding.priceCartTextView.text = data.total.toString()
+        binding.priceCartTextView.text = data.total
 
+        binding.totalCartTextView.text = data.total_after_tax
+        binding.totalTextView.text = data.total_after_tax
         if (data.tax == 0)
             binding.shippingFeeTextView.text = getString(R.string.free)
         else
             binding.shippingFeeTextView.text = data.tax.toString()
 
-        binding.totalCartTextView.text = data.total_after_tax.toString()
-        binding.totalTextView.text = data.total_after_tax.toString()
 
 
     }
