@@ -8,9 +8,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -19,8 +23,13 @@ import com.rokneltayb.data.sharedPref.SharedPreferencesImpl
 import com.rokneltayb.databinding.ActivityBaseBinding
 import com.rokneltayb.domain.util.Constants
 import com.rokneltayb.domain.util.Constants.LANGUAGE_ARABIC
+import com.rokneltayb.domain.util.LoadingScreen.hideProgress
+import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.localization.LocalizationUtils
+import com.rokneltayb.domain.util.logoutNoAuth
 import com.rokneltayb.domain.util.toast
+import com.rokneltayb.domain.util.toastError
+import com.rokneltayb.presentation.more.favorite.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -36,6 +45,32 @@ class BaseActivity : AppCompatActivity() {
     var binding: ActivityBaseBinding? = null
     private val mNavController by lazy { Navigation.findNavController(this, R.id.navHostFragment) }
     val sharedPref by lazy { SharedPreferencesImpl(this) }
+    private val viewModel: NotificationCountViewModel by viewModels()
+
+    private fun observeUIState() {
+        lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
+        }
+
+    }
+
+    private fun updateUI(uiState: NotificationCountViewModel.UiState) {
+        when (uiState) {
+            is NotificationCountViewModel.UiState.Loading -> {
+            }
+
+            is NotificationCountViewModel.UiState.Error -> {
+            }
+
+            is NotificationCountViewModel.UiState.Success -> {
+                if (uiState.data.data!!.count != 0)
+                    binding!!.notificationCountTextView.text = uiState.data.data!!.count.toString()
+                else
+                    binding!!.notificationCountTextView.visibility = View.GONE
+
+            }
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,6 +195,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivFav.visibility = View.GONE
+                    binding!!.notificationCountTextView.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
                 }
                 "fragment_categories"->{
@@ -169,6 +205,8 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivFav.visibility = View.VISIBLE
+                    binding!!.notificationCountTextView.visibility = View.VISIBLE
+
                     binding!!.ivSearch.visibility = View.GONE
                 } "fragment_products"->{
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
@@ -176,7 +214,8 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivFav.visibility = View.VISIBLE
-                    binding!!.ivSearch.visibility = View.GONE
+                    binding!!.notificationCountTextView.visibility = View.GONE
+                binding!!.ivSearch.visibility = View.GONE
                 }
                 "fragment_search" ->{
                     binding!!.bottomNavigation.visibility = View.GONE
@@ -185,6 +224,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                    binding!!.notificationCountTextView.visibility = View.GONE
 
                 }
 
@@ -196,6 +236,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                    binding!!.notificationCountTextView.visibility = View.GONE
 
                 }"fragment_address" -> {
                     binding!!.bottomNavigation.visibility = View.GONE
@@ -205,8 +246,9 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                binding!!.notificationCountTextView.visibility = View.GONE
 
-                }"fragment_contact_us" -> {
+            }"fragment_contact_us" -> {
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.tvMainEmployeeName.text = getString(R.string.contact_us)
@@ -214,8 +256,9 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                binding!!.notificationCountTextView.visibility = View.GONE
 
-                }"fragment_privacy_policy" -> {
+            }"fragment_privacy_policy" -> {
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.tvMainEmployeeName.text = getString(R.string.privacy_policy)
@@ -223,21 +266,24 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
-                }"fragment_popular_products","fragment_daily_products" ->{
+                binding!!.notificationCountTextView.visibility = View.GONE
+            }"fragment_popular_products","fragment_daily_products" ->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.VISIBLE
+                binding!!.notificationCountTextView.visibility = View.VISIBLE
 
-                }"fragment_cart" ->{
+            }"fragment_cart" ->{
                     binding!!.bottomNavigation.visibility = View.VISIBLE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.GONE
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                binding!!.notificationCountTextView.visibility = View.VISIBLE
 
                 }"fragment_check_out" ->{
                     binding!!.bottomNavigation.visibility = View.GONE
@@ -246,14 +292,17 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.VISIBLE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                binding!!.notificationCountTextView.visibility = View.VISIBLE
 
-                } "fragment_order" ->{
+
+            } "fragment_order" ->{
                     binding!!.bottomNavigation.visibility = View.GONE
                     binding!!.clMainToolbarContainer.visibility = View.VISIBLE
                     binding!!.ivBack.visibility = View.VISIBLE
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                binding!!.notificationCountTextView.visibility = View.GONE
 
                 } else ->{
                     binding!!.bottomNavigation.visibility = View.GONE
@@ -262,6 +311,7 @@ class BaseActivity : AppCompatActivity() {
                     binding!!.ivFav.visibility = View.GONE
                     binding!!.ivHome.visibility = View.GONE
                     binding!!.ivSearch.visibility = View.GONE
+                binding!!.notificationCountTextView.visibility = View.GONE
 
                 }
             }
@@ -300,6 +350,7 @@ class BaseActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
+
         mNavController.addOnDestinationChangedListener(listener)
     }
     override fun onPause() {

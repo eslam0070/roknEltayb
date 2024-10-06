@@ -8,6 +8,8 @@ import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
 import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
+import com.rokneltayb.data.model.otp.OtpSignUpResponse
+import com.rokneltayb.data.model.otp.ResendOtpSignUpResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Field
@@ -84,5 +86,14 @@ interface UserServices {
         @Field("phone")phone:String,
         @Field("email")email:String): Response<UpdateProfileResponse>
 
+    @FormUrlEncoded
+    @POST("client/auth/sign-up/verify-phone")
+    suspend fun verifyPhone(
+        @Field("phone")name:String,
+        @Field("token")email:String): Response<OtpSignUpResponse>
+
+    @FormUrlEncoded
+    @POST("client/auth/sign-up/resend-verify-phone'")
+    suspend fun resendVerifyPhone(@Field("phone")phone:String): Response<ResendOtpSignUpResponse>
 
 }

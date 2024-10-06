@@ -1,4 +1,4 @@
-package com.rokneltayb.presentation.login.forgetpassword.verifyaccount
+package com.rokneltayb.presentation.register.otp
 
 import android.graphics.Paint
 import android.os.Bundle
@@ -22,26 +22,22 @@ import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.openKeyBoard
 import com.rokneltayb.domain.util.snackBarFailure
 import com.rokneltayb.domain.util.toastError
-import com.rokneltayb.presentation.login.forgetpassword.ForgetPasswordFragmentDirections
 import com.rokneltayb.presentation.login.forgetpassword.ForgetPasswordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class VerifyYourAccountFragment : Fragment() {
+class OtpSignUpFragment : Fragment() {
 
-    private val args: VerifyYourAccountFragmentArgs by navArgs()
+    private val args: OtpSignUpFragmentArgs by navArgs()
     private val binding by lazy { FragmentVerifyYourAccountBinding.inflate(layoutInflater) }
-    private val resendviewModel: ForgetPasswordViewModel by viewModels()
-    private val viewModel: VerifyYourAccountViewModel by viewModels()
+    private val viewModel: OtpSignUpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         observeUIState()
-        observeUIStateResendCode()
-
         val text = getString(R.string.please_enter_your_phone_number_to_receive_a_verification_code_to_reset_the_password) + "  " + args.phone.substring(7) + "*********"
 
         binding.number.text = text
@@ -50,26 +46,31 @@ class VerifyYourAccountFragment : Fragment() {
         binding.verifyCodePinView.doAfterTextChanged {
             val code = it.toString()
             if (code.length > 3) {
-                viewModel.resetPassword(args.phone, code)
-            }
+                viewModel.verifyPhone(args.phone, code)
+            }else
+                snackBarFailure(requireContext().getString(R.string.otp_code_must_be_4_digits))
+
         }
 
         binding.resendcode.setOnClickListener {
-            resendviewModel.sendOtp(args.phone)
+            binding.verifyCodePinView.clearComposingText()
+            setTimer(SecResendCode)
+            viewModel.resendVerifyPhone(args.phone)
         }
         return binding.root
     }
+    val SecResendCode = 60
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setTimer()
+        setTimer(SecResendCode)
         requireContext().openKeyBoard(binding.verifyCodePinView)
     }
 
-    private fun setTimer() {
+    private fun setTimer(sec: Int) {
         binding.resendcode.isEnabled = false
         //Todo change the timer to 60000
-        object : CountDownTimer(5000, 1000) {
+        object : CountDownTimer((sec * 1000).toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = (millisUntilFinished / 1000).toInt() % 60
 
@@ -78,6 +79,9 @@ class VerifyYourAccountFragment : Fragment() {
                 } else {
                     "0$seconds"
                 }
+
+                binding.resendcode.isClickable = false
+
                 binding.resendcode.text = getString(R.string.resend_verification_code) + "  " + strSec + getString(R.string.s)
                 binding.resendcode.setTextColor(ContextCompat.getColor(requireContext(),R.color.main))
 
@@ -97,51 +101,25 @@ class VerifyYourAccountFragment : Fragment() {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
         }
 
-    private fun updateUI(uiState: VerifyYourAccountViewModel.UiState) {
+    private fun updateUI(uiState: OtpSignUpViewModel.UiState) {
         when (uiState) {
-            is VerifyYourAccountViewModel.UiState.Loading -> {
+            is OtpSignUpViewModel.UiState.Loading -> {
                 showProgress()
             }
 
-            is VerifyYourAccountViewModel.UiState.Success -> {
-                findNavController().navigate(VerifyYourAccountFragmentDirections.actionVerifyYourAccountFragmentToResetYourPasswordFragment())
+            is OtpSignUpViewModel.UiState.Success -> {
+                findNavController().navigate(OtpSignUpFragmentDirections.actionOtpSignUpFragmentToLoginFragment())
                 hideProgress()
-                viewModel.removeState()
             }
 
-            is VerifyYourAccountViewModel.UiState.Error -> {
+            is OtpSignUpViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
-                viewModel.removeState()
             }
 
-            is VerifyYourAccountViewModel.UiState.Idle -> hideProgress()
-        }
-    }
+            is OtpSignUpViewModel.UiState.ResendSuccess -> {
 
-    private fun observeUIStateResendCode() =
-        lifecycleScope.launch {
-            resendviewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUIReset)
-        }
-    private fun updateUIReset(uiState: ForgetPasswordViewModel.UiState) {
-        when (uiState) {
-            is ForgetPasswordViewModel.UiState.Loading -> {
-                showProgress()
             }
-
-            is ForgetPasswordViewModel.UiState.Success -> {
-                Toast.makeText(requireContext(), uiState.data.message, Toast.LENGTH_SHORT).show()
-                hideProgress()
-                resendviewModel.removeState()
-            }
-
-            is ForgetPasswordViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
-                hideProgress()
-                resendviewModel.removeState()
-            }
-
-            is ForgetPasswordViewModel.UiState.Idle -> hideProgress()
         }
     }
 }

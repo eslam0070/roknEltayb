@@ -13,11 +13,13 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
+import com.rokneltayb.data.model.notification_count.NotificationCountResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 
 interface FavoritesRepository {
     suspend fun favorites(): Result<FavoritesResponse>
+    suspend fun notificationCount(): Result<NotificationCountResponse>
     suspend fun storeFavorites(productId: Int): Result<AddFavoritesResponse>
     suspend fun deleteFavorites(productId: Int): Result<DeleteFavoritesResponse>
 }

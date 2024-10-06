@@ -9,6 +9,8 @@ import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
 import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
+import com.rokneltayb.data.model.otp.OtpSignUpResponse
+import com.rokneltayb.data.model.otp.ResendOtpSignUpResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.repository.UserRepository
@@ -55,5 +57,9 @@ class UserRepositoryImpl @Inject constructor(private val remoteSource: UserRemot
     ): Result<SignUpResponse> = remoteSource.signUp(name, phone, email, password, passwordConfirmation, fcmToken)
 
 
+    override suspend fun verifyPhone(phone: String,token: String): Result<OtpSignUpResponse>
+    = remoteSource.verifyPhone(phone, token)
+    override suspend fun resendVerifyPhone(phone: String): Result<ResendOtpSignUpResponse>
+            = remoteSource.resendVerifyPhone(phone)
 
 }

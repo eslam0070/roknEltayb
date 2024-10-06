@@ -105,8 +105,9 @@
                 android:gravity="start"
                 android:hint="@string/phone_number"
                 android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="98"
+
+                android:inputType="number"
+                android:maxLength="11"
                 android:padding="13dp"
                 android:textAlignment="viewStart"
                 android:textColor="@color/black"
@@ -450,7 +451,7 @@
                 tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/signUpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

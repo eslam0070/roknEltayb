@@ -2,9 +2,16 @@ pluginManagement {
     repositories {
         google()
         mavenCentral()
-        gradlePluginPortal()
+        maven {url "http://dl.bintray.com/jlmd/maven"
+            setAllowInsecureProtocol(true)}
+        maven { url 'https://jitpack.io' }
+        maven {url "https://plugins.gradle.org/m2/"}
+        maven {
+            url "https://jcenter.bintray.com"
+        }
         jcenter()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        gradlePluginPortal()
+        maven { url "https://maven.localazy.com/repository/release/" }
 
     }
 }
@@ -15,9 +22,15 @@ dependencyResolutionManagement {
         mavenCentral()
         maven {url "http://dl.bintray.com/jlmd/maven"
             setAllowInsecureProtocol(true)}
-        jcenter()
         maven { url 'https://jitpack.io' }
         maven {url "https://plugins.gradle.org/m2/"}
+        maven {
+            url "https://jcenter.bintray.com"
+        }
+        jcenter()
+        gradlePluginPortal()
+        maven { url "https://maven.localazy.com/repository/release/" }
+
     }
 }
 

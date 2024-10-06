@@ -10,6 +10,7 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
+import com.rokneltayb.data.model.notification_count.NotificationCountResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Field
@@ -19,9 +20,11 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface FavoriteServices {
-
     @GET("client/favorites")
     suspend fun favorites(): Response<FavoritesResponse>
+
+    @GET("client/favorites_count")
+    suspend fun notificationCount(): Response<NotificationCountResponse>
 
     @FormUrlEncoded
     @POST("client/store-favorites")

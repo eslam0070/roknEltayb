@@ -1,16 +1,15 @@
 package com.rokneltayb.presentation.home.details
 
+import android.R.id.input
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
-import android.text.InputFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
-import com.airbnb.lottie.utils.Utils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rokneltayb.BaseActivity
 import com.rokneltayb.R
@@ -31,7 +29,6 @@ import com.rokneltayb.data.model.products.details.Shape
 import com.rokneltayb.databinding.AddComentDialogBinding
 import com.rokneltayb.databinding.CountineCartDialogBinding
 import com.rokneltayb.databinding.FragmentProductDetailsBinding
-import com.rokneltayb.domain.util.InputFilterMinMax
 import com.rokneltayb.domain.util.LoadingScreen.hideProgress
 import com.rokneltayb.domain.util.LoadingScreen.showProgress
 import com.rokneltayb.domain.util.addBasicItemDecoration
@@ -283,7 +280,7 @@ class ProductDetailsFragment : Fragment() {
 
 
         setShapepinner(data.shapes)
-        setCount(data.inStock)
+        setCount(data.inStock,data.price)
         binding.addFavoriteImageView.setOnClickListener {
             if (data.is_favorite == 0)
                 favoriteviewModel.storeFavorite(data.id)
@@ -309,13 +306,22 @@ class ProductDetailsFragment : Fragment() {
 
     }
 
-    private fun setCount(inStock: Int) {
+    private fun setCount(inStock: Int, price: String) {
 
         binding.plusTextView.setOnClickListener {
             if (count == inStock)
                 toast("لقد وصلت الى الحد الاقصي للكميه المتاحة")
             else{
                 count++
+                val value: Double = price.toDouble() // For double
+                Log.d("TAG", "setCount1: "+value)
+
+                val totalPrice =  count * value
+
+                Log.d("TAG", "setCount2: "+totalPrice)
+                Log.d("TAG", "setCount3: "+count)
+                Log.d("TAG", "setCount4: "+value.toInt())
+                binding.priceTextView.text = totalPrice.toString() + requireActivity().getString(R.string.kwd)
                 binding.countTextView.text = count.toString()
             }
         }
@@ -326,8 +332,13 @@ class ProductDetailsFragment : Fragment() {
                 count = 1
                 binding.countTextView.text = "1"
             }
-            else
+            else{
+                val value: Double = price.toDouble() // For double
+                val totalPrice =  count * value
+
+                binding.priceTextView.text = totalPrice.toString() + requireActivity().getString(R.string.kwd)
                 binding.countTextView.text = count.toString()
+            }
         }
     }
 
@@ -355,6 +366,7 @@ class ProductDetailsFragment : Fragment() {
                 id: Long
             ) {
                 shapeId = shapesAdapter!!.getItem(binding.shapeProductSpinner.selectedItemPosition)!!.id
+                binding.priceTextView.text = shapesAdapter!!.getItem(binding.shapeProductSpinner.selectedItemPosition)!!.price  + requireActivity().getString(R.string.kwd)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

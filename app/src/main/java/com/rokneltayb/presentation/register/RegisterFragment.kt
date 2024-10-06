@@ -38,19 +38,27 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         observeUIState()
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.signUpTxt.paintFlags = binding.signUpTxt.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
 
         binding.signUpButton.setOnClickListener {
-            if (checkValidation()){
-                binding.signUpButton.startAnimation()
-                viewModel.signUp(binding.username.text.toString(),
-                    binding.phone.text.toString(),binding.email.text.toString(),binding.etLoginPassword.text.toString(),binding.passwordConfirm.text.toString(),fcmToken)
-            }
+            //if (checkValidation())
+            viewModel.signUp(
+                binding.username.text.toString(),
+                binding.phone.text.toString(),
+                binding.email.text.toString(),
+                binding.etLoginPassword.text.toString(),
+                binding.passwordConfirm.text.toString(),
+                fcmToken
+            )
         }
-        return binding.root
     }
-
     private fun observeUIState() =
         lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
@@ -64,68 +72,66 @@ class RegisterFragment : Fragment() {
 
             is RegisterViewModel.UiState.Success -> {
                 toast(getString(R.string.register_success))
-                findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToLoginFragment())
+                findNavController().navigate(
+                    RegisterFragmentDirections.actionRegisterFragmentToOtpSignUpFragment(
+                        binding.phone.text.toString()
+                    )
+                )
                 hideProgress()
                 binding.signUpButton.revertAnimation()
-                viewModel.removeState()
             }
 
             is RegisterViewModel.UiState.Error -> {
                 toastError(uiState.errorData.message)
                 hideProgress()
                 binding.signUpButton.revertAnimation()
-                viewModel.removeState()
             }
 
             is RegisterViewModel.UiState.Idle -> hideProgress()
         }
     }
+
     private fun checkValidation(): Boolean {
-        var valid = true
-        when {
-            binding.username.text.toString().isEmpty() -> {
-                toastError(getString(R.string.please_write_username))
-                valid = false
-                binding.signUpButton.revertAnimation()
-            }
+        return if (binding.username.text.toString().isEmpty()) {
+            toastError(getString(R.string.please_write_username))
+            binding.signUpButton.revertAnimation()
+            false
+        } else if(binding.email.text!!.toString().isEmpty()) {
+            binding.email.error = getString(R.string.please_write_email_address)
+            binding.signUpButton.revertAnimation()
+            false
+        } else if (binding.etLoginPassword.text.toString().length < 8) {
+            toastError(getString(R.string.password_is_less_than_8_letters))
+            binding.signUpButton.revertAnimation()
+            false
+        } else if (binding.passwordConfirm.text.toString().length < 8) {
+            toastError(getString(R.string.confirm_password_is_less_than_8_letters))
+            binding.signUpButton.revertAnimation()
+            false
+        } else if ((binding.passwordConfirm.text.toString() != binding.etLoginPassword.text.toString())) {
+            toastError(getString(R.string.confirm_password_does_not_match))
+            binding.signUpButton.revertAnimation()
+            false
+        } else {
+            binding.signUpButton.startAnimation()
+            /*viewModel.signUp(
+                binding.username.text.toString(),
+                binding.phone.text.toString(),
+                binding.email.text.toString(),
+                binding.etLoginPassword.text.toString(),
+                binding.passwordConfirm.text.toString(),
+                fcmToken
+            )*/
 
-            binding.email.text.toString().isEmpty() -> {
-                toastError(getString(R.string.please_write_email_address))
-                valid = false
-                binding.signUpButton.revertAnimation()
-            }
-
-            !Validate.isEmailValid(binding.email.text.toString()) -> {
-                toastError(getString(R.string.invalid_email))
-                valid = false
-                binding.signUpButton.revertAnimation()
-            }
-            binding.etLoginPassword.text.toString().length < 8 -> {
-                toastError(getString(R.string.password_is_less_than_8_letters))
-                valid = false
-                binding.signUpButton.revertAnimation()
-            }
-
-            binding.passwordConfirm.text.toString().length < 8 -> {
-                toastError(getString(R.string.confirm_password_is_less_than_8_letters))
-                valid = false
-                binding.signUpButton.revertAnimation()
-            }
-
-            (binding.passwordConfirm.text.toString() != binding.etLoginPassword.text.toString()) -> {
-                toastError(getString(R.string.confirm_password_does_not_match))
-                valid = false
-                binding.signUpButton.revertAnimation()
-            }
+            true
         }
-        return valid
-
     }
 
     override fun onStart() {
         super.onStart()
         getFcmToken()
     }
+
     var fcmToken = ""
 
     private fun getFcmToken() {

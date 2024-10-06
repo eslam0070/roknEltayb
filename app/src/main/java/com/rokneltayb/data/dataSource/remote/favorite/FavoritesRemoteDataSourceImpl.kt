@@ -8,6 +8,7 @@ import com.rokneltayb.data.model.favorite.FavoritesResponse
 import com.rokneltayb.data.model.favorite.add.AddFavoritesResponse
 import com.rokneltayb.data.model.favorite.delete.DeleteFavoritesResponse
 import com.rokneltayb.data.model.home.home.HomeResponse
+import com.rokneltayb.data.model.notification_count.NotificationCountResponse
 import javax.inject.Inject
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
@@ -20,6 +21,15 @@ class FavoritesRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun favorites(): Result<FavoritesResponse> {
         val res = requestApiCall.requestApiCall { networkServices.favorites() }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    }
+
+    override suspend fun notificationCount(): Result<NotificationCountResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.notificationCount() }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

@@ -8,6 +8,8 @@ import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.profile.ProfileResponse
 import com.rokneltayb.data.model.login.profile.update.UpdateProfileResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
+import com.rokneltayb.data.model.otp.OtpSignUpResponse
+import com.rokneltayb.data.model.otp.ResendOtpSignUpResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.data.network.NetworkServices
 import com.rokneltayb.data.network.api.RequestApiCall
@@ -116,6 +118,25 @@ class UserRemoteDataSourceImpl @Inject constructor(
         fcmToken: String
     ): Result<SignUpResponse> {
         val res = requestApiCall.requestApiCall { networkServices.signUp(name, phone, email, password, passwordConfirmation, fcmToken) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    } override suspend fun verifyPhone(
+        phone: String,
+        token: String,
+    ): Result<OtpSignUpResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.verifyPhone(phone, token) }
+
+        return if (res is Result.Success && res.data != null)
+            Result.Success(res.data)
+        else
+            Result.Error(res.errorType)
+    } override suspend fun resendVerifyPhone(
+        phone: String
+    ): Result<ResendOtpSignUpResponse> {
+        val res = requestApiCall.requestApiCall { networkServices.resendVerifyPhone(phone) }
 
         return if (res is Result.Success && res.data != null)
             Result.Success(res.data)

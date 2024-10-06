@@ -123,7 +123,8 @@ dependencies {
 
     implementation 'com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3'
 
-    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+    //implementation 'com.github.smarteist:autoimageslider:1.4.0'
+    implementation 'com.github.smarteist:Android-Image-Slider:1.4.0'
     implementation 'com.github.GrenderG:Toasty:1.3.0'
     implementation 'com.github.boldijar:pdfy:1.0.2'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -131,7 +132,8 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
-    implementation 'br.com.simplepass:loading-button-android:2.2.0'
+   // implementation 'br.com.simplepass:loading-button-android:2.2.0'
+    implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
 
     implementation 'com.jsibbold:zoomage:1.3.1'
     implementation 'com.github.zhpanvip:viewpagerindicator:1.2.1'

@@ -48,7 +48,6 @@ class ProductsFragment : Fragment() {
     private var search = ""
     var page: Int = 1
     var productsAdapter: ProductsAdapter? = null
-    var productsList = mutableListOf<DataXX>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -28,22 +28,22 @@ class RegisterViewModel @Inject constructor(private val useCase: UserUseCase) : 
         passwordConfirmation: String,
         fcmToken: String) {
         viewModelScope.launch {
-            when (val result = useCase.signUp(name, phone, email, password, passwordConfirmation, fcmToken)) {
+            _uiState.value = UiState.Loading
+            val result =
+                useCase.signUp(name, phone, email, password, passwordConfirmation, fcmToken)
+            _uiState.value = when (result) {
+                is Result.Loading -> UiState.Loading
                 is Result.Error -> {
-                    _uiState.value = UiState.Error(result.errorType!!)
+                    UiState.Error(result.errorType.toString())
+
                 }
 
                 is Result.Success -> {
-                    _uiState.value = UiState.Success(result.data!!)
+
                 }
 
-                is Result.Loading -> {
-                    _uiState.value = UiState.Loading
-                }
             }
-
         }
-
     }
 
 

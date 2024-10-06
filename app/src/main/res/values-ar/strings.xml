@@ -52,7 +52,6 @@
     <string name="cart">عربة التسوق</string>
     <string name="more">المزيد</string>
     <string name="did_not_get_the_code">لم تحصل على الرمز؟ إعادة الإرسال خلال  ثانية</string>
-    <string name="enter_verification_code">أدخل رمز التحقق المكون من 4 أرقام</string>
     <string name="password_is_empty">لا يمكن أن تكون كلمة المرور فارغة</string>
     <string name="phone_number_is_empty">لا يمكن أن يكون رقم الهاتف فارغًا</string>
     <string name="phone_number_should_be_11_char">رقم الهاتف يجب أن يكون 11 رقم</string>
@@ -183,8 +182,15 @@
     <string name="send_a_message">ارسل رسالة</string>
     <string name="welcome">إهلا بك </string>
     <string name="register_success">تم النسجيل بنجاح</string>
-    <string name="kwd">" KWD"</string>
+    <string name="kwd">" د.ك "</string>
     <string name="add_new_address">إضافه عنوان جديد</string>
     <string name="delete">حذف</string>
     <string name="unavailable">غير متوفر</string>
+    <string name="enter_verification_code">أدخل رمز التحقق</string>
+    <string name="sms_with_4_digit">تم إرسال رسالة قصيرة برمز التحقق المكون من 4 أرقام \n الى</string>
+    <string name="confirm">تأكيد</string>
+    <string name="did_you_get_code">لم تحصل على رمز؟</string>
+    <string name="s">ث</string>
+    <string name="otp_code_must_be_4_digits">يجب أن يكون رمز OTP أكثر من 4 أرقام</string>
+
 </resources>

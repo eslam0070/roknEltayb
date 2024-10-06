@@ -18,6 +18,7 @@ import com.rokneltayb.data.model.login.delete.DeleteAccountResponse
 import com.rokneltayb.data.model.login.login.LoginResponse
 import com.rokneltayb.data.model.login.logout.LogoutResponse
 import com.rokneltayb.data.model.login.resetpassword.ResetPasswordResponse
+import com.rokneltayb.data.model.notification_count.NotificationCountResponse
 import com.rokneltayb.data.model.signup.SignUpResponse
 import com.rokneltayb.domain.entity.Result
 import com.rokneltayb.domain.repository.CartRepository
@@ -29,6 +30,7 @@ import javax.inject.Inject
 class FavoritesRepositoryImpl @Inject constructor(private val remoteSource: FavoritesRemoteDataSource):
     FavoritesRepository {
     override suspend fun favorites(): Result<FavoritesResponse> = remoteSource.favorites()
+    override suspend fun notificationCount(): Result<NotificationCountResponse> = remoteSource.notificationCount()
 
     override suspend fun storeFavorites(productId: Int): Result<AddFavoritesResponse> = remoteSource.storeFavorites(productId)
 
