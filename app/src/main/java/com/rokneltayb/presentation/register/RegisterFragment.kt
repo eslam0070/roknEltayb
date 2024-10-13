@@ -31,6 +31,7 @@ class RegisterFragment : Fragment() {
 
     private val binding by lazy { FragmentRegisterBinding.inflate(layoutInflater) }
     private val viewModel: RegisterViewModel by viewModels()
+    private val Login2ViewModel: RegisterViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -42,9 +43,15 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
+    private fun observeUIState() {
+        lifecycleScope.launch {
+            viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.signUpTxt.paintFlags = binding.signUpTxt.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+        //binding.signUpTxt.paintFlags = binding.signUpTxt.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
 
         binding.signUpButton.setOnClickListener {
@@ -59,15 +66,12 @@ class RegisterFragment : Fragment() {
             )
         }
     }
-    private fun observeUIState() =
-        lifecycleScope.launch {
-            viewModel.uiState.flowWithLifecycle(lifecycle).collect(::updateUI)
-        }
+
 
     private fun updateUI(uiState: RegisterViewModel.UiState) {
         when (uiState) {
             is RegisterViewModel.UiState.Loading -> {
-                showProgress()
+                hideProgress()
             }
 
             is RegisterViewModel.UiState.Success -> {
@@ -78,20 +82,19 @@ class RegisterFragment : Fragment() {
                     )
                 )
                 hideProgress()
-                binding.signUpButton.revertAnimation()
+               // binding.signUpButton.revertAnimation()
             }
 
             is RegisterViewModel.UiState.Error -> {
-                toastError(uiState.errorData.message)
+                toastError(uiState.errorData)
                 hideProgress()
-                binding.signUpButton.revertAnimation()
+               // binding.signUpButton.revertAnimation()
             }
 
-            is RegisterViewModel.UiState.Idle -> hideProgress()
         }
     }
 
-    private fun checkValidation(): Boolean {
+   /* private fun checkValidation(): Boolean {
         return if (binding.username.text.toString().isEmpty()) {
             toastError(getString(R.string.please_write_username))
             binding.signUpButton.revertAnimation()
@@ -114,18 +117,18 @@ class RegisterFragment : Fragment() {
             false
         } else {
             binding.signUpButton.startAnimation()
-            /*viewModel.signUp(
+            *//*viewModel.signUp(
                 binding.username.text.toString(),
                 binding.phone.text.toString(),
                 binding.email.text.toString(),
                 binding.etLoginPassword.text.toString(),
                 binding.passwordConfirm.text.toString(),
                 fcmToken
-            )*/
+            )*//*
 
             true
         }
-    }
+    }*/
 
     override fun onStart() {
         super.onStart()

@@ -75,7 +75,7 @@ class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        observeUIState()
         if (Build.VERSION.SDK_INT >= 31) {
             window.decorView.layoutDirection = resources.configuration.layoutDirection
         }
@@ -91,6 +91,7 @@ class BaseActivity : AppCompatActivity() {
             CurvedBottomNavigation.Model(R.id.cartFragment, getString(R.string.cart),R.drawable.ic_cart_gray),
             CurvedBottomNavigation.Model(R.id.moreFragment, getString(R.string.more),R.drawable.ic_more))
 
+        viewModel.notificationCount()
         binding!!.ivBack.setOnClickListener {
             findNavController(R.id.navHostFragment).navigateUp()
         }

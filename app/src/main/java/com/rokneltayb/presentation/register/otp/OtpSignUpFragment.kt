@@ -38,7 +38,7 @@ class OtpSignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         observeUIState()
-        val text = getString(R.string.please_enter_your_phone_number_to_receive_a_verification_code_to_reset_the_password) + "  " + args.phone.substring(7) + "*********"
+        val text = getString(R.string.please_enter_your_phone_number_to_receive_a_verification_code_to_reset_the_password)
 
         binding.number.text = text
         binding.resendcode.paintFlags = binding.resendcode.paintFlags or Paint.UNDERLINE_TEXT_FLAG
