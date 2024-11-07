@@ -25,7 +25,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
         return if (res is Result.Success && res.data != null) {
             Result.Success(res.data)
         } else {
-            Result.Error(res.errorType!!)
+            Result.Error(res.errorType)
         }
 
     }

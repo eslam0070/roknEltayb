@@ -78,7 +78,7 @@ class LoginFragment : Fragment() {
             }
 
             is LoginViewModel.UiState.Error -> {
-                when (uiState.errorData.status) {
+                when (uiState.errorData!!.status) {
                     400 -> toastError(uiState.errorData.message)
                     406 -> toastError(uiState.errorData.message)
                     422  -> {

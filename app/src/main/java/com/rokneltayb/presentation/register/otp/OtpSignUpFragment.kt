@@ -32,24 +32,21 @@ class OtpSignUpFragment : Fragment() {
     private val args: OtpSignUpFragmentArgs by navArgs()
     private val binding by lazy { FragmentVerifyYourAccountBinding.inflate(layoutInflater) }
     private val viewModel: OtpSignUpViewModel by viewModels()
+    private val SecResendCode = 60
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         observeUIState()
-        val text = getString(R.string.please_enter_your_phone_number_to_receive_a_verification_code_to_reset_the_password)
 
-        binding.number.text = text
         binding.resendcode.paintFlags = binding.resendcode.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-        binding.verifyCodePinView.doAfterTextChanged {
-            val code = it.toString()
-            if (code.length > 3) {
-                viewModel.verifyPhone(args.phone, code)
+        binding.verifyButton.setOnClickListener{
+            if (binding.verifyCodePinView.text.toString().length == 4) {
+                viewModel.verifyPhone(args.phone, binding.verifyCodePinView.text.toString())
             }else
                 snackBarFailure(requireContext().getString(R.string.otp_code_must_be_4_digits))
-
         }
 
         binding.resendcode.setOnClickListener {
@@ -59,7 +56,6 @@ class OtpSignUpFragment : Fragment() {
         }
         return binding.root
     }
-    val SecResendCode = 60
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,7 +65,6 @@ class OtpSignUpFragment : Fragment() {
 
     private fun setTimer(sec: Int) {
         binding.resendcode.isEnabled = false
-        //Todo change the timer to 60000
         object : CountDownTimer((sec * 1000).toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val seconds = (millisUntilFinished / 1000).toInt() % 60
@@ -118,7 +113,11 @@ class OtpSignUpFragment : Fragment() {
             }
 
             is OtpSignUpViewModel.UiState.ResendSuccess -> {
+                hideProgress()
+            }
 
+            OtpSignUpViewModel.UiState.Idle -> {
+                hideProgress()
             }
         }
     }

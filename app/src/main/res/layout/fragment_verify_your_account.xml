@@ -56,15 +56,6 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
 
-                    <TextView
-                        android:id="@+id/number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textAlignment="center"
-                        android:textSize="@dimen/_12sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:textColor="@color/textGrey"/>
-
                     <LinearLayout
                         android:id="@+id/linearPhone"
                         android:layout_width="match_parent"

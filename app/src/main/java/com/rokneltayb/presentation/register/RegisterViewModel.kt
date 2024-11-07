@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val useCase: UserUseCase) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -34,7 +34,6 @@ class RegisterViewModel @Inject constructor(private val useCase: UserUseCase) : 
             _uiState.value = when (result) {
                 is Result.Loading -> UiState.Loading
                 is Result.Error -> UiState.Error(result.errorType!!.message)
-
                 is Result.Success -> UiState.Success(result.data!!)
 
             }
@@ -43,6 +42,7 @@ class RegisterViewModel @Inject constructor(private val useCase: UserUseCase) : 
 
 
     sealed class UiState {
+        data object Idle : UiState()
         data object Loading : UiState()
         class Error(val errorData: String): UiState()
         class Success(val data: SignUpResponse) : UiState()

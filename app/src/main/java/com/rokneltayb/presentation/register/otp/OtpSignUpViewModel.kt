@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OtpSignUpViewModel @Inject constructor(private val useCase: UserUseCase) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading)
+    private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
@@ -58,6 +58,7 @@ class OtpSignUpViewModel @Inject constructor(private val useCase: UserUseCase) :
 
     sealed class UiState {
         data object Loading : UiState()
+        data object Idle : UiState()
         class Error(val errorData: ErrorResponse): UiState()
         class Success(val data: OtpSignUpResponse) : UiState()
         class ResendSuccess(val data: ResendOtpSignUpResponse) : UiState()

@@ -23,7 +23,7 @@ class LoginViewModel @Inject constructor(private val useCase: UserUseCase) : Vie
         viewModelScope.launch {
             when (val result = useCase.login(fcmToken,phone, password)) {
                 is Result.Error -> {
-                    _uiState.value = UiState.Error(result.errorType!!)
+                    _uiState.value = UiState.Error(result.errorType)
                 }
 
                 is Result.Success -> {
@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(private val useCase: UserUseCase) : Vie
     sealed class UiState {
         data object Loading : UiState()
         data object Idle : UiState()
-        class Error(val errorData:ErrorResponse): UiState()
+        class Error(val errorData: ErrorResponse?): UiState()
         class Success(val data: LoginResponse) : UiState()
     }
 }
